@@ -3,88 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AOMORI 2026</title>
+    <title>Aomori Archive 2026</title>
     <style>
         :root {
-            --bg: #efefef; /* 要求的淺灰色背景 */
-            --text: #1a1a1a;
-            --accent: #0051ff; /* Aomori Blue */
+            --bg: #f2f2f0; /* 更柔和的淺米灰 */
+            --text: #333333;
+            --accent: #1a1a1a;
+            --grid-bg: #ffffff;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             margin: 0; background-color: var(--bg);
-            font-family: 'Helvetica Neue', 'PingFang TC', sans-serif;
+            font-family: 'PingFang TC', 'SF Pro Display', sans-serif;
             color: var(--text);
+            line-height: 1.6;
         }
 
-        /* 頂部導航列 */
+        /* 導航列：增加高度與模糊度 */
         nav {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: rgba(239, 239, 239, 0.9);
+            position: fixed; top: 0; width: 100%; height: 80px;
+            background: rgba(242, 242, 240, 0.85);
             backdrop-filter: blur(20px);
             display: flex; justify-content: space-around; align-items: center;
+            z-index: 1000; padding: 0 20px;
             border-bottom: 0.5px solid rgba(0,0,0,0.05);
-            z-index: 1000;
-            padding: 0 10px;
         }
         nav a { 
-            text-decoration: none; color: #999; 
-            font-size: 10px; font-weight: bold; letter-spacing: 2px;
-            transition: 0.3s;
+            text-decoration: none; color: #aaa; 
+            font-size: 11px; font-weight: 600; letter-spacing: 2px;
+            transition: 0.3s; padding: 10px;
         }
-        nav a.active { color: var(--text); border-bottom: 1.5px solid var(--text); padding-bottom: 4px; }
+        nav a.active { color: var(--accent); position: relative; }
+        nav a.active::after {
+            content: ''; position: absolute; bottom: 5px; left: 25%; width: 50%; height: 1.5px; background: var(--accent);
+        }
 
-        /* 獨立頁面切換邏輯 */
-        .page {
-            display: none; /* 預設隱藏 */
-            width: 100vw; min-height: 100vh;
-            padding: 100px 25px 50px;
-        }
+        .page { display: none; width: 100vw; min-height: 100vh; padding: 100px 25px 80px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .page.active { display: block; }
 
-        /* --- 圖六風格：日曆藝術網格 --- */
-        .grid-container {
+        /* 日曆網格：調整為 3 列讓空間更開闊 */
+        .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4格網格 */
-            gap: 15px; margin-top: 40px;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px 15px; /* 增加上下間距 */
+            margin-top: 40px;
         }
-        .grid-item {
-            position: relative;
-            aspect-ratio: 1 / 1.3; /* 稍微細長的正方形 */
-            background: #e5e5e5;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            transition: 0.2s;
-        }
-        .grid-item:active { transform: scale(0.95); background: #ddd; }
-        
-        /* 模擬圖六的數字標註 */
-        .grid-number {
-            position: absolute; top: -20px; width: 100%;
-            text-align: center; font-size: 10px; color: #888;
-            font-family: 'Courier New', monospace;
-        }
-        .grid-photo-placeholder {
-            width: 80%; height: 70%;
-            background: #fff; /* 這裡預留放照片的地方 */
-            border: 0.5px solid #000;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
-        }
-        .grid-desc { font-size: 8px; margin-top: 8px; color: #555; text-align: center; }
 
-        /* 內容卡片 */
-        .detail-card {
-            background: #fff; padding: 30px; border: 0.5px solid #000;
-            margin-top: 20px; line-height: 1.8;
+        .calendar-item {
+            position: relative;
+            display: flex; flex-direction: column; align-items: center;
         }
-        h2 { font-size: 14px; letter-spacing: 4px; text-align: center; font-weight: 300; }
+
+        .item-num {
+            font-family: 'Courier New', monospace; font-size: 10px; color: #bbb;
+            margin-bottom: 8px; letter-spacing: 1px;
+        }
+
+        .item-image {
+            width: 100%; aspect-ratio: 1/1.2;
+            background-color: #e8e8e6;
+            border: 0.5px solid rgba(0,0,0,0.1);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; background-size: cover; background-position: center;
+        }
+
+        .item-label {
+            margin-top: 10px; font-size: 9px; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase; color: #666;
+            text-align: center; height: 20px;
+        }
+
+        /* 標題樣式 */
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-size: 14px; font-weight: 300; letter-spacing: 5px; color: #888; }
+
+        .card { background: #fff; padding: 30px; margin-bottom: 20px; border: 0.5px solid #eee; }
+        .card h3 { font-size: 13px; margin-top: 0; letter-spacing: 2px; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .card p { font-size: 12px; color: #666; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-<nav id="app-nav">
+<nav>
     <a href="javascript:void(0)" onclick="showPage('home')" id="nav-home">INDEX</a>
     <a href="javascript:void(0)" onclick="showPage('schedule')" id="nav-schedule">SCHEDULE</a>
     <a href="javascript:void(0)" onclick="showPage('base')" id="nav-base">BASE</a>
@@ -92,68 +95,104 @@
 </nav>
 
 <section id="home" class="page active">
-    <div style="margin-top: 20vh; text-align: center;">
-        <h1 style="font-size: 38px; font-weight: 200; letter-spacing: 8px;">AOMORI</h1>
-        <p style="font-size: 10px; color: #888; letter-spacing: 3px;">2026 ARCHIVE</p>
+    <div style="margin-top: 25vh; text-align: center;">
+        <h1 style="font-size: 32px; font-weight: 200; letter-spacing: 10px; color: #1a1a1a;">AOMORI</h1>
+        <p style="font-size: 10px; color: #aaa; letter-spacing: 4px; margin-top: 20px;">LIFE ARCHIVE / 2026</p>
     </div>
 </section>
 
 <section id="schedule" class="page">
-    <h2>DAILY ARCHIVE</h2>
-    <div class="grid-container">
-        <div class="grid-item"><div class="grid-number">01</div><div class="grid-photo-placeholder"></div><div class="grid-desc">ARRIVAL</div></div>
-        <div class="grid-item"><div class="grid-number">02</div><div class="grid-photo-placeholder"></div><div class="grid-desc">MARKET</div></div>
-        <div class="grid-item"><div class="grid-number">03</div><div class="grid-photo-placeholder"></div><div class="grid-desc">MENTOR</div></div>
-        <div class="grid-item"><div class="grid-number">04</div><div class="grid-photo-placeholder"></div><div class="grid-desc">SENTO</div></div>
-        <div class="grid-item"><div class="grid-number">05</div><div class="grid-photo-placeholder"></div><div class="grid-desc">STUDY</div></div>
-        <div class="grid-item"><div class="grid-number">06</div><div class="grid-photo-placeholder"></div><div class="grid-desc">HIROSAKI</div></div>
-        <div class="grid-item"><div class="grid-number">07</div><div class="grid-photo-placeholder"></div><div class="grid-desc">COFFEE</div></div>
-        <div class="grid-item"><div class="grid-number">08</div><div class="grid-photo-placeholder"></div><div class="grid-desc">MUSEUM</div></div>
+    <div class="section-header">
+        <h2>DAILY ARCHIVE</h2>
     </div>
-    <p style="text-align: center; font-size: 10px; color: #aaa; margin-top: 40px;">( 依此類推補齊 30 天 )</p>
+    
+    <div class="calendar-grid" id="grid-content">
+        </div>
 </section>
 
 <section id="base" class="page">
-    <h2>BASE & TUTOR</h2>
-    <div class="detail-card">
-        <b>Stay / 住宿詳細</b><br>
-        📍 <a href="#" style="color:var(--text)">青森市新町 1-XX-XX</a><br>
-        🏠 獨立公寓 (Airbnb)
+    <div class="section-header"><h2>BASE & TUTOR</h2></div>
+    <div class="card">
+        <h3>STAY / 住所</h3>
+        <p><b>Aomori Shinmachi Studio</b><br>📍 青森市新町 1-XX-XX<br>鄰近 A-Factory，擁有獨立空間進行每日筆記。</p>
     </div>
-    <div class="detail-card">
-        <b>Tutor / 私人老師</b><br>
-        👤 Sato-san<br>
-        每日 3 小時沈浸式對話習作。
+    <div class="card">
+        <h3>MENTOR / 私人導師</h3>
+        <p><b>Sato-san</b><br>每週五天，每日 3 小時沈浸對話習作。<br>專注於津輕方言與在地生活應用。</p>
     </div>
 </section>
 
 <section id="budget" class="page">
-    <h2>FINANCIAL</h2>
-    <div class="detail-card" style="text-align: center; border: 1px dashed #000;">
-        <p>Accommodation: NT$ 32,000</p>
-        <p>Tutor: NT$ 18,500</p>
-        <hr>
-        <p><b>Total: NT$ 73,500</b></p>
+    <div class="section-header"><h2>FINANCIAL</h2></div>
+    <div class="card" style="text-align: center;">
+        <p style="letter-spacing: 1px;">Accommodation: NT$ 32,000</p>
+        <p style="letter-spacing: 1px;">Private Tutor: NT$ 18,500</p>
+        <p style="letter-spacing: 1px;">Daily Living: NT$ 15,000</p>
+        <div style="border-top: 1px solid #eee; margin-top: 20px; padding-top: 20px; font-weight: bold; font-size: 14px;">
+            TOTAL: NT$ 65,500
+        </div>
     </div>
 </section>
 
 <script>
+    // 30 天行程與模擬圖片數據
+    const scheduleData = [
+        { title: "Arrival", img: "https://picsum.photos/id/10/400/500?grayscale" },
+        { title: "Market", img: "https://picsum.photos/id/11/400/500?grayscale" },
+        { title: "Mentor", img: "https://picsum.photos/id/12/400/500?grayscale" },
+        { title: "Sento", img: "https://picsum.photos/id/13/400/500?grayscale" },
+        { title: "Study", img: "https://picsum.photos/id/14/400/500?grayscale" },
+        { title: "Hirosaki", img: "https://picsum.photos/id/15/400/500?grayscale" },
+        { title: "Coffee", img: "https://picsum.photos/id/16/400/500?grayscale" },
+        { title: "Museum", img: "https://picsum.photos/id/17/400/500?grayscale" },
+        { title: "Sketch", img: "https://picsum.photos/id/18/400/500?grayscale" },
+        { title: "Library", img: "https://picsum.photos/id/19/400/500?grayscale" },
+        { title: "Forest", img: "https://picsum.photos/id/20/400/500?grayscale" },
+        { title: "Apple", img: "https://picsum.photos/id/21/400/500?grayscale" },
+        { title: "Winter", img: "https://picsum.photos/id/22/400/500?grayscale" },
+        { title: "Local", img: "https://picsum.photos/id/23/400/500?grayscale" },
+        { title: "Craft", img: "https://picsum.photos/id/24/400/500?grayscale" },
+        { title: "Train", img: "https://picsum.photos/id/25/400/500?grayscale" },
+        { title: "Temple", img: "https://picsum.photos/id/26/400/500?grayscale" },
+        { title: "Harbor", img: "https://picsum.photos/id/27/400/500?grayscale" },
+        { title: "Seafood", img: "https://picsum.photos/id/28/400/500?grayscale" },
+        { title: "Park", img: "https://picsum.photos/id/29/400/500?grayscale" },
+        { title: "Snow", img: "https://picsum.photos/id/30/400/500?grayscale" },
+        { title: "Warm", img: "https://picsum.photos/id/31/400/500?grayscale" },
+        { title: "Dialect", img: "https://picsum.photos/id/32/400/500?grayscale" },
+        { title: "Night", img: "https://picsum.photos/id/33/400/500?grayscale" },
+        { title: "Review", img: "https://picsum.photos/id/34/400/500?grayscale" },
+        { title: "Packing", img: "https://picsum.photos/id/35/400/500?grayscale" },
+        { title: "Memories", img: "https://picsum.photos/id/36/400/500?grayscale" },
+        { title: "Final", img: "https://picsum.photos/id/37/400/500?grayscale" },
+        { title: "Departure", img: "https://picsum.photos/id/38/400/500?grayscale" },
+        { title: "Home", img: "https://picsum.photos/id/39/400/500?grayscale" }
+    ];
+
     function showPage(pageId) {
-        // 隱藏所有頁面
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(p => p.classList.remove('active'));
-        
-        // 顯示目標頁面
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
-        
-        // 更新導航列樣式
-        const navs = document.querySelectorAll('nav a');
-        navs.forEach(n => n.classList.remove('active'));
+        document.querySelectorAll('nav a').forEach(n => n.classList.remove('active'));
         document.getElementById('nav-' + pageId).classList.add('active');
-        
-        // 自動回到頂部
         window.scrollTo(0, 0);
     }
+
+    // 動態生成 30 天網格
+    const grid = document.getElementById('grid-content');
+    scheduleData.forEach((item, index) => {
+        const dayNum = (index + 1).toString().padStart(2, '0');
+        const html = `
+            <div class="calendar-item">
+                <div class="item-num">${dayNum}</div>
+                <div class="item-image" style="background-image: url('${item.img}')"></div>
+                <div class="item-label">${item.title}</div>
+            </div>
+        `;
+        grid.innerHTML += html;
+    });
+
+    // 預設高亮 SCHEDULE (因為你現在正在設定這頁)
+    showPage('schedule');
 </script>
 
 </body>
