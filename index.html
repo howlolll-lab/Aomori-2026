@@ -6,7 +6,7 @@
     <title>Aomori Zine Archive 2026</title>
     <style>
         :root {
-            --bg: #efefef; /* 高級質感淺灰米 */
+            --bg: #efefef;
             --text: #1a1a1a;
             --accent: #b03a2e;
             --grid-bg: #fff;
@@ -21,7 +21,6 @@
             line-height: 1.6;
         }
 
-        /* 導航列：復刻圖四 Zine 風格 */
         nav {
             position: fixed; top: 0; width: 100%; height: 80px;
             background: rgba(239, 239, 237, 0.9);
@@ -41,21 +40,21 @@
         .page.active { display: block; animation: fadeIn 0.6s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 內容卡片 */
         .info-card { background: #fff; padding: 30px; margin-bottom: 25px; border: 0.5px solid #000; }
         .info-card h3 { font-size: 13px; margin: 0 0 15px 0; letter-spacing: 2px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .info-card p { font-size: 12px; color: #555; margin-bottom: 10px; }
+        .info-card p, .info-card li { font-size: 12px; color: #555; margin-bottom: 10px; }
 
-        /* --- 日曆網格：微型化 (復刻圖六) --- */
+        /* --- 日曆網格：增加間距 (修正擠迫感) --- */
         .calendar-zine-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 手機版 4 列 */
-            gap: 15px; margin-top: 30px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px 20px; /* 增加上下(30px)與左右(20px)間距 */
+            margin-top: 40px;
         }
 
         .zine-item {
             position: relative;
-            aspect-ratio: 1 / 1.3; /* 稍微細長的正方形 */
+            aspect-ratio: 1 / 1.3;
             background-color: var(--grid-bg);
             border: 0.5px solid #000;
             display: flex; flex-direction: column;
@@ -64,13 +63,11 @@
         }
         .zine-item:active { transform: scale(0.96); background: #fafafa; }
 
-        /* 復刻圖六的數字標註 */
         .zine-num {
             font-family: 'Courier New', monospace; font-size: 10px; color: #888;
-            position: absolute; top: -18px; width: 100%; text-align: center;
+            position: absolute; top: -22px; width: 100%; text-align: center;
         }
 
-        /* 小圖片區域 */
         .zine-photo-box {
             width: 85%; height: 75%;
             background-color: #f2f2f0;
@@ -78,7 +75,6 @@
             background-size: cover; background-position: center;
         }
 
-        /* 行程簡述文字 */
         .zine-label {
             width: 100%; text-align: center;
             font-size: 8px; font-weight: 500;
@@ -86,14 +82,20 @@
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
 
-        /* 小地圖樣式 */
-        .map-wrapper {
-            width: 100%; aspect-ratio: 16/9; margin-top: 15px;
-            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="150"%3E%3Cpath d="M0 75h300M150 0v150" stroke="%23aaa" stroke-width=".5"/%3E%3Crect x="135" y="60" width="30" height="30" fill="%23fff" stroke="%23000" stroke-width=".5"/%3E%3Crect x="135" y="60" width="30" height="30" fill="%23efefed" opacity=".5"/%3E%3Crect x="200" y="30" width="50" height="50" fill="%23f7f7f5" stroke="%23aaa" stroke-width=".5"/%3E%3Crect x="20" y="20" width="60" height="60" fill="%23e8e8e6" stroke="%23aaa" stroke-width=".5"/%3E%3Crect x="70" y="100" width="80" height="40" fill="%23eee" stroke="%23aaa" stroke-width=".5"/%3E%3Ccircle cx="150" cy="75" r="5" fill="%23b03a2e"/%3E%3C/svg%3E');
-            background-size: cover; border: 0.5px solid #ccc;
+        /* --- 簡約小地圖 (修正過大問題) --- */
+        .mini-map {
+            width: 100px; height: 100px; /* 縮小尺寸 */
+            margin: 15px 0;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Cpath d="M0 50h100M50 0v100" stroke="%23ddd" stroke-width=".5"/%3E%3Ccircle cx="65" cy="40" r="4" fill="%23b03a2e"/%3E%3Crect x="0" y="0" width="100" height="100" fill="none" stroke="%23000" stroke-width=".5"/%3E%3C/svg%3E');
+            background-size: cover; border: 0.5px solid #000;
         }
 
-        /* 彈窗樣式 */
+        /* 預算表格細節 */
+        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+        th, td { border: 0.5px solid #eee; padding: 10px; text-align: left; }
+        th { background: #f9f9f9; color: #888; }
+
+        /* 彈窗 */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;
@@ -127,34 +129,45 @@
 </section>
 
 <section id="schedule" class="page">
-    <div style="text-align: center; font-size: 12px; letter-spacing: 5px; color: #bbb; margin-bottom: 50px;">DAILY LOG</div>
+    <div style="text-align: center; font-size: 12px; letter-spacing: 5px; color: #bbb; margin-bottom: 20px;">DAILY LOG</div>
     <div class="calendar-zine-grid" id="grid-content"></div>
 </section>
 
 <section id="base" class="page">
-    <div style="text-align: center; font-size: 12px; letter-spacing: 5px; color: #bbb; margin-bottom: 50px;">BASE & PLAN</div>
-    
     <div class="info-card">
         <h3>📍 STAY / 住宿詳細</h3>
-        <p><b>Aomori Furukawa Studio (Airbnb)</b><br>位於古川 1 丁目生活圈。</p>
-        <p style="font-size: 10px; color: #aaa;">1 Chome-XX-XX Furukawa, Aomori-shi, 030-0862</p>
-        <div class="map-wrapper"></div>
-        <p style="margin-top: 15px;"><a href="#" style="color:var(--text); font-weight:bold;">👉 開啟 Google Maps</a></p>
+        <p><b>Aomori Furukawa Studio (Airbnb)</b><br>鄰近古川市場與中央溫泉。</p>
+        <div class="mini-map"></div>
+        <p style="font-size: 10px; color: #aaa;">1 Chome-XX-XX Furukawa, Aomori-shi</p>
+        <p><a href="#" style="color:var(--text); font-size: 11px; font-weight:bold;">👉 開啟 Google Maps</a></p>
     </div>
 
     <div class="info-card">
-        <h3>🔍尋找老師步驟</h3>
-        <p>1. 篩選居住於「青森縣」教師。<br>2. 私訊確認是否願意配合「實地教學」。<br>3. 第一週面談對齊計畫；二四週改為市場實戰。</p>
+        <h3>🎯 計畫目標與成果</h3>
+        <ul style="padding-left: 15px;">
+            <li><b>實踐：</b>獨立在市場完成食材挑選與議價。</li>
+            <li><b>語言：</b>掌握 20 組津輕方言日常問候。</li>
+            <li><b>紀錄：</b>完成 30 頁 Aomori Zine 影像集。</li>
+        </ul>
     </div>
 </section>
 
 <section id="budget" class="page">
-    <div class="info-card" style="text-align: center; padding: 60px 20px;">
-        <h3>FINANCIAL</h3>
-        <p>Stay: NT$ 32,000</p>
-        <p>Tutor: NT$ 18,500</p>
-        <p>Living: NT$ 15,000</p>
-        <div style="font-size: 16px; font-weight: bold; margin-top: 30px;">TOTAL: NT$ 65,500</div>
+    <div class="info-card">
+        <h3>💰 BUDGET / 金額明細</h3>
+        <table>
+            <tr><th>項目</th><th>估算金額 (NTD)</th><th>細節說明</th></tr>
+            <tr><td><b>住宿 (Stay)</b></td><td>$32,000</td><td>Airbnb 月租折扣 (約 $1,066/晚)</td></tr>
+            <tr><td><b>導師 (Tutor)</b></td><td>$18,500</td><td>私人習作 60 小時</td></tr>
+            <tr><td><b>食費 (Food)</b></td><td>$8,000</td><td>超市採買自炊與市場探訪</td></tr>
+            <tr><td><b>交通 (Trans)</b></td><td>$4,000</td><td>單車月租、JR 弘前來回巴士</td></tr>
+            <tr><td><b>文化 (Life)</b></td><td>$3,000</td><td>錢湯入浴、美術館門票雜支</td></tr>
+            <tr style="font-weight: bold; font-size: 13px;">
+                <td>總計 (Total)</td>
+                <td>$65,500</td>
+                <td>未含機票支出</td>
+            </tr>
+        </table>
     </div>
 </section>
 
@@ -167,14 +180,13 @@
 </div>
 
 <script>
-    // 完整的 30 天詳細數據，含 D01 台灣->青森行程
     const scheduleData = [
         { 
-            title: "Arrival", // DAY 01
+            title: "Arrival", 
             img: "https://picsum.photos/id/10/400/500?grayscale",
             plan: [
-                {t: "08:00", e: "抵達桃園機場 (TPE) check-in"},
-                {t: "10:30", e: "航班起飛：TPE -> AOJ"},
+                {t: "08:00", e: "抵達桃園機場 (TPE) Check-in"},
+                {t: "10:30", e: "航班起飛：TPE → AOJ"},
                 {t: "15:00", e: "抵達青森機場 (AOJ)"},
                 {t: "15:45", e: "搭乘機場巴士前往青森車站"},
                 {t: "16:30", e: "租借單車、前往古川 Airbnb"},
@@ -183,18 +195,11 @@
             ]
         },
         { title: "Market", detail: "古川市場實戰：練習詢價、自製 Nokke-don。", img: "https://picsum.photos/id/11/400/500?grayscale" },
-        { title: "Mentor", detail: "於 ASPAM 觀景台習作：設定方言目標。", img: "https://picsum.photos/id/12/400/500?grayscale" },
-        { title: "Sento", detail: "中央古川溫泉體會：觀察老社交儀式。", img: "https://picsum.photos/id/13/400/500?grayscale" },
-        { title: "Lesson", detail: "餐廳點餐專題習作。", img: "https://picsum.photos/id/14/400/500?grayscale" },
-        { title: "Library", detail: "查閱津輕刺繡歷史、整理影像紀錄。", img: "https://picsum.photos/id/15/400/500?grayscale" },
-        { title: "Hirosaki", detail: "弘前城散策習作 (JR 來回)。", img: "https://picsum.photos/id/16/400/500?grayscale" },
-        { title: "Museum", detail: "縣立美術館觀察：奈良美智作品。", img: "https://picsum.photos/id/17/400/500?grayscale" }
-        // 後續日期邏輯已定
+        { title: "Mentor", detail: "於星巴克與導師會合：設定 30 天方言目標。", img: "https://picsum.photos/id/12/400/500?grayscale" }
     ];
 
-    // 自動生成其餘日期，並微調 D01 的 detail 顯示方式
-    for(let i=8; i<30; i++) {
-        scheduleData.push({ title: "Routine", detail: `第 ${i+1} 天生活習作。`, img: `https://picsum.photos/id/${i+10}/400/500?grayscale` });
+    for(let i=scheduleData.length; i<30; i++) {
+        scheduleData.push({ title: "Routine", detail: `第 ${i+1} 天生活習作與紀錄。`, img: `https://picsum.photos/id/${i+10}/400/500?grayscale` });
     }
 
     function showPage(pageId) {
@@ -208,29 +213,24 @@
     const grid = document.getElementById('grid-content');
     scheduleData.forEach((item, index) => {
         const day = (index + 1).toString().padStart(2, '0');
-        const html = `
+        grid.innerHTML += `
             <div class="zine-item" onclick="openModal(${index})">
                 <div class="zine-num">${day}</div>
                 <div class="zine-photo-box" style="background-image: url('${item.img}')"></div>
                 <div class="zine-label">${item.title}</div>
-            </div>
-        `;
-        grid.innerHTML += html;
+            </div>`;
     });
 
     function openModal(index) {
         const data = scheduleData[index];
         const day = (index + 1).toString().padStart(2, '0');
         document.getElementById('m-title').innerText = `DAY ${day}: ${data.title}`;
-        
         let contentHtml = '';
         if (data.plan) {
-            // 如果有時間表 (如 Day 01)
             data.plan.forEach(p => {
                 contentHtml += `<div class="time-row"><div class="time-label">${p.t}</div><div class="time-event">${p.e}</div></div>`;
             });
         } else {
-            // 一般日期的簡短描述
             contentHtml = `<p style="font-size:13px; color:#666;">${data.detail}</p>`;
         }
         document.getElementById('m-content').innerHTML = contentHtml;
