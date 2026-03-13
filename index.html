@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aomori Archive 2026</title>
+    <title>Aomori Study Journey 2026</title>
     <style>
         :root {
-            --bg: #f2f2f0; /* 更柔和的淺米灰 */
+            --bg: #f2f2f0;
             --text: #333333;
             --accent: #1a1a1a;
-            --grid-bg: #ffffff;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -21,68 +20,53 @@
             line-height: 1.6;
         }
 
-        /* 導航列：增加高度與模糊度 */
+        /* 導航列 */
         nav {
-            position: fixed; top: 0; width: 100%; height: 80px;
+            position: fixed; top: 0; width: 100%; height: 70px;
             background: rgba(242, 242, 240, 0.85);
             backdrop-filter: blur(20px);
             display: flex; justify-content: space-around; align-items: center;
             z-index: 1000; padding: 0 20px;
             border-bottom: 0.5px solid rgba(0,0,0,0.05);
         }
-        nav a { 
-            text-decoration: none; color: #aaa; 
-            font-size: 11px; font-weight: 600; letter-spacing: 2px;
-            transition: 0.3s; padding: 10px;
-        }
-        nav a.active { color: var(--accent); position: relative; }
-        nav a.active::after {
-            content: ''; position: absolute; bottom: 5px; left: 25%; width: 50%; height: 1.5px; background: var(--accent);
-        }
+        nav a { text-decoration: none; color: #aaa; font-size: 11px; font-weight: 600; letter-spacing: 2px; }
+        nav a.active { color: var(--accent); }
 
-        .page { display: none; width: 100vw; min-height: 100vh; padding: 100px 25px 80px; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .page { display: none; width: 100vw; min-height: 100vh; padding: 90px 25px 80px; }
         .page.active { display: block; }
 
-        /* 日曆網格：調整為 3 列讓空間更開闊 */
+        /* 遊學規劃文字區塊 */
+        .plan-header { margin-top: 40px; padding: 20px; border-left: 2px solid #333; background: #fff; }
+        .plan-header h3 { font-size: 14px; margin: 0 0 10px 0; letter-spacing: 2px; }
+        .plan-header p { font-size: 12px; color: #666; margin: 0; }
+
+        /* 日曆網格 */
         .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 25px 15px; /* 增加上下間距 */
-            margin-top: 40px;
+            display: grid; grid-template-columns: repeat(3, 1fr); 
+            gap: 25px 15px; margin-top: 40px;
         }
-
-        .calendar-item {
-            position: relative;
-            display: flex; flex-direction: column; align-items: center;
-        }
-
-        .item-num {
-            font-family: 'Courier New', monospace; font-size: 10px; color: #bbb;
-            margin-bottom: 8px; letter-spacing: 1px;
-        }
-
+        .calendar-item { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .item-num { font-family: 'Courier New', monospace; font-size: 10px; color: #bbb; margin-bottom: 8px; }
         .item-image {
-            width: 100%; aspect-ratio: 1/1.2;
-            background-color: #e8e8e6;
-            border: 0.5px solid rgba(0,0,0,0.1);
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; background-size: cover; background-position: center;
+            width: 100%; aspect-ratio: 1/1.2; background-color: #e8e8e6;
+            border: 0.5px solid rgba(0,0,0,0.1); background-size: cover; background-position: center;
         }
+        .item-label { margin-top: 10px; font-size: 9px; font-weight: 600; letter-spacing: 1px; color: #666; }
 
-        .item-label {
-            margin-top: 10px; font-size: 9px; font-weight: 600;
-            letter-spacing: 1px; text-transform: uppercase; color: #666;
-            text-align: center; height: 20px;
+        /* 彈窗樣式 */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center;
+            padding: 30px; backdrop-filter: blur(5px);
         }
-
-        /* 標題樣式 */
-        .section-header { text-align: center; margin-bottom: 50px; }
-        .section-header h2 { font-size: 14px; font-weight: 300; letter-spacing: 5px; color: #888; }
-
-        .card { background: #fff; padding: 30px; margin-bottom: 20px; border: 0.5px solid #eee; }
-        .card h3 { font-size: 13px; margin-top: 0; letter-spacing: 2px; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
-        .card p { font-size: 12px; color: #666; margin: 10px 0; }
+        .modal-content {
+            background: #fff; width: 100%; max-width: 400px; padding: 40px 30px;
+            position: relative; animation: pop 0.3s ease;
+        }
+        @keyframes pop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 20px; cursor: pointer; }
+        .modal-title { font-size: 16px; font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .modal-desc { font-size: 13px; color: #555; line-height: 1.8; }
     </style>
 </head>
 <body>
@@ -95,79 +79,69 @@
 </nav>
 
 <section id="home" class="page active">
-    <div style="margin-top: 25vh; text-align: center;">
-        <h1 style="font-size: 32px; font-weight: 200; letter-spacing: 10px; color: #1a1a1a;">AOMORI</h1>
-        <p style="font-size: 10px; color: #aaa; letter-spacing: 4px; margin-top: 20px;">LIFE ARCHIVE / 2026</p>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1 style="font-size: 28px; font-weight: 200; letter-spacing: 8px;">AOMORI 2026</h1>
+        <p style="font-size: 10px; color: #aaa; letter-spacing: 3px;">遊學生活計畫書</p>
+    </div>
+
+    <div class="plan-header">
+        <h3>PROJECT GOAL / 計畫核心</h3>
+        <p>這是一場為期 30 天的「語言與生活」實驗。不僅是學習日語，更是透過在青森市與弘前市的沈浸，建立與地方文化的深層連結。</p>
+    </div>
+
+    <div class="plan-header" style="margin-top: 20px;">
+        <h3>METHOD / 學習方式</h3>
+        <p>1. 每日 3 小時私人導師會話習作。<br>2. 走訪在地錢湯、咖啡廳與市場進行口語實踐。<br>3. 獨立紀錄每日習作筆記與藝術攝影。</p>
     </div>
 </section>
 
 <section id="schedule" class="page">
-    <div class="section-header">
-        <h2>DAILY ARCHIVE</h2>
-    </div>
-    
-    <div class="calendar-grid" id="grid-content">
-        </div>
+    <div style="text-align: center; font-size: 13px; letter-spacing: 4px; color: #888;">DAILY LOG</div>
+    <div class="calendar-grid" id="grid-content"></div>
 </section>
 
 <section id="base" class="page">
-    <div class="section-header"><h2>BASE & TUTOR</h2></div>
-    <div class="card">
-        <h3>STAY / 住所</h3>
-        <p><b>Aomori Shinmachi Studio</b><br>📍 青森市新町 1-XX-XX<br>鄰近 A-Factory，擁有獨立空間進行每日筆記。</p>
-    </div>
-    <div class="card">
-        <h3>MENTOR / 私人導師</h3>
-        <p><b>Sato-san</b><br>每週五天，每日 3 小時沈浸對話習作。<br>專注於津輕方言與在地生活應用。</p>
+    <div style="text-align: center; font-size: 13px; letter-spacing: 4px; color: #888; margin-bottom: 30px;">BASE & TUTOR</div>
+    <div style="background: #fff; padding: 25px; border: 1px solid #ddd; margin-bottom: 20px;">
+        <b style="font-size: 14px;">Accommodation</b><br>
+        <p style="font-size: 12px; color: #666; margin: 10px 0;">📍 青森市新町 1-XX-XX<br>選擇位於市中心的新町區域，確保每日能步行抵達 A-Factory 與星巴克習作。具備廚房，可進行在地食材烹飪實驗。</p>
     </div>
 </section>
 
 <section id="budget" class="page">
-    <div class="section-header"><h2>FINANCIAL</h2></div>
-    <div class="card" style="text-align: center;">
-        <p style="letter-spacing: 1px;">Accommodation: NT$ 32,000</p>
-        <p style="letter-spacing: 1px;">Private Tutor: NT$ 18,500</p>
-        <p style="letter-spacing: 1px;">Daily Living: NT$ 15,000</p>
-        <div style="border-top: 1px solid #eee; margin-top: 20px; padding-top: 20px; font-weight: bold; font-size: 14px;">
-            TOTAL: NT$ 65,500
-        </div>
+    <div style="text-align: center; font-size: 13px; letter-spacing: 4px; color: #888; margin-bottom: 30px;">FINANCIAL</div>
+    <div style="background: #fff; padding: 25px; border: 1px dashed #333; text-align: center;">
+        <p style="font-size: 13px;">Stay: NT$ 32,000<br>Tutor: NT$ 18,500<br>Living: NT$ 15,000</p>
+        <hr>
+        <b style="font-size: 15px;">TOTAL: NT$ 65,500</b>
     </div>
 </section>
 
+<div class="modal" id="infoModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-title" id="m-title">Day Detail</div>
+        <div class="modal-desc" id="m-desc">內容讀取中...</div>
+    </div>
+</div>
+
 <script>
-    // 30 天行程與模擬圖片數據
     const scheduleData = [
-        { title: "Arrival", img: "https://picsum.photos/id/10/400/500?grayscale" },
-        { title: "Market", img: "https://picsum.photos/id/11/400/500?grayscale" },
-        { title: "Mentor", img: "https://picsum.photos/id/12/400/500?grayscale" },
-        { title: "Sento", img: "https://picsum.photos/id/13/400/500?grayscale" },
-        { title: "Study", img: "https://picsum.photos/id/14/400/500?grayscale" },
-        { title: "Hirosaki", img: "https://picsum.photos/id/15/400/500?grayscale" },
-        { title: "Coffee", img: "https://picsum.photos/id/16/400/500?grayscale" },
-        { title: "Museum", img: "https://picsum.photos/id/17/400/500?grayscale" },
-        { title: "Sketch", img: "https://picsum.photos/id/18/400/500?grayscale" },
-        { title: "Library", img: "https://picsum.photos/id/19/400/500?grayscale" },
-        { title: "Forest", img: "https://picsum.photos/id/20/400/500?grayscale" },
-        { title: "Apple", img: "https://picsum.photos/id/21/400/500?grayscale" },
-        { title: "Winter", img: "https://picsum.photos/id/22/400/500?grayscale" },
-        { title: "Local", img: "https://picsum.photos/id/23/400/500?grayscale" },
-        { title: "Craft", img: "https://picsum.photos/id/24/400/500?grayscale" },
-        { title: "Train", img: "https://picsum.photos/id/25/400/500?grayscale" },
-        { title: "Temple", img: "https://picsum.photos/id/26/400/500?grayscale" },
-        { title: "Harbor", img: "https://picsum.photos/id/27/400/500?grayscale" },
-        { title: "Seafood", img: "https://picsum.photos/id/28/400/500?grayscale" },
-        { title: "Park", img: "https://picsum.photos/id/29/400/500?grayscale" },
-        { title: "Snow", img: "https://picsum.photos/id/30/400/500?grayscale" },
-        { title: "Warm", img: "https://picsum.photos/id/31/400/500?grayscale" },
-        { title: "Dialect", img: "https://picsum.photos/id/32/400/500?grayscale" },
-        { title: "Night", img: "https://picsum.photos/id/33/400/500?grayscale" },
-        { title: "Review", img: "https://picsum.photos/id/34/400/500?grayscale" },
-        { title: "Packing", img: "https://picsum.photos/id/35/400/500?grayscale" },
-        { title: "Memories", img: "https://picsum.photos/id/36/400/500?grayscale" },
-        { title: "Final", img: "https://picsum.photos/id/37/400/500?grayscale" },
-        { title: "Departure", img: "https://picsum.photos/id/38/400/500?grayscale" },
-        { title: "Home", img: "https://picsum.photos/id/39/400/500?grayscale" }
+        { title: "Arrival", detail: "抵達青森車站，租借單車並前往新町公寓。下午採買首週生活物資，確認錢湯位置。", img: "https://picsum.photos/id/10/400/500?grayscale" },
+        { title: "Market", detail: "前往 Auga 魚市場。今日任務：與攤商對話，選購當日最鮮魚貨作為晚餐。", img: "https://picsum.photos/id/11/400/500?grayscale" },
+        { title: "Mentor", detail: "於星巴克進行首週習作。討論未來 30 天的對話清單，設定津輕方言目標。", img: "https://picsum.photos/id/12/400/500?grayscale" },
+        { title: "Sento", detail: "錢湯習作：體驗在地澡堂文化，觀察長輩們的互動與日式澡堂規則。", img: "https://picsum.photos/id/13/400/500?grayscale" },
+        { title: "Study", detail: "語言課 01：專注於餐廳點餐、菜單辨識與常見禮節用語。", img: "https://picsum.photos/id/14/400/500?grayscale" },
+        { title: "Hirosaki", detail: "弘前單日遠征：造訪弘前公園、星巴克古蹟店，紀錄兩市氛圍差異。", img: "https://picsum.photos/id/15/400/500?grayscale" },
+        { title: "Coffee", detail: "到歷史感咖啡館習作。今日任務：與店主交流店內歷史，練習過去式語法。", img: "https://picsum.photos/id/16/400/500?grayscale" },
+        { title: "Museum", detail: "青森縣立美術館：觀察奈良美智作品，練習用日語描述顏色與情緒。", img: "https://picsum.photos/id/17/400/500?grayscale" },
+        // ... 此處已為你補齊邏輯，你可以自行填入 30 天
     ];
+
+    // 自動生成其餘日期
+    for(let i=8; i<30; i++) {
+        scheduleData.push({ title: "Routine", detail: `第 ${i+1} 天：沈浸式生活習作與導師會話練習。`, img: `https://picsum.photos/id/${i+10}/400/500?grayscale` });
+    }
 
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -177,12 +151,11 @@
         window.scrollTo(0, 0);
     }
 
-    // 動態生成 30 天網格
     const grid = document.getElementById('grid-content');
     scheduleData.forEach((item, index) => {
         const dayNum = (index + 1).toString().padStart(2, '0');
         const html = `
-            <div class="calendar-item">
+            <div class="calendar-item" onclick="openModal('${dayNum}', '${item.title}', '${item.detail}')">
                 <div class="item-num">${dayNum}</div>
                 <div class="item-image" style="background-image: url('${item.img}')"></div>
                 <div class="item-label">${item.title}</div>
@@ -191,8 +164,13 @@
         grid.innerHTML += html;
     });
 
-    // 預設高亮 SCHEDULE (因為你現在正在設定這頁)
-    showPage('schedule');
+    function openModal(day, title, desc) {
+        document.getElementById('m-title').innerText = `DAY ${day}: ${title}`;
+        document.getElementById('m-desc').innerText = desc;
+        document.getElementById('infoModal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('infoModal').style.display = 'none'; }
 </script>
 
 </body>
