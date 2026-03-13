@@ -21,18 +21,19 @@
             line-height: 1.6;
         }
 
+        /* 導航列 */
         nav {
             position: fixed; top: 0; width: 100%; height: 80px;
             background: rgba(239, 239, 237, 0.9);
             backdrop-filter: blur(20px);
             display: flex; justify-content: space-around; align-items: center;
             border-bottom: 0.5px solid rgba(0,0,0,0.05);
-            z-index: 1000; padding: 0 15px;
+            z-index: 1000; padding: 0 10px;
         }
         nav a { 
             text-decoration: none; color: #aaa; 
-            font-size: 11px; font-weight: bold; letter-spacing: 2.5px;
-            transition: 0.3s; padding: 10px;
+            font-size: 10px; font-weight: bold; letter-spacing: 1.5px;
+            transition: 0.3s; padding: 10px 5px;
         }
         nav a.active { color: var(--text); border-bottom: 1.5px solid var(--text); }
 
@@ -40,76 +41,58 @@
         .page.active { display: block; animation: fadeIn 0.6s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .info-card { background: #fff; padding: 30px; margin-bottom: 25px; border: 0.5px solid #000; }
+        /* 卡片樣式 */
+        .info-card { background: #fff; padding: 25px; margin-bottom: 25px; border: 0.5px solid #000; }
         .info-card h3 { font-size: 13px; margin: 0 0 15px 0; letter-spacing: 2px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .info-card p, .info-card li { font-size: 12px; color: #555; margin-bottom: 10px; }
+        .info-card p, .info-card li { font-size: 12px; color: #555; margin-bottom: 8px; }
 
-        /* --- 日曆網格：增加間距 (修正擠迫感) --- */
+        /* 日曆網格：保持寬鬆 */
         .calendar-zine-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 30px 20px; /* 增加上下(30px)與左右(20px)間距 */
+            gap: 35px 20px;
             margin-top: 40px;
         }
-
         .zine-item {
-            position: relative;
-            aspect-ratio: 1 / 1.3;
-            background-color: var(--grid-bg);
-            border: 0.5px solid #000;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: space-between;
-            padding: 5px; cursor: pointer; transition: 0.2s;
+            position: relative; aspect-ratio: 1 / 1.3;
+            background-color: var(--grid-bg); border: 0.5px solid #000;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            padding: 5px; cursor: pointer;
         }
-        .zine-item:active { transform: scale(0.96); background: #fafafa; }
+        .zine-num { font-family: 'Courier New', monospace; font-size: 10px; color: #888; position: absolute; top: -22px; width: 100%; text-align: center; }
+        .zine-photo-box { width: 85%; height: 75%; background-color: #f2f2f0; background-size: cover; background-position: center; border: 0.5px solid rgba(0,0,0,0.1); }
+        .zine-label { width: 100%; text-align: center; font-size: 8px; font-weight: 500; color: #666; letter-spacing: 1px; }
 
-        .zine-num {
-            font-family: 'Courier New', monospace; font-size: 10px; color: #888;
-            position: absolute; top: -22px; width: 100%; text-align: center;
+        /* 觀光頁面清單樣式 */
+        .sight-item {
+            display: flex; align-items: flex-start; margin-bottom: 15px;
+            padding-bottom: 15px; border-bottom: 0.5px solid #f0f0f0;
         }
-
-        .zine-photo-box {
-            width: 85%; height: 75%;
-            background-color: #f2f2f0;
-            border: 0.5px solid rgba(0,0,0,0.1);
-            background-size: cover; background-position: center;
+        .sight-checkbox {
+            width: 18px; height: 18px; border: 1px solid #000; margin-right: 12px;
+            cursor: pointer; flex-shrink: 0; margin-top: 2px;
+            display: flex; align-items: center; justify-content: center;
         }
+        .sight-checkbox.checked::after { content: '✓'; font-size: 14px; }
+        .sight-info b { font-size: 13px; display: block; }
+        .sight-info span { font-size: 11px; color: #888; }
+        .sight-link { font-size: 10px; color: var(--accent); text-decoration: none; margin-top: 5px; display: inline-block; }
 
-        .zine-label {
-            width: 100%; text-align: center;
-            font-size: 8px; font-weight: 500;
-            color: #666; letter-spacing: 1px;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-        }
+        /* 簡約小地圖 */
+        .mini-map { width: 80px; height: 80px; margin: 10px 0; background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Cpath d="M0 40h80M40 0v80" stroke="%23ddd" stroke-width=".5"/%3E%3Ccircle cx="50" cy="30" r="3" fill="%23b03a2e"/%3E%3Crect x="0" y="0" width="80" height="80" fill="none" stroke="%23000" stroke-width=".5"/%3E%3C/svg%3E'); border: 0.5px solid #000; }
 
-        /* --- 簡約小地圖 (修正過大問題) --- */
-        .mini-map {
-            width: 100px; height: 100px; /* 縮小尺寸 */
-            margin: 15px 0;
-            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Cpath d="M0 50h100M50 0v100" stroke="%23ddd" stroke-width=".5"/%3E%3Ccircle cx="65" cy="40" r="4" fill="%23b03a2e"/%3E%3Crect x="0" y="0" width="100" height="100" fill="none" stroke="%23000" stroke-width=".5"/%3E%3C/svg%3E');
-            background-size: cover; border: 0.5px solid #000;
-        }
-
-        /* 預算表格細節 */
-        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+        /* 預算表 */
+        table { width: 100%; border-collapse: collapse; font-size: 11px; }
         th, td { border: 0.5px solid #eee; padding: 10px; text-align: left; }
         th { background: #f9f9f9; color: #888; }
 
         /* 彈窗 */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;
-            padding: 30px; backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: #fff; width: 100%; max-width: 380px; padding: 40px 25px;
-            position: relative; box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 20px; color: #ccc; }
-        .m-title { font-size: 15px; font-weight: bold; margin-bottom: 25px; letter-spacing: 1px; }
-        .time-row { display: flex; font-size: 12px; margin-bottom: 12px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 30px; backdrop-filter: blur(8px); }
+        .modal-content { background: #fff; width: 100%; max-width: 380px; padding: 40px 25px; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 20px; color: #ccc; cursor: pointer; }
+        .m-title { font-size: 14px; font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .time-row { display: flex; font-size: 12px; margin-bottom: 10px; }
         .time-label { width: 60px; color: #aaa; font-family: 'Courier New', monospace; flex-shrink: 0; }
-        .time-event { color: #555; }
     </style>
 </head>
 <body>
@@ -117,56 +100,59 @@
 <nav>
     <a href="javascript:void(0)" onclick="showPage('home')" id="nav-home">INDEX</a>
     <a href="javascript:void(0)" onclick="showPage('schedule')" id="nav-schedule">SCHEDULE</a>
+    <a href="javascript:void(0)" onclick="showPage('sights')" id="nav-sights">SIGHTS</a>
     <a href="javascript:void(0)" onclick="showPage('base')" id="nav-base">BASE & PLAN</a>
     <a href="javascript:void(0)" onclick="showPage('budget')" id="nav-budget">BUDGET</a>
 </nav>
 
 <section id="home" class="page active">
-    <div style="height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-        <h1 style="font-size: 32px; font-weight: 200; letter-spacing: 10px; color: #1a1a1a;">AOMORI</h1>
-        <p style="font-size: 10px; color: #aaa; letter-spacing: 4px; margin-top: 25px;">LIFE ARCHIVE / 2026</p>
+    <div style="height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <h1 style="font-size: 32px; font-weight: 200; letter-spacing: 12px;">AOMORI</h1>
+        <p style="font-size: 10px; color: #aaa; letter-spacing: 4px;">LIFE ARCHIVE / 2026</p>
     </div>
 </section>
 
 <section id="schedule" class="page">
-    <div style="text-align: center; font-size: 12px; letter-spacing: 5px; color: #bbb; margin-bottom: 20px;">DAILY LOG</div>
+    <div style="text-align: center; font-size: 11px; letter-spacing: 5px; color: #bbb; margin-bottom: 20px;">DAILY LOG</div>
     <div class="calendar-zine-grid" id="grid-content"></div>
+</section>
+
+<section id="sights" class="page">
+    <div class="info-card">
+        <h3>🍎 青森市區 (Aomori City)</h3>
+        <div id="aomori-list"></div>
+    </div>
+    <div class="info-card">
+        <h3>🏯 弘前地區 (Hirosaki)</h3>
+        <div id="hirosaki-list"></div>
+    </div>
 </section>
 
 <section id="base" class="page">
     <div class="info-card">
         <h3>📍 STAY / 住宿詳細</h3>
-        <p><b>Aomori Furukawa Studio (Airbnb)</b><br>鄰近古川市場與中央溫泉。</p>
+        <p><b>Aomori Furukawa Studio</b></p>
         <div class="mini-map"></div>
         <p style="font-size: 10px; color: #aaa;">1 Chome-XX-XX Furukawa, Aomori-shi</p>
-        <p><a href="#" style="color:var(--text); font-size: 11px; font-weight:bold;">👉 開啟 Google Maps</a></p>
+        <p><a href="https://www.airbnb.com.tw" target="_blank" style="color:var(--text); font-size: 11px; font-weight:bold;">👉 開啟 Airbnb 連結</a></p>
     </div>
-
     <div class="info-card">
-        <h3>🎯 計畫目標與成果</h3>
-        <ul style="padding-left: 15px;">
-            <li><b>實踐：</b>獨立在市場完成食材挑選與議價。</li>
-            <li><b>語言：</b>掌握 20 組津輕方言日常問候。</li>
-            <li><b>紀錄：</b>完成 30 頁 Aomori Zine 影像集。</li>
-        </ul>
+        <h3>🎯 計畫目標</h3>
+        <p>• 掌握 20 組津輕方言日常問候。<br>• 完成 30 頁 Aomori Zine 影像集。</p>
     </div>
 </section>
 
 <section id="budget" class="page">
     <div class="info-card">
-        <h3>💰 BUDGET / 金額明細</h3>
+        <h3>💰 BUDGET / 詳細金額明細</h3>
         <table>
-            <tr><th>項目</th><th>估算金額 (NTD)</th><th>細節說明</th></tr>
-            <tr><td><b>住宿 (Stay)</b></td><td>$32,000</td><td>Airbnb 月租折扣 (約 $1,066/晚)</td></tr>
-            <tr><td><b>導師 (Tutor)</b></td><td>$18,500</td><td>私人習作 60 小時</td></tr>
-            <tr><td><b>食費 (Food)</b></td><td>$8,000</td><td>超市採買自炊與市場探訪</td></tr>
-            <tr><td><b>交通 (Trans)</b></td><td>$4,000</td><td>單車月租、JR 弘前來回巴士</td></tr>
-            <tr><td><b>文化 (Life)</b></td><td>$3,000</td><td>錢湯入浴、美術館門票雜支</td></tr>
-            <tr style="font-weight: bold; font-size: 13px;">
-                <td>總計 (Total)</td>
-                <td>$65,500</td>
-                <td>未含機票支出</td>
-            </tr>
+            <tr><th>項目</th><th>金額 (NTD)</th><th>說明</th></tr>
+            <tr><td>住宿 (Stay)</td><td>$32,000</td><td>Airbnb 月租折扣 (含水電)</td></tr>
+            <tr><td>導師 (Tutor)</td><td>$18,500</td><td>私人習作 60hrs (含交通補貼)</td></tr>
+            <tr><td>食費 (Food)</td><td>$8,000</td><td>市場探訪與每日自炊預算</td></tr>
+            <tr><td>交通 (Trans)</td><td>$4,000</td><td>單車、JR 弘前來回、巴士</td></tr>
+            <tr><td>文化 (Extra)</td><td>$3,000</td><td>錢湯入浴卷、美術館門票</td></tr>
+            <tr style="font-weight:bold; font-size:14px;"><td>TOTAL</td><td>$65,500</td><td>未含機票支出</td></tr>
         </table>
     </div>
 </section>
@@ -174,34 +160,55 @@
 <div class="modal" id="infoModal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
-        <div class="m-title" id="m-title">DAY DETAIL</div>
+        <div class="m-title" id="m-title"></div>
         <div id="m-content"></div>
     </div>
 </div>
 
 <script>
+    // 1. 觀光數據
+    const sightsData = {
+        aomori: [
+            { name: "睡魔之家 Wa Rasse", info: "青森站旁，展示巨大睡魔燈籠", link: "http://www.nebuta.jp/warasse/" },
+            { name: "古川市場 (Nokke-don)", info: "自助海鮮丼實戰地", link: "https://nokkedon.jp/" },
+            { name: "ASPAM 青森縣觀光館", info: "三角形地標，360度觀景台", link: "http://www.aomori-kanko.or.jp/" },
+            { name: "A-Factory", info: "文青蘋果工廠，特色蘋果酒", link: "https://www.jre-abc.com/wp/afactory/" },
+            { name: "青森縣立美術館", info: "奈良美智「青森犬」所在地", link: "https://www.aomori-museum.jp/" }
+        ],
+        hirosaki: [
+            { name: "弘前公園 (弘前城)", info: "日本最美櫻花勝地與天守閣", link: "https://www.hirosakipark.jp/" },
+            { name: "星巴克 弘前公園前店", info: "登錄有形文化財的百年建築", link: "https://store.starbucks.co.jp/detail-1302/" },
+            { name: "藤田紀念庭園", info: "大正浪漫風格庭園與洋館咖啡", link: "http://www.hirosaki-kanko.or.jp/" },
+            { name: "弘前煉瓦倉庫美術館", info: "由舊酒廠改建的現代藝術空間", link: "https://www.hirosaki-moca.jp/" }
+        ]
+    };
+
+    // 2. 行程數據 (含詳細巴士時刻)
     const scheduleData = [
         { 
             title: "Arrival", 
             img: "https://picsum.photos/id/10/400/500?grayscale",
             plan: [
-                {t: "08:00", e: "抵達桃園機場 (TPE) Check-in"},
+                {t: "08:00", e: "TPE 機場 Check-in"},
                 {t: "10:30", e: "航班起飛：TPE → AOJ"},
                 {t: "15:00", e: "抵達青森機場 (AOJ)"},
-                {t: "15:45", e: "搭乘機場巴士前往青森車站"},
-                {t: "16:30", e: "租借單車、前往古川 Airbnb"},
-                {t: "17:30", e: "Check-in 安頓、確認錢湯地圖"},
-                {t: "19:00", e: "A-Factory 採買首日晚餐"}
+                {t: "15:45", e: "搭乘機場巴士 (2號月台) 往青森站"},
+                {t: "ℹ️", e: "巴士號碼：JR巴士青森空港線 (約860円)"},
+                {t: "ℹ️", e: "時刻表：15:45 / 16:10 / 17:25 (視航班)"},
+                {t: "16:30", e: "抵達青森站，租借單車"},
+                {t: "17:30", e: "Airbnb Check-in 與安頓"},
+                {t: "19:00", e: "A-Factory 購買首日晚餐"}
             ]
         },
         { title: "Market", detail: "古川市場實戰：練習詢價、自製 Nokke-don。", img: "https://picsum.photos/id/11/400/500?grayscale" },
-        { title: "Mentor", detail: "於星巴克與導師會合：設定 30 天方言目標。", img: "https://picsum.photos/id/12/400/500?grayscale" }
+        { title: "Mentor", detail: "與導師會面，設定津輕方言學習目標。", img: "https://picsum.photos/id/12/400/500?grayscale" }
     ];
 
     for(let i=scheduleData.length; i<30; i++) {
         scheduleData.push({ title: "Routine", detail: `第 ${i+1} 天生活習作與紀錄。`, img: `https://picsum.photos/id/${i+10}/400/500?grayscale` });
     }
 
+    // 頁面切換
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
@@ -210,33 +217,44 @@
         window.scrollTo(0, 0);
     }
 
+    // 初始化網格
     const grid = document.getElementById('grid-content');
     scheduleData.forEach((item, index) => {
         const day = (index + 1).toString().padStart(2, '0');
-        grid.innerHTML += `
-            <div class="zine-item" onclick="openModal(${index})">
-                <div class="zine-num">${day}</div>
-                <div class="zine-photo-box" style="background-image: url('${item.img}')"></div>
-                <div class="zine-label">${item.title}</div>
-            </div>`;
+        grid.innerHTML += `<div class="zine-item" onclick="openModal(${index})"><div class="zine-num">${day}</div><div class="zine-photo-box" style="background-image: url('${item.img}')"></div><div class="zine-label">${item.title}</div></div>`;
     });
+
+    // 初始化觀光清單與打勾功能
+    function renderSights(listId, data) {
+        const container = document.getElementById(listId);
+        data.forEach((s, idx) => {
+            container.innerHTML += `
+                <div class="sight-item">
+                    <div class="sight-checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <div class="sight-info">
+                        <b>${s.name}</b>
+                        <span>${s.info}</span><br>
+                        <a href="${s.link}" target="_blank" class="sight-link">🌐 官方網站</a>
+                    </div>
+                </div>`;
+        });
+    }
+    renderSights('aomori-list', sightsData.aomori);
+    renderSights('hirosaki-list', sightsData.hirosaki);
 
     function openModal(index) {
         const data = scheduleData[index];
         const day = (index + 1).toString().padStart(2, '0');
         document.getElementById('m-title').innerText = `DAY ${day}: ${data.title}`;
-        let contentHtml = '';
+        let html = '';
         if (data.plan) {
-            data.plan.forEach(p => {
-                contentHtml += `<div class="time-row"><div class="time-label">${p.t}</div><div class="time-event">${p.e}</div></div>`;
-            });
+            data.plan.forEach(p => { html += `<div class="time-row"><div class="time-label">${p.t}</div><div>${p.e}</div></div>`; });
         } else {
-            contentHtml = `<p style="font-size:13px; color:#666;">${data.detail}</p>`;
+            html = `<p style="font-size:13px; color:#666;">${data.detail}</p>`;
         }
-        document.getElementById('m-content').innerHTML = contentHtml;
+        document.getElementById('m-content').innerHTML = html;
         document.getElementById('infoModal').style.display = 'flex';
     }
-
     function closeModal() { document.getElementById('infoModal').style.display = 'none'; }
 </script>
 
