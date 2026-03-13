@@ -1,166 +1,162 @@
 <style>
-/* --- Minimalist & Elegant Journal Style (image_8.png Inspired) --- */
+/* --- 極簡雜誌風：米白紙質色調 --- */
 :root {
-  --text-main: #333333; /* Soft Black */
-  --text-mute: #888888; /* Muted Grey */
-  --bg-color: #f7f3f0; /* Off-white textured paper feel */
-  --accent: #a33f3e; /* Deep Red for accents */
+  --text-main: #2c2c2c;
+  --text-mute: #8e8e8e;
+  --bg-color: #f9f7f2; /* 類似 image_8.png 的溫潤紙色 */
+  --accent: #b03a2e;
 }
 
 body {
-  font-family: 'SF Mono', Monaco, 'Courier New', 'PingFang TC', 'MicroSoft JhengHei', serif; /* Script-like monospaced serif */
+  font-family: 'PingFang TC', 'MicroSoft JhengHei', 'Georgia', serif;
   background-color: var(--bg-color);
   color: var(--text-main);
-  max-width: 650px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 40px;
-  line-height: 1.8;
-  letter-spacing: 0.02em;
+  padding: 50px 25px;
+  line-height: 1.9;
+  letter-spacing: 0.05em;
 }
 
-/* Subtle header numbering */
-.page-header {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 11px;
+/* 頂部頁碼感排版 */
+.journal-header {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 10px;
   text-transform: uppercase;
   color: var(--text-mute);
   display: flex;
   justify-content: space-between;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
+  border-bottom: 1px solid #e0ddd5;
+  padding-bottom: 10px;
 }
 
 h1 {
   text-align: center;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 300;
-  margin-top: 60px;
-  margin-bottom: 50px;
-  color: var(--text-main);
+  margin: 40px 0;
+  letter-spacing: 0.2em;
 }
 
 h2 {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   margin-top: 50px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   color: var(--text-mute);
   text-align: center;
 }
 
-ul {
-  list-style-type: none;
+.itinerary-list {
+  list-style: none;
   padding: 0;
-  margin-bottom: 40px;
 }
 
-li {
-  margin-bottom: 18px;
-  font-size: 15px;
-  color: var(--text-main);
-  border-left: 2px solid transparent;
-  padding-left: 0;
-  transition: border-left 0.3s;
+.itinerary-item {
+  margin-bottom: 20px;
+  font-size: 14px;
+  display: flex;
+  align-items: flex-start;
 }
 
-li:hover {
-  border-left: 2px solid var(--accent);
-  padding-left: 10px;
-}
-
-/* Day index styling */
-li b {
+.day-index {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
   color: var(--text-mute);
-  font-weight: 400;
-  margin-right: 12px;
-  font-size: 12px;
+  width: 40px;
+  margin-top: 4px;
+}
+
+.task-content {
+  flex: 1;
+}
+
+.task-content b {
+  color: var(--text-main);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
 }
 
 a {
   color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-bottom 0.3s;
+  border-bottom: 1px solid #ddd;
 }
 
-a:hover {
-  border-bottom: 1px solid var(--accent);
+/* 圖片佔位符樣式 */
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+  margin: 40px 0;
 }
 
-/* Embedded Media Grid Style */
-.media-container {
+.photo-box {
+  background: #eee;
+  aspect-ratio: 1/1;
   display: flex;
-  gap: 20px;
-  margin-top: 30px;
-  margin-bottom: 50px;
-}
-
-.media-cell {
-  background-color: transparent;
-  padding: 0;
-  width: calc(33.33% - 13.33px);
-  position: relative;
-}
-
-.media-cell img {
-  width: 100%;
-  border-radius: 4px;
-}
-
-.media-cell-caption {
+  align-items: center;
+  justify-content: center;
   font-size: 10px;
-  color: var(--text-mute);
-  text-align: center;
-  margin-top: 8px;
-  text-transform: uppercase;
+  color: #aaa;
+  border-radius: 2px;
 }
 
 .footer {
   text-align: center;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-mute);
-  margin-top: 80px;
+  margin-top: 100px;
+  text-transform: uppercase;
 }
 </style>
 
-<div class="page-header">
-  <span>02 / Hirosaki Life Journal</span>
-  <span>LAN - Aomori Connection</span>
+<div class="journal-header">
+  <span>Issue 01 / Aomori</span>
+  <span>LAN - 2026</span>
 </div>
 
-# Aomori-2026<br><font size="4">🍎 30-Day Living in Tsugaru</font>
+<h1>AOMORI LIFESTYLE JOURNEY</h1>
 
 ---
 
-## Part 1: Immersion & Community (The First 7 Days)
+<h2>Phase 01: Local Immersion</h2>
 
-* **B01** Day 1: Arrive & Hirosaki Airbnb Check-in. (Setup local base, rent bicycle)
-* **B02** Day 2: Visit local 'Niji-no-aji' Market. (Rainbow Taste Market) | Task: Interact with vendors, find seasonal recommendations.
-* **B03** Day 3: Morning Ritual at [Starbucks Hirosaki (Taisho Roman Building)](https://goo.gl/maps/starbucks_hirosaki). | Task: Set personal study goals.
-* **B04** Day 4: Afternoon at Hirosaki Municipal Library. | Task: Study local architecture & history through print.
-* **B05** Day 5: 'Sento' Culture Experience (Central Onsen). | Task: Practice social etiquette for shared spaces.
-* **Weekend Task:** Aomori City Exploration. (Nebuta Museum Wa Rasse, A-Factory)
-
----
-
-## Visual Notes & Finds (Curated Gallery)
-
-<div class="media-container">
-  <div class="media-cell">
-    <img src="https://raw.githubusercontent.com/howlo111-lab/Aomori-2026/main/media_01.jpg" alt="Local Snacks" />
-    <div class="media-cell-caption">I. Local Flavors</div>
+<div class="itinerary-list">
+  <div class="itinerary-item">
+    <div class="day-index">D.01</div>
+    <div class="task-content"><b>抵達弘前與安頓</b> 入住 Airbnb、辦理單車租借。</div>
   </div>
-  <div class="media-cell">
-    <img src="https://raw.githubusercontent.com/howlo111-lab/Aomori-2026/main/media_02.jpg" alt="City View" />
-    <div class="media-cell-caption">II. Street Observations</div>
+  <div class="itinerary-item">
+    <div class="day-index">D.02</div>
+    <div class="task-content"><b>虹之味市場實戰</b> 向攤販詢問季節性蘋果品種。</div>
   </div>
-  <div class="media-cell">
-    <img src="https://raw.githubusercontent.com/howlo111-lab/Aomori-2026/main/media_03.jpg" alt="Lesson Space" />
-    <div class="media-cell-caption">III. Workspace View</div>
+  <div class="itinerary-item">
+    <div class="day-index">D.03</div>
+    <div class="task-content"><b>咖啡廳習作</b> 在 <a href="#">星巴克弘前公園前店</a> 與老師見面。</div>
+  </div>
+  <div class="itinerary-item">
+    <div class="day-index">D.04</div>
+    <div class="task-content"><b>文化閱讀</b> 走訪市立圖書館，查閱津輕歷史。</div>
+  </div>
+  <div class="itinerary-item">
+    <div class="day-index">D.05</div>
+    <div class="task-content"><b>庶民錢湯體驗</b> 走訪「中央溫泉」感受在地社交。</div>
   </div>
 </div>
 
 ---
 
-<p class="footer">POWERED BY GITHUB PAGES • MINIMALIST JOURNAL STYLE • LIVE UPDATE ON README COMMIT</p>
+<h2>Visual Notes</h2>
+
+<div class="photo-grid">
+  <div class="photo-box">Photo Here</div>
+  <div class="photo-box">Photo Here</div>
+  <div class="photo-box">Photo Here</div>
+</div>
+
+<p class="footer">Captured by LAN • Living in Hirosaki • Powered by GitHub Pages</p>
