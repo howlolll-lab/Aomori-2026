@@ -9,7 +9,7 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; background-color: var(--bg); font-family: 'PingFang TC', sans-serif; color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-        /* 選單按鈕邏輯：滑動隱藏 */
+        /* 選單按鈕：置頂且隨捲動消失 */
         .menu-trigger {
             position: fixed; top: 25px; left: 25px; z-index: 2000;
             font-size: 24px; cursor: pointer; 
@@ -28,7 +28,6 @@
         nav a { text-decoration: none; color: #888; font-size: 14px; font-weight: bold; letter-spacing: 4px; margin: 20px 0; }
         nav a.active { color: var(--text); border-bottom: 1px solid var(--text); }
 
-        /* 頁面佈局 */
         .page { display: none; width: 100vw; min-height: 100vh; padding: 100px 25px 80px; }
         .page.active { display: block; animation: fadeIn 0.5s ease; }
         #home { display: none; height: 100vh; padding: 0 25px; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
@@ -39,14 +38,12 @@
         .info-card { background: #fff; padding: 25px; margin-bottom: 25px; border: 0.5px solid #000; }
         .info-card h3 { font-size: 13px; margin: 0 0 15px 0; letter-spacing: 2px; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 8px; }
 
-        /* 日曆網格 */
         .calendar-zine-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 15px; margin-top: 40px; }
         .zine-item { position: relative; aspect-ratio: 1 / 1.3; background: var(--grid-bg); border: 0.5px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 5px; cursor: pointer; }
         .zine-num { font-family: 'Courier New', monospace; font-size: 10px; color: #888; position: absolute; top: -22px; width: 100%; text-align: center; }
         .zine-photo-box { width: 85%; height: 75%; background-color: #f2f2f0; background-size: cover; background-position: center; border: 0.5px solid rgba(0,0,0,0.05); }
         .zine-label { width: 100%; text-align: center; font-size: 7px; font-weight: 500; color: #666; letter-spacing: 0.5px; }
 
-        /* SIGHTS 樣式 */
         .sight-item { margin-bottom: 25px; border-bottom: 0.5px solid #eee; padding-bottom: 20px; }
         .sight-header { display: flex; align-items: center; margin-bottom: 10px; }
         .sight-checkbox { width: 18px; height: 18px; border: 1px solid #000; margin-right: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -81,7 +78,7 @@
 </section>
 
 <section id="schedule" class="page">
-    <div style="text-align: center; font-size: 11px; letter-spacing: 5px; color: #bbb; margin-bottom: 20px;">DAILY ARCHIVE</div>
+    <div style="text-align: center; font-size: 11px; letter-spacing: 5px; color: #bbb; margin-bottom: 20px;">30-DAY LOG</div>
     <div class="calendar-zine-grid" id="grid-content"></div>
 </section>
 
@@ -89,13 +86,13 @@
     <div class="info-card" style="background: #fdf2f2; border-color: var(--accent);">
         <h3>🚆 跨區交通：青森 ↔ 弘前</h3>
         <p style="font-size: 11px;">
-            <b>JR 奧羽本線：</b>車程約 40-50 分 (¥680)。<br>
-            <b>特急津輕號：</b>約 30 分 (需加收特急料金)。<br>
-            *建議使用 Suica 或購買 JR East Pass。
+            <b>JR 奧羽本線：</b>車程約 40-50 分 (¥680)。最推薦方式。<br>
+            <b>特急津輕號：</b>約 30 分 (需加收特急料金)。快速但班次較少。<br>
+            <b>自駕/計程車：</b>經國道 7 號約 1 小時。
         </p>
     </div>
     <div class="info-card">
-        <h3>🌸 季節限定與秘境 (Seasonal)</h3>
+        <h3>🌸 櫻花與秘境 (Seasonal)</h3>
         <div id="seasonal-list"></div>
     </div>
     <div class="info-card">
@@ -116,26 +113,26 @@
         <p><a href="https://www.airbnb.com.tw" target="_blank" style="color:var(--text); font-size: 11px; font-weight:bold;">👉 開啟 Airbnb 房源頁面</a></p>
     </div>
     <div class="info-card">
-        <h3>🔍 導師方案 (中文教學)</h3>
-        <p style="font-size: 12px;"><b>推薦平台與篩選方式：</b></p>
+        <h3>🔍 導師方案 (會中文的老師)</h3>
+        <p style="font-size: 12px;"><b>推薦平台篩選：</b></p>
         <p style="font-size: 11px;">
-            1. <b>AmazingTalker：</b>篩選「日籍老師」且具備「中文流利」。適合零基礎者解釋文法。<br>
-            2. <b>Preply：</b>搜尋居住地「Aomori」，找出在地導師後私訊詢問是否可配合市場實地教學。<br>
-            3. <b>Italki：</b>找尋會中文的「社區導師」，進行輕鬆的日常對話練習。
+            1. <b>AmazingTalker：</b>選「日籍老師」+「精通中文」。適合解釋細節與基礎文法。<br>
+            2. <b>Preply：</b>搜尋「Aomori」居住地導師，私訊確認是否能配合實地教學。<br>
+            3. <b>Italki：</b>適合尋找會中文的「社區導師」，價格親民且練習口說彈性高。
         </p>
     </div>
 </section>
 
 <section id="budget" class="page">
     <div class="info-card">
-        <h3>💰 BUDGET / 2026 預估明細</h3>
+        <h3>💰 BUDGET / 2026 精算</h3>
         <table>
             <tr><th>項目</th><th>預估金額</th><th>備註</th></tr>
-            <tr><td>住宿 (Stay)</td><td>NT$ 32,000</td><td>月租平均價</td></tr>
-            <tr><td>導師 (Tutor)</td><td>NT$ 18,500</td><td>含線上與實體</td></tr>
-            <tr><td>JR East Pass</td><td>¥ 35,000</td><td>2026 東北版</td></tr>
-            <tr><td>伙食 (Food)</td><td>NT$ 12,000</td><td>超市自炊為主</td></tr>
-            <tr><td>Zine 製作</td><td>NT$ 3,000</td><td>底片與沖洗</td></tr>
+            <tr><td>住宿 (Stay)</td><td>NT$ 32,000</td><td>Airbnb 月租折扣</td></tr>
+            <tr><td>導師 (Tutor)</td><td>NT$ 18,500</td><td>含線上與在地實踐</td></tr>
+            <tr><td>JR East Pass</td><td>¥ 35,000</td><td>2026 最新版價格</td></tr>
+            <tr><td>伙食 (Food)</td><td>NT$ 12,000</td><td>超市自炊+在地小吃</td></tr>
+            <tr><td>Zine 製作</td><td>NT$ 3,000</td><td>攝影耗材與輸出</td></tr>
             <tr style="font-weight:bold; color: var(--accent);"><td>合計</td><td>NT$ 72,000+</td><td>不含機票</td></tr>
         </table>
     </div>
@@ -161,16 +158,23 @@
 
     const sightsData = {
         seasonal: [
-            { name: "青森縣立中央醫院前 櫻花大道", time: "4月下旬", special: "Threads 網友私房推薦，綿延數公里的櫻花隧道。", access: "青森站搭公車 15 分", link: "https://www.pref.aomori.lg.jp/soshiki/byoin/chuoh/", addr: "青森市東造道2丁目1-1" },
-            { name: "合浦公園", time: "24小時", special: "青森市區內海濱與櫻花共存的地點。", access: "市營巴士至合浦公園前", link: "https://www.aptinet.jp/Detail_display_00000021.html", addr: "青森市合浦2丁目17-50" }
+            { name: "青森縣立中央醫院前 櫻花大道", time: "4月下旬", special: "Threads 網友激推秘境！綿延數公里的櫻花隧道。", access: "青森站搭公車約 15 分", link: "https://www.pref.aomori.lg.jp/soshiki/byoin/chuoh/", addr: "青森市東造道2丁目1-1" },
+            { name: "合浦公園", time: "24小時", special: "青森市內唯一的濱海公園，櫻花與海景絕配。", access: "市營巴士至「合浦公園前」", link: "https://www.city.aomori.aomori.jp/koen-kasen/shisetsu/koen/01.html", addr: "青森市合浦2丁目17-50" },
+            { name: "蘆野公園", time: "24小時", special: "復古小火車穿梭櫻花隧道，太宰治迷必訪。", access: "津輕鐵道「蘆野公園」站即達", link: "https://www.aptinet.jp/Detail_display_00000028.html", addr: "五所川原市金木町蘆野" }
         ],
         aomori: [
-            { name: "古川市場", time: "07:00-16:00", special: "自助海鮮丼(Nokke-don)實戰練習區。", access: "青森站步行 5 分", link: "https://nokkedon.jp/", addr: "青森市古川1-11-16" },
-            { name: "青森縣立美術館", time: "09:30-17:00", special: "奈良美智大作「青森犬」所在地。", access: "站前巴士 20 分", link: "https://www.aomori-museum.jp/tw/", addr: "青森市安田近野185" }
+            { name: "古川市場 (自助海鮮丼)", time: "07:00-16:00", special: "實戰練習日文詢價，DIY 最豐富的海鮮飯。", access: "青森站步行 5 分", link: "https://nokkedon.jp/", addr: "青森市古川1-11-16" },
+            { name: "青森縣立美術館", time: "09:30-17:00", special: "奈良美智「青森犬」，建築美學與雪白外牆。", access: "站前巴士 6 號月台搭乘約 20 分", link: "https://www.aomori-museum.jp/tw/", addr: "青森市安田近野185" },
+            { name: "睡魔之家 WA・RASSE", time: "09:00-18:00", special: "展示巨大的睡魔祭燈籠，感受青森祭典熱情。", access: "青森站東口步行 1 分", link: "http://www.nebuta.jp/warasse/", addr: "青森市安方1-1-1" },
+            { name: "A-Factory", time: "09:00-20:00", special: "蘋果酒工廠與精緻伴手禮，適合攝影取景。", access: "青森站東口步行 2 分", link: "https://www.jre-abc.com/wp/afactory/", addr: "青森市柳川1-4-2" },
+            { name: "淺蟲溫泉", time: "各設施不同", special: "海邊溫泉街，日落時分的海景非常壯觀。", access: "青之森鐵路約 20 分", link: "https://www.asamushi.com/", addr: "青森市淺蟲" }
         ],
         hirosaki: [
-            { name: "弘前城 (弘前公園)", time: "09:00-17:00", special: "日本第一賞櫻名所。", access: "JR 弘前站轉公車", link: "https://www.hirosakipark.jp/", addr: "弘前市下白銀町1" },
-            { name: "弘前磚倉庫美術館 (MOCA)", time: "09:00-17:00", special: "紅磚建築美學與當代藝術。", access: "弘前中央站步行 2 分", link: "https://www.hirosaki-moca.jp/", addr: "弘前市吉野町2-1" }
+            { name: "弘前城 (弘前公園)", time: "09:00-17:00", special: "日本第一賞櫻名所，現存 12 天守之一。", access: "JR 弘前站搭乘循環巴士", link: "https://www.hirosakipark.jp/", addr: "弘前市下白銀町1" },
+            { name: "弘前磚倉庫美術館 (MOCA)", time: "09:00-17:00", special: "紅磚倉庫改建的當代美術館，有奈良美智的犬雕像。", access: "弘前中央站步行 2 分", link: "https://www.hirosaki-moca.jp/", addr: "弘前市吉野町2-1" },
+            { name: "最勝院五重塔", time: "09:00-16:30", special: "東北第一美的五重塔，氛圍寧靜肅穆。", access: "弘前站搭巴士約 15 分", link: "http://www.saishoin.jp/", addr: "弘前市銅屋町63" },
+            { name: "藤田紀念庭園", time: "09:00-17:00", special: "在大正時代的洋館裡喝下午茶看庭園。", access: "弘前公園旁", link: "https://www.hirosaki-kanko.or.jp/details.html?id=CNT00204021611110756", addr: "弘前市上白銀町8-1" },
+            { name: "星巴克 弘前公園前店", time: "07:00-21:00", special: "註冊有形文化財建築，全日本最美星巴克之一。", access: "弘前公園追手門對面", link: "https://store.starbucks.co.jp/detail-1302/", addr: "弘前市上白銀町1-1" }
         ]
     };
 
@@ -188,7 +192,7 @@
                         <p style="margin:8px 0;">${s.special}</p>
                         <div class="access">📍 交通：${s.access}</div>
                         <div class="address-box">🏠 地址：${s.addr}</div>
-                        <a href="${s.link}" target="_blank" style="font-size:10px; color:#aaa; text-decoration:none; border-bottom:1px solid #eee;">🌐 前往官方網站</a>
+                        <a href="${s.link}" target="_blank" style="font-size:10px; color:#aaa; text-decoration:none; border-bottom:1px solid #eee;">🌐 點我查看官網 / 詳情</a>
                     </div>
                 </div>`;
         });
@@ -197,11 +201,19 @@
     renderSights('aomori-list', sightsData.aomori);
     renderSights('hirosaki-list', sightsData.hirosaki);
 
+    // SCHEDULE 更新：分配邏輯
     const scheduleData = [];
+    const routines = [
+        "上午：AmazingTalker 導師課 / 下午：美術館攝影練習",
+        "上午：古川市場語言實踐 / 下午：A-Factory 影像整理",
+        "全日：弘前跨區移動，針對紅磚倉庫進行材質攝影",
+        "上午：方言詞彙複習 / 下午：淺蟲溫泉日落取景",
+        "全日：Zine 內容排版討論，尋找在地印刷店"
+    ];
     for(let i=0; i<30; i++) {
         scheduleData.push({ 
-            title: i === 0 ? "Arrival" : "Daily Immersion", 
-            detail: i === 0 ? "抵達青森，辦理入住並在 A-Factory 購買晚餐。" : `第 ${i+1} 天：上午進行雙語導師課程，下午進行 Zine 攝影習作。`, 
+            title: i === 0 ? "Arrival" : "Daily Task", 
+            detail: i === 0 ? "抵達青森，入住並在 A-Factory 採買物資。" : routines[i % routines.length], 
             img: `https://picsum.photos/id/${i+10}/400/500?grayscale` 
         });
     }
