@@ -9,11 +9,18 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; background-color: var(--bg); font-family: 'PingFang TC', sans-serif; color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-        /* 左側選單廊道 */
+        /* --- 1. 選單按鈕：置頂且隨捲動消失 --- */
         .menu-trigger {
-            position: fixed; top: 30px; left: 0; width: 60px;
-            z-index: 2000; font-size: 22px; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center;
+            position: fixed; top: 25px; left: 25px; z-index: 2000;
+            font-size: 24px; cursor: pointer; 
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 1;
+        }
+        /* 當頁面下滑時，透過 JS 加入此 class 隱藏按鈕 */
+        .menu-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
         }
 
         nav {
@@ -26,12 +33,16 @@
         nav a { text-decoration: none; color: #888; font-size: 14px; font-weight: bold; letter-spacing: 4px; margin: 20px 0; }
         nav a.active { color: var(--text); border-bottom: 1px solid var(--text); }
 
-        /* 內容整體右移，空出左側給選單按鈕 */
-        .page { display: none; width: 100vw; min-height: 100vh; padding: 100px 25px 80px 70px; }
+        /* --- 2. 取消留白，回歸全螢幕 --- */
+        .page { display: none; width: 100vw; min-height: 100vh; padding: 100px 25px 80px; }
         .page.active { display: block; animation: fadeIn 0.5s ease; }
-        #home { display: none; height: 100vh; padding: 0 0 0 60px; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        
+        #home { display: none; height: 100vh; padding: 0 25px; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         #home.active { display: flex; }
 
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 內容卡片 */
         .info-card { background: #fff; padding: 25px; margin-bottom: 25px; border: 0.5px solid #000; }
         .info-card h3 { font-size: 13px; margin: 0 0 15px 0; letter-spacing: 2px; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 8px; }
 
@@ -42,7 +53,7 @@
         .zine-photo-box { width: 85%; height: 75%; background-color: #f2f2f0; background-size: cover; background-position: center; border: 0.5px solid rgba(0,0,0,0.05); }
         .zine-label { width: 100%; text-align: center; font-size: 7px; font-weight: 500; color: #666; letter-spacing: 0.5px; }
 
-        /* SIGHTS 列表優化 */
+        /* SIGHTS 樣式 */
         .sight-item { margin-bottom: 25px; border-bottom: 0.5px solid #eee; padding-bottom: 20px; }
         .sight-header { display: flex; align-items: center; margin-bottom: 10px; }
         .sight-checkbox { width: 18px; height: 18px; border: 1px solid #000; margin-right: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -61,7 +72,7 @@
 </head>
 <body>
 
-<div class="menu-trigger" onclick="toggleMenu()">☰</div>
+<div class="menu-trigger" id="menuBtn" onclick="toggleMenu()">☰</div>
 
 <nav id="sideNav">
     <a href="javascript:void(0)" onclick="goTo('home')" id="nav-home">INDEX</a>
@@ -83,7 +94,7 @@
 
 <section id="sights" class="page">
     <div class="info-card">
-        <h3>🌸 櫻花與秘境 (Seasonal & Hidden)</h3>
+        <h3>🌸 櫻花與秘境 (Seasonal)</h3>
         <div id="seasonal-list"></div>
     </div>
     <div class="info-card">
@@ -91,7 +102,7 @@
         <div id="aomori-list"></div>
     </div>
     <div class="info-card">
-        <h3>🏯 弘前與大自然 (Hirosaki & Nature)</h3>
+        <h3>🏯 弘前與大自然 (Nature)</h3>
         <div id="hirosaki-list"></div>
     </div>
 </section>
@@ -106,14 +117,11 @@
     </div>
     <div class="info-card">
         <h3>🔍 尋找導師步驟 (Plan)</h3>
-        <p>1. <b>篩選：</b>在 italki 使用居住地「青森」篩選。<br>
-           2. <b>面試：</b>預約試聽，確認是否接受「市場實地對話」。<br>
-           3. <b>目標：</b>第一週確定 30 天的詞彙目標清單。</p>
+        <p>1. <b>篩選：</b>在 italki 使用居住地「青森」篩選。<br>2. <b>面試：</b>預約試聽，確認是否接受「市場實地對話」。<br>3. <b>目標：</b>第一週確定詞彙清單。</p>
     </div>
     <div class="info-card">
         <h3>🎯 生活計畫成果</h3>
-        <p>• 掌握津輕方言基本日常對話。<br>
-           • 完成 30 頁 Aomori Zine 影像紀錄集。</p>
+        <p>• 掌握津輕方言日常對話。<br>• 完成 30 頁 Aomori Zine 影像紀錄集。</p>
     </div>
 </section>
 
@@ -141,27 +149,33 @@
 </div>
 
 <script>
+    const menuBtn = document.getElementById('menuBtn');
+    
+    // 捲動監聽：只有在頂部才顯示選單
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            menuBtn.classList.add('menu-hidden');
+        } else {
+            menuBtn.classList.remove('menu-hidden');
+        }
+    });
+
     function toggleMenu() { document.getElementById('sideNav').classList.toggle('open'); }
     function goTo(id) { toggleMenu(); showPage(id); }
 
     const sightsData = {
         seasonal: [
-            { name: "青森縣立中央醫院前 櫻花大道", time: "4月下旬 - 5月上旬", special: "Threads 網友激推！在地人的私房賞櫻隧道。", access: "青森站搭往中央病院公車 15 分", link: "https://www.pref.aomori.lg.jp/soshiki/byoin/chuoh/" },
-            { name: "合浦公園", time: "24小時", special: "青森市內最有名的賞櫻公園，有攤販與夜間照明。", access: "青森站搭市營巴士約 15 分至合浦公園前", link: "https://www.city.aomori.aomori.jp/koen-kasen/shisetsu/koen/01.html" }
+            { name: "青森縣立中央醫院前 櫻花大道", time: "4月下旬 - 5月上旬", special: "網友激推！在地人的私房櫻花隧道。", access: "青森站搭公車 15 分", link: "https://www.pref.aomori.lg.jp/soshiki/byoin/chuoh/" },
+            { name: "合浦公園", time: "24小時", special: "海濱與櫻花共存的絕佳景點。", access: "市營巴士約 15 分", link: "https://www.city.aomori.aomori.jp/" }
         ],
         aomori: [
-            { name: "古川市場 (自助海鮮丼)", time: "07:00-16:00", special: "實戰練習日文詢價的最佳地點。", access: "青森站步行 5 分", link: "https://nokkedon.jp/" },
-            { name: "睡魔之家 Wa Rasse", time: "09:00-18:00", special: "感受青森靈魂祭典的最速路徑。", access: "青森站步行 1 分", link: "http://www.nebuta.jp/warasse/" },
-            { name: "青森縣立美術館", time: "09:30-17:00", special: "純白建築與著名的青森犬。", access: "站前巴士 20 分", link: "https://www.aomori-museum.jp/" },
-            { name: "淺蟲溫泉 (夕陽之湯)", time: "各設施不同", special: "看著陸奧灣夕陽泡湯，極度療癒。", access: "青之森鐵路 20 分", link: "https://www.asamushi.com/" },
-            { name: "八甲田纜車", time: "09:00-15:30", special: "世界級樹冰與秋季楓紅地毯。", access: "站前巴士約 60 分", link: "http://www.hakkoda-ropeway.jp/" }
+            { name: "古川市場", time: "07:00-16:00", special: "實戰練習日文詢價的最佳地點。", access: "青森站步行 5 分", link: "https://nokkedon.jp/" },
+            { name: "睡魔之家 Wa Rasse", time: "09:00-18:00", special: "感受青森靈魂祭典。", access: "青森站步行 1 分", link: "http://www.nebuta.jp/warasse/" },
+            { name: "青森縣立美術館", time: "09:30-17:00", special: "純白建築與奈良美智作品。", access: "站前巴士 20 分", link: "https://www.aomori-museum.jp/" }
         ],
         hirosaki: [
-            { name: "弘前城 (現存天守)", time: "09:00-17:00", special: "日本第一賞櫻名所，也有絕美秋楓。", access: "JR 弘前站轉公車", link: "https://www.hirosakipark.jp/" },
-            { name: "星巴克 弘前公園前店", time: "07:00-21:00", special: "在古蹟建築裡喝咖啡，大正浪漫風格。", access: "弘前城追手門對面", link: "https://store.starbucks.co.jp/detail-1302/" },
-            { name: "奧入瀨溪流", time: "建議白天", special: "最美的溪流步道，充滿負離子與苔蘚之美。", access: "青森站搭 JR 巴士約 120 分", link: "https://www.oirase-stream.com/" },
-            { name: "十和田湖", time: "24小時", special: "神祕的高山湖泊，乙女之像所在地。", access: "奧入瀨溪流終點再往南", link: "https://www.towadako.or.jp/" },
-            { name: "弘前市蘋果公園", time: "09:00-17:00", special: "80種蘋果樹，體驗採摘與品嚐青森蘋果。", access: "弘前站搭巴士 20 分", link: "https://www.hirosaki-kanko.or.jp/" }
+            { name: "弘前城 (現存天守)", time: "09:00-17:00", special: "日本第一賞櫻名所。", access: "JR 弘前站轉公車", link: "https://www.hirosakipark.jp/" },
+            { name: "奧入瀨溪流", time: "建議白天", special: "最美的溪流步道，苔蘚之美。", access: "青森站搭 JR 巴士約 120 分", link: "https://www.oirase-stream.com/" }
         ]
     };
 
