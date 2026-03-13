@@ -5,77 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Aomori Study Journey 2026</title>
     <style>
-        :root {
-            --bg: #efefed; /* 質感的淺灰米 */
-            --text: #2c2c2c;
-            --accent: #1a1a1a;
-        }
-
+        :root { --bg: #efefed; --text: #2c2c2c; --accent: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            margin: 0; background-color: var(--bg);
-            font-family: 'PingFang TC', 'SF Pro Display', sans-serif;
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        /* 導航列 */
-        nav {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: rgba(239, 239, 237, 0.8);
-            backdrop-filter: blur(20px);
-            display: flex; justify-content: space-around; align-items: center;
-            z-index: 1000; padding: 0 20px;
-        }
+        body { margin: 0; background-color: var(--bg); font-family: 'PingFang TC', sans-serif; color: var(--text); line-height: 1.6; }
+        
+        nav { position: fixed; top: 0; width: 100%; height: 70px; background: rgba(239, 239, 237, 0.85); backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
         nav a { text-decoration: none; color: #bbb; font-size: 10px; font-weight: 600; letter-spacing: 2px; }
-        nav a.active { color: var(--accent); }
+        nav a.active { color: var(--accent); border-bottom: 1px solid var(--accent); }
 
-        .page { display: none; width: 100vw; min-height: 100vh; padding: 90px 25px 80px; }
-        .page.active { display: block; animation: fadeIn 0.6s ease; }
+        .page { display: none; width: 100vw; min-height: 100vh; padding: 90px 20px 80px; }
+        .page.active { display: block; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 首頁極簡化 */
-        .hero {
-            height: 70vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-        }
-        .hero h1 { font-size: 32px; font-weight: 200; letter-spacing: 12px; margin: 0; }
-        .hero p { font-size: 10px; color: #888; letter-spacing: 4px; margin-top: 20px; }
+        /* 內容卡片 */
+        .info-card { background: #fff; padding: 25px; margin-bottom: 20px; border: 0.5px solid #ddd; border-radius: 2px; }
+        .info-card h3 { font-size: 14px; margin: 0 0 15px 0; letter-spacing: 1px; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; }
+        .info-card p, .info-card li { font-size: 12px; color: #555; margin-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+        th, td { border: 0.5px solid #eee; padding: 10px; text-align: left; }
+        th { background: #f9f9f9; color: #888; }
 
-        /* 計畫區塊 */
-        .plan-card { background: #fff; padding: 30px; margin-bottom: 25px; border: 0.5px solid #ddd; }
-        .plan-card h3 { font-size: 13px; margin: 0 0 15px 0; letter-spacing: 2px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .plan-card p { font-size: 12px; color: #666; margin-bottom: 8px; }
+        /* 日曆網格 */
+        .calendar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 12px; margin-top: 20px; }
+        .calendar-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .item-num { font-family: 'Courier New', monospace; font-size: 10px; color: #bbb; margin-bottom: 5px; }
+        .item-image { width: 100%; aspect-ratio: 1/1.2; background-color: #ddd; background-size: cover; background-position: center; border: 0.5px solid #ccc; }
+        .item-label { margin-top: 8px; font-size: 9px; font-weight: bold; color: #666; text-align: center; }
 
-        /* 日曆網格：增加間距感 */
-        .calendar-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); 
-            gap: 30px 15px; margin-top: 20px;
-        }
-        .calendar-item { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-        .item-num { font-family: 'Courier New', monospace; font-size: 10px; color: #bbb; margin-bottom: 10px; }
-        .item-image {
-            width: 100%; aspect-ratio: 1/1.2; background-color: #e5e5e3;
-            border: 0.5px solid rgba(0,0,0,0.08); background-size: cover; background-position: center;
-        }
-        .item-label { margin-top: 10px; font-size: 9px; font-weight: 600; letter-spacing: 1px; color: #777; }
-
-        /* 彈窗樣式：模擬行程表 */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center;
-            padding: 20px; backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: #fff; width: 100%; max-width: 380px; padding: 40px 25px;
-            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 20px; color: #ccc; }
-        .modal-title { font-size: 15px; font-weight: bold; margin-bottom: 20px; letter-spacing: 1px; }
-        .time-row { display: flex; font-size: 12px; margin-bottom: 12px; border-bottom: 0.5px solid #f7f7f7; padding-bottom: 8px; }
-        .time-label { width: 60px; font-family: 'Courier New', monospace; color: #999; flex-shrink: 0; }
-        .time-event { color: #555; }
+        /* 彈窗 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
+        .modal-content { background: #fff; width: 100%; max-width: 380px; padding: 35px 25px; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 20px; color: #aaa; }
+        .time-row { display: flex; font-size: 12px; margin-bottom: 10px; border-bottom: 0.5px solid #f9f9f9; padding-bottom: 5px; }
+        .time-label { width: 55px; color: #999; font-family: 'Courier New', monospace; flex-shrink: 0; }
     </style>
 </head>
 <body>
@@ -88,112 +50,83 @@
 </nav>
 
 <section id="home" class="page active">
-    <div class="hero">
-        <h1>AOMORI</h1>
-        <p>THE ART OF LIVING / 2026</p>
-        <div style="width:1px; height:60px; background:#ccc; margin-top:40px;"></div>
+    <div style="height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <h1 style="font-size: 32px; font-weight: 200; letter-spacing: 12px;">AOMORI</h1>
+        <p style="font-size: 10px; color: #888; letter-spacing: 4px; margin-top: 15px;">30-DAY LIFE ARCHIVE / 2026</p>
     </div>
 </section>
 
 <section id="schedule" class="page">
-    <div style="text-align: center; font-size: 11px; letter-spacing: 4px; color: #bbb; margin-bottom: 40px;">DAILY LOG</div>
+    <div style="text-align: center; font-size: 11px; letter-spacing: 3px; color: #bbb; margin-bottom: 30px;">DAILY LOG</div>
     <div class="calendar-grid" id="grid-content"></div>
 </section>
 
 <section id="base" class="page">
-    <div class="plan-card">
-        <h3>PROJECT CORE / 計畫核心</h3>
-        <p>透過 30 天的異地生活，實踐「沈浸式語言學習」。將日語從課本搬移至市場、錢湯與日常街道，建立與地方的真實連結。</p>
+    <div class="info-card">
+        <h3>📍 住宿分析 (Accommodation)</h3>
+        <table>
+            <tr><th>類型</th><th>預估月租</th><th>優點</th></tr>
+            <tr><td><b>Airbnb</b></td><td>$13k-$20k</td><td>自炊、生活感、空間大</td></tr>
+            <tr><td><b>飯店</b></td><td>$20k-$30k</td><td>每日清潔、不需押金</td></tr>
+            <tr><td><b>Share</b></td><td>$9k-$15k</td><td>便宜、能認識室友</td></tr>
+        </table>
+        <p style="margin-top: 10px;"><b>推薦地段：</b>古川 1 丁目 (鄰近市場與錢湯)。</p>
     </div>
-    <div class="plan-card">
-        <h3>METHOD / 學習方式</h3>
-        <p>• 每日 3 小時與佐藤老師的 1-on-1 對話習作。</p>
-        <p>• 每日選擇一個特定場域（如：市場）進行口語挑戰。</p>
-        <p>• 以影像與文字紀錄津輕地區的微小生活變化。</p>
+
+    <div class="info-card">
+        <h3>📅 推薦遊學月份</h3>
+        <p>• <b>5月</b>：弘前櫻花季，氣候宜人 (住宿貴)。</p>
+        <p>• <b>9-10月</b>：紅葉與蘋果豐收季 (視覺最美)。</p>
+        <p>• <b>1-2月</b>：豪雪挑戰，極致溫泉體驗 (行動不便)。</p>
     </div>
-    <div class="plan-card">
-        <h3>BASE / 住宿詳細</h3>
-        <p><b>Aomori Shinmachi Apartment</b></p>
-        <p>位於市中心，生活動線涵蓋了最重要的文化據點。配備廚房，能與導師討論當季食材並實踐烹飪習作。</p>
+
+    <div class="info-card">
+        <h3>🎓 學習成果目標</h3>
+        <ul style="padding-left: 15px;">
+            <li>能獨自在市場完成食材挑選與議價。</li>
+            <li>掌握 20 組津輕方言日常問候。</li>
+            <li>完成一份 30 頁的生活影像集 (Aomori Zine)。</li>
+        </ul>
+    </div>
+
+    <div class="info-card">
+        <h3>🔍 尋找導師步驟</h3>
+        <p>1. 使用 <b>italki / HelloTalk</b> 搜尋定位於青森的日語教師。</p>
+        <p>2. 第一週：面談對齊計畫；二四週：實地習作 (逛街對話)。</p>
     </div>
 </section>
 
 <section id="budget" class="page">
-    <div class="plan-card" style="text-align: center; padding: 50px 20px;">
-        <h3 style="border:none;">FINANCIAL ESTIMATION</h3>
-        <p>Accommodation: NT$ 32,000</p>
-        <p>Tutor: NT$ 18,500</p>
-        <p>Living: NT$ 15,000</p>
-        <div style="font-size: 18px; font-weight: bold; margin-top: 30px; color:var(--accent);">TOTAL: NT$ 65,500</div>
+    <div class="info-card">
+        <h3>💰 金額明細 (Total: NT$ 65,500)</h3>
+        <table>
+            <tr><td>住宿 (Airbnb 月租折扣)</td><td>$32,000</td></tr>
+            <tr><td>導師費 (60小時)</td><td>$18,500</td></tr>
+            <tr><td>生活開銷 (食、交通)</td><td>$15,000</td></tr>
+        </table>
+        <p style="text-align: center; margin-top: 20px; font-size: 11px; color: #aaa;">*不含機票支出</p>
     </div>
 </section>
 
 <div class="modal" id="infoModal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
-        <div class="modal-title" id="m-title">DAY DETAIL</div>
-        <div id="m-schedule-box">
-            </div>
+        <div id="m-title" style="font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;"></div>
+        <div id="m-content"></div>
     </div>
 </div>
 
 <script>
-    // 詳細的時間規劃數據
-    const detailedSchedules = [
-        { 
-            title: "ARRIVAL", 
-            img: "https://picsum.photos/id/10/400/500?grayscale",
-            plan: [
-                {t: "14:00", e: "抵達青森車站，租借單車"},
-                {t: "15:30", e: "公寓 Check-in 與環境熟悉"},
-                {t: "17:00", e: "A-Factory 採買首日晚餐食材"},
-                {t: "20:00", e: "整理生活動線與錢湯地圖"}
-            ]
-        },
-        { 
-            title: "MARKET", 
-            img: "https://picsum.photos/id/11/400/500?grayscale",
-            plan: [
-                {t: "08:30", e: "Auga 鮮魚市場對話挑戰"},
-                {t: "10:30", e: "與佐藤導師進行首場對話"},
-                {t: "13:00", e: "古川市場 Nokke-don 體驗"},
-                {t: "15:00", e: "單字筆記：海鮮與計量詞"}
-            ]
-        },
-        { 
-            title: "TUTOR", 
-            img: "https://picsum.photos/id/12/400/500?grayscale",
-            plan: [
-                {t: "10:00", e: "與導師討論「津輕方言」入門"},
-                {t: "13:00", e: "市區咖啡館練習日常對話"},
-                {t: "15:30", e: "圖書館查閱青森祭典歷史"},
-                {t: "18:00", e: "獨立習作：撰寫日語生活紀錄"}
-            ]
-        },
-        { 
-            title: "SENTO", 
-            img: "https://picsum.photos/id/13/400/500?grayscale",
-            plan: [
-                {t: "14:00", e: "市區歷史建築巡禮"},
-                {t: "16:30", e: "中央古川錢湯：社交禮儀觀察"},
-                {t: "18:30", e: "在地居酒屋練習點餐用語"},
-                {t: "21:00", e: "語音錄製：今日學到的新詞彙"}
-            ]
-        }
-        // 可依此類推增加更多天數...
+    const scheduleData = [
+        { title: "Arrival", plan: [{t: "14:00", e: "抵達、租單車"}, {t: "16:00", e: "Airbnb 安頓"}, {t: "18:00", e: "超市備品採買"}] },
+        { title: "Market", plan: [{t: "08:30", e: "古川市場實戰挑戰"}, {t: "11:00", e: "導師習作：單字整理"}, {t: "18:00", e: "自炊實驗：市場食材"}] },
+        { title: "Route", plan: [{t: "10:00", e: "公車站牌識別習作"}, {t: "14:00", e: "星巴克對話習作"}, {t: "19:00", e: "中央古川溫泉體會"}] },
+        { title: "Art Day", plan: [{t: "11:00", e: "縣立美術館觀察"}, {t: "14:00", e: "導師習作：形容詞練習"}, {t: "17:00", e: "整理今日影像紀錄"}] }
     ];
 
     // 填充 30 天
-    for(let i=detailedSchedules.length; i<30; i++) {
-        detailedSchedules.push({
-            title: "ROUTINE",
-            img: `https://picsum.photos/id/${i+10}/400/500?grayscale`,
-            plan: [
-                {t: "10:00", e: "沈浸式對話習作"},
-                {t: "13:00", e: "在地生活場域探索"},
-                {t: "16:00", e: "筆記整理與攝影紀錄"}
-            ]
-        });
+    for(let i=scheduleData.length; i<30; i++) {
+        scheduleData.push({ title: "Routine", plan: [{t: "09:00", e: "在地生活實踐"}, {t: "13:00", e: "導師會話習作"}, {t: "16:00", e: "影像與文字紀錄"}] });
     }
 
     function showPage(pageId) {
@@ -205,33 +138,27 @@
     }
 
     const grid = document.getElementById('grid-content');
-    detailedSchedules.forEach((item, index) => {
-        const dayNum = (index + 1).toString().padStart(2, '0');
-        const html = `
+    scheduleData.forEach((item, index) => {
+        const day = (index + 1).toString().padStart(2, '0');
+        const imgUrl = `https://picsum.photos/id/${index+15}/400/500?grayscale`;
+        grid.innerHTML += `
             <div class="calendar-item" onclick="openModal(${index})">
-                <div class="item-num">${dayNum}</div>
-                <div class="item-image" style="background-image: url('${item.img}')"></div>
+                <div class="item-num">${day}</div>
+                <div class="item-image" style="background-image: url('${imgUrl}')"></div>
                 <div class="item-label">${item.title}</div>
-            </div>
-        `;
-        grid.innerHTML += html;
+            </div>`;
     });
 
-    function openModal(index) {
-        const data = detailedSchedules[index];
-        const day = (index + 1).toString().padStart(2, '0');
+    function openModal(i) {
+        const day = (i+1).toString().padStart(2, '0');
+        const data = scheduleData[i];
         document.getElementById('m-title').innerText = `DAY ${day}: ${data.title}`;
-        
-        let scheduleHtml = '';
-        data.plan.forEach(p => {
-            scheduleHtml += `<div class="time-row"><div class="time-label">${p.t}</div><div class="time-event">${p.e}</div></div>`;
-        });
-        document.getElementById('m-schedule-box').innerHTML = scheduleHtml;
+        let html = '';
+        data.plan.forEach(p => { html += `<div class="time-row"><div class="time-label">${p.t}</div><div>${p.e}</div></div>`; });
+        document.getElementById('m-content').innerHTML = html;
         document.getElementById('infoModal').style.display = 'flex';
     }
-
     function closeModal() { document.getElementById('infoModal').style.display = 'none'; }
 </script>
-
 </body>
 </html>
