@@ -3,60 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aomori Study Archive 2026</title>
+    <title>Aomori Life Archive 2026</title>
     <style>
         :root { --bg: #efefef; --text: #1a1a1a; --accent: #b03a2e; --grid-bg: #fff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; background-color: var(--bg); font-family: 'PingFang TC', sans-serif; color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- 1. 左側選單：留白式設計 --- */
+        /* 左側選單廊道 */
         .menu-trigger {
-            position: fixed; top: 30px; left: 0; width: 60px; /* 固定寬度廊道 */
+            position: fixed; top: 30px; left: 0; width: 60px;
             z-index: 2000; font-size: 22px; cursor: pointer; 
             display: flex; align-items: center; justify-content: center;
-            background: transparent; /* 完全透明 */
         }
 
         nav {
             position: fixed; top: 0; left: -100%; width: 75%; height: 100vh;
             background: #fff; z-index: 2001; display: flex; flex-direction: column;
             justify-content: center; align-items: center; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.05);
         }
         nav.open { left: 0; }
         nav a { text-decoration: none; color: #888; font-size: 14px; font-weight: bold; letter-spacing: 4px; margin: 20px 0; }
         nav a.active { color: var(--text); border-bottom: 1px solid var(--text); }
 
-        /* --- 2. 內容整體右移：避免遮擋 --- */
-        .page { 
-            display: none; width: 100vw; min-height: 100vh; 
-            padding: 100px 25px 80px 70px; /* 左側 padding 加大至 70px 避開按鈕 */
-        }
+        /* 內容整體右移，空出左側給選單按鈕 */
+        .page { display: none; width: 100vw; min-height: 100vh; padding: 100px 25px 80px 70px; }
         .page.active { display: block; animation: fadeIn 0.5s ease; }
-        
-        #home { 
-            display: none; height: 100vh; padding: 0 0 0 60px; 
-            flex-direction: column; justify-content: center; align-items: center; text-align: center;
-        }
+        #home { display: none; height: 100vh; padding: 0 0 0 60px; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         #home.active { display: flex; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* 內容卡片 */
         .info-card { background: #fff; padding: 25px; margin-bottom: 25px; border: 0.5px solid #000; }
         .info-card h3 { font-size: 13px; margin: 0 0 15px 0; letter-spacing: 2px; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 8px; }
 
+        /* 日曆格線 */
         .calendar-zine-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 15px; margin-top: 40px; }
         .zine-item { position: relative; aspect-ratio: 1 / 1.3; background: var(--grid-bg); border: 0.5px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 5px; cursor: pointer; }
         .zine-num { font-family: 'Courier New', monospace; font-size: 10px; color: #888; position: absolute; top: -22px; width: 100%; text-align: center; }
         .zine-photo-box { width: 85%; height: 75%; background-color: #f2f2f0; background-size: cover; background-position: center; border: 0.5px solid rgba(0,0,0,0.05); }
         .zine-label { width: 100%; text-align: center; font-size: 7px; font-weight: 500; color: #666; letter-spacing: 0.5px; }
 
-        /* SIGHTS 列表 */
+        /* SIGHTS 列表優化 */
         .sight-item { margin-bottom: 25px; border-bottom: 0.5px solid #eee; padding-bottom: 20px; }
         .sight-header { display: flex; align-items: center; margin-bottom: 10px; }
         .sight-checkbox { width: 18px; height: 18px; border: 1px solid #000; margin-right: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .sight-checkbox.checked::after { content: '✓'; font-size: 14px; }
-        .tag { display: inline-block; background: #f6f6f6; padding: 2px 6px; font-size: 9px; color: #888; margin-right: 5px; }
+        .tag { display: inline-block; background: #f6f6f6; padding: 2px 6px; font-size: 9px; color: #888; margin-right: 5px; margin-bottom: 5px; }
         .access { margin-top: 8px; color: var(--accent); font-weight: bold; font-size: 10px; }
 
         table { width: 100%; border-collapse: collapse; font-size: 11px; }
@@ -100,7 +91,7 @@
         <div id="aomori-list"></div>
     </div>
     <div class="info-card">
-        <h3>🏯 弘前地區 (Hirosaki)</h3>
+        <h3>🏯 弘前與大自然 (Hirosaki & Nature)</h3>
         <div id="hirosaki-list"></div>
     </div>
 </section>
@@ -113,6 +104,17 @@
         <p style="font-size: 10px; color: #aaa;">1 Chome-XX-XX Furukawa, Aomori-shi</p>
         <p><a href="https://www.airbnb.com.tw" target="_blank" style="color:var(--text); font-size: 11px; font-weight:bold;">👉 開啟 Airbnb 連結</a></p>
     </div>
+    <div class="info-card">
+        <h3>🔍 尋找導師步驟 (Plan)</h3>
+        <p>1. <b>篩選：</b>在 italki 使用居住地「青森」篩選。<br>
+           2. <b>面試：</b>預約試聽，確認是否接受「市場實地對話」。<br>
+           3. <b>目標：</b>第一週確定 30 天的詞彙目標清單。</p>
+    </div>
+    <div class="info-card">
+        <h3>🎯 生活計畫成果</h3>
+        <p>• 掌握津輕方言基本日常對話。<br>
+           • 完成 30 頁 Aomori Zine 影像紀錄集。</p>
+    </div>
 </section>
 
 <section id="budget" class="page">
@@ -122,9 +124,9 @@
             <tr><th>項目</th><th>金額 (NTD)</th><th>說明</th></tr>
             <tr><td>住宿 (Stay)</td><td>$32,000</td><td>Airbnb 月租折扣</td></tr>
             <tr><td>導師 (Tutor)</td><td>$18,500</td><td>私人習作 60hrs</td></tr>
-            <tr><td>食費 (Food)</td><td>$8,000</td><td>自炊與市場採買</td></tr>
-            <tr><td>交通 (Trans)</td><td>$4,000</td><td>單車、巴士、JR</td></tr>
-            <tr><td>文化 (Life)</td><td>$3,000</td><td>錢湯、美術館</td></tr>
+            <tr><td>食費 (Food)</td><td>$8,000</td><td>自炊與市場</td></tr>
+            <tr><td>交通 (Trans)</td><td>$4,000</td><td>單車/巴士/JR</td></tr>
+            <tr><td>文化 (Life)</td><td>$3,000</td><td>錢湯/美術館</td></tr>
             <tr style="font-weight:bold;"><td>TOTAL</td><td>$65,500</td><td>未含機票</td></tr>
         </table>
     </div>
@@ -144,16 +146,22 @@
 
     const sightsData = {
         seasonal: [
-            { name: "青森縣立中央醫院前 櫻花大道", time: "4月下旬 - 5月上旬", special: "Threads 網友推薦私房景點！綿延數公里的櫻花隧道，在地人才知道的賞櫻路段。", access: "從青森站搭乘往「中央病院」方向公車約 15 分鐘", link: "https://www.pref.aomori.lg.jp/soshiki/byoin/chuoh/" }
+            { name: "青森縣立中央醫院前 櫻花大道", time: "4月下旬 - 5月上旬", special: "Threads 網友激推！在地人的私房賞櫻隧道。", access: "青森站搭往中央病院公車 15 分", link: "https://www.pref.aomori.lg.jp/soshiki/byoin/chuoh/" },
+            { name: "合浦公園", time: "24小時", special: "青森市內最有名的賞櫻公園，有攤販與夜間照明。", access: "青森站搭市營巴士約 15 分至合浦公園前", link: "https://www.city.aomori.aomori.jp/koen-kasen/shisetsu/koen/01.html" }
         ],
         aomori: [
-            { name: "古川市場", time: "07:00-16:00", special: "自助海鮮丼(Nokke-don)實戰地。", access: "青森站步行 5 分鐘", link: "https://nokkedon.jp/" },
-            { name: "青森縣立美術館", time: "09:30-17:00", special: "必看奈良美智「青森犬」。", access: "站前搭巴士約 20 分鐘", link: "https://www.aomori-museum.jp/" },
-            { name: "淺蟲溫泉", time: "各設施不同", special: "擁有 1200 年歷史的溫泉地，海景絕佳。", access: "青之森鐵路約 20 分鐘", link: "https://www.asamushi.com/" }
+            { name: "古川市場 (自助海鮮丼)", time: "07:00-16:00", special: "實戰練習日文詢價的最佳地點。", access: "青森站步行 5 分", link: "https://nokkedon.jp/" },
+            { name: "睡魔之家 Wa Rasse", time: "09:00-18:00", special: "感受青森靈魂祭典的最速路徑。", access: "青森站步行 1 分", link: "http://www.nebuta.jp/warasse/" },
+            { name: "青森縣立美術館", time: "09:30-17:00", special: "純白建築與著名的青森犬。", access: "站前巴士 20 分", link: "https://www.aomori-museum.jp/" },
+            { name: "淺蟲溫泉 (夕陽之湯)", time: "各設施不同", special: "看著陸奧灣夕陽泡湯，極度療癒。", access: "青之森鐵路 20 分", link: "https://www.asamushi.com/" },
+            { name: "八甲田纜車", time: "09:00-15:30", special: "世界級樹冰與秋季楓紅地毯。", access: "站前巴士約 60 分", link: "http://www.hakkoda-ropeway.jp/" }
         ],
         hirosaki: [
-            { name: "弘前城 (弘前公園)", time: "09:00-17:00", special: "現存 12 天守之一，全日最美櫻花勝地。", access: "JR 弘前站搭巴士至市役所前", link: "https://www.hirosakipark.jp/" },
-            { name: "星巴克 弘前公園前店", time: "07:00-21:00", special: "古蹟建築內的特色星巴克。", access: "弘前城追手門對面", link: "https://store.starbucks.co.jp/detail-1302/" }
+            { name: "弘前城 (現存天守)", time: "09:00-17:00", special: "日本第一賞櫻名所，也有絕美秋楓。", access: "JR 弘前站轉公車", link: "https://www.hirosakipark.jp/" },
+            { name: "星巴克 弘前公園前店", time: "07:00-21:00", special: "在古蹟建築裡喝咖啡，大正浪漫風格。", access: "弘前城追手門對面", link: "https://store.starbucks.co.jp/detail-1302/" },
+            { name: "奧入瀨溪流", time: "建議白天", special: "最美的溪流步道，充滿負離子與苔蘚之美。", access: "青森站搭 JR 巴士約 120 分", link: "https://www.oirase-stream.com/" },
+            { name: "十和田湖", time: "24小時", special: "神祕的高山湖泊，乙女之像所在地。", access: "奧入瀨溪流終點再往南", link: "https://www.towadako.or.jp/" },
+            { name: "弘前市蘋果公園", time: "09:00-17:00", special: "80種蘋果樹，體驗採摘與品嚐青森蘋果。", access: "弘前站搭巴士 20 分", link: "https://www.hirosaki-kanko.or.jp/" }
         ]
     };
 
@@ -182,7 +190,7 @@
     const scheduleData = [
         { title: "Arrival", img: "https://picsum.photos/id/10/400/500?grayscale", plan: [
             {t: "08:00", e: "TPE機場Check-in"}, {t: "10:30", e: "起飛：TPE → AOJ"}, {t: "15:00", e: "抵達青森機場"},
-            {t: "15:45", e: "巴士往青森站"}, {t: "16:30", e: "租借單車"},
+            {t: "15:45", e: "機場巴士往青森站"}, {t: "16:30", e: "租借單車"},
             {t: "17:30", e: "Airbnb Check-in"}, {t: "19:00", e: "A-Factory 買晚餐"}
         ]}
     ];
@@ -215,7 +223,6 @@
         document.getElementById('m-content').innerHTML = html;
         document.getElementById('infoModal').style.display = 'flex';
     }
-
     function closeModal() { document.getElementById('infoModal').style.display = 'none'; }
     function checkClose(e) { if(e.target.id === 'infoModal') closeModal(); }
 </script>
