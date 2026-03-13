@@ -1,148 +1,96 @@
 <style>
-/* --- Minimalist Responsive Journal Style --- */
+/* --- 極簡藝術 Zine 風格 (Responsive) --- */
 :root {
-  --text-main: #2c2c2c;
-  --text-mute: #8e8e8e;
-  --bg-color: #f9f7f2; 
+  --text-main: #333333;
+  --bg-color: #f7f3f0; 
   --accent: #b03a2e;
-  --line: #e0ddd5;
 }
 
 body {
-  font-family: 'PingFang TC', 'MicroSoft JhengHei', 'Georgia', serif;
+  font-family: 'PingFang TC', 'MicroSoft JhengHei', 'serif', 'Georgia';
   background-color: var(--bg-color);
   color: var(--text-main);
   margin: 0 auto;
-  line-height: 2.0;
-  letter-spacing: 0.05em;
-  padding: 20px;
-}
-
-@media (min-width: 768px) {
-  body { max-width: 750px; padding: 80px 0; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-  .photo-grid { grid-template-columns: 1fr 1fr 1fr; }
+  line-height: 1.8;
+  letter-spacing: 0.1em;
+  padding: 40px;
+  max-width: 650px;
 }
 
 @media (max-width: 767px) {
-  body { padding: 40px 20px; }
-  .grid-2 { display: block; }
-  .photo-grid { grid-template-columns: 1fr 1fr; }
-  .mobile-space { margin-top: 40px; }
+  body { padding: 25px; }
+  .grid-box { grid-template-columns: 1fr !important; }
 }
 
-.journal-header {
-  font-family: 'Helvetica', sans-serif;
+.magazine-header {
+  font-family: 'Courier New', monospace;
   font-size: 10px;
   text-transform: uppercase;
-  color: var(--text-mute);
   display: flex;
   justify-content: space-between;
-  margin-bottom: 40px;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 10px;
+  margin-bottom: 60px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
 }
 
-h1 { text-align: center; font-weight: 300; margin: 60px 0; letter-spacing: 0.3em; line-height: 1.4; font-size: 24px; }
-h2 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.25em; margin: 60px 0 30px; color: var(--text-mute); text-align: center; border-top: 1px solid var(--line); padding-top: 50px; }
-h3 { font-size: 14px; font-weight: 600; margin-bottom: 20px; border-left: 2px solid var(--accent); padding-left: 15px; }
+h1 { text-align: center; font-size: 24px; font-weight: 300; margin: 60px 0; letter-spacing: 0.2em; }
+h2 { font-size: 14px; font-weight: 500; text-transform: uppercase; margin-top: 60px; text-align: center; color: var(--accent); }
 
-.itinerary-list { list-style: none; padding: 0; }
-.itinerary-item { margin-bottom: 25px; font-size: 14px; display: flex; }
-.day-index { font-family: 'Courier New', monospace; font-size: 11px; color: var(--text-mute); width: 50px; }
-.task-content b { color: var(--text-main); display: block; margin-bottom: 4px; }
+/* 住宿與老師 網格佈局 */
+.grid-box { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; margin: 40px 0; border-top: 1px solid #ddd; padding-top: 30px; }
+.info-label { font-size: 11px; color: #888; text-transform: uppercase; display: block; margin-bottom: 5px; }
+.info-value { font-size: 15px; font-weight: 500; }
 
-.budget-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 30px; }
-.budget-table td { padding: 10px 0; border-bottom: 1px solid #eee; }
-.budget-table td:last-child { text-align: right; font-family: 'Courier New', monospace; }
+/* 預算表單 */
+.budget-list { background: #fff; padding: 25px; border-radius: 2px; border: 1px solid #eee; margin: 30px 0; }
+.budget-row { display: flex; justify-content: space-between; font-size: 13px; padding: 8px 0; border-bottom: 1px dashed #eee; }
 
-.photo-grid { display: grid; gap: 15px; margin: 40px 0; }
-.photo-box { background: #fff; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #ccc; border: 1px solid var(--line); text-transform: uppercase; }
+.lifestyle-item { margin-bottom: 30px; font-size: 14px; position: relative; padding-left: 20px; }
+.lifestyle-item::before { content: '●'; position: absolute; left: 0; color: var(--accent); font-size: 10px; top: 2px; }
 
-.footer { text-align: center; font-size: 10px; color: var(--text-mute); margin-top: 120px; padding-bottom: 60px; letter-spacing: 0.2em; }
+.footer { text-align: center; font-size: 10px; margin-top: 100px; padding-bottom: 60px; font-family: 'Courier New', monospace; }
 </style>
 
-<div class="journal-header">
-  <span>Issue 01 / Vol. 2026</span>
-  <span>LAN - Aomori Archive</span>
+<div class="magazine-header">
+  <span>HIROSAKI JOURNAL</span>
+  <span>LAN - 2026 Archive</span>
 </div>
 
 <h1>AOMORI LIFESTYLE JOURNEY</h1>
 
----
-
-<div class="grid-2">
+<div class="grid-box">
   <div>
-    <h3>Stay & Base</h3>
-    <p style="font-size: 14px; color: #555;">
-      <b>Location:</b> Hirosaki Central District<br>
-      <b>Style:</b> Local Guesthouse / Airbnb<br>
-      <b>Vibe:</b> 靠近弘前公園，步行可達中央溫泉與星巴克古蹟店。
+    <span class="info-label">Base / Stay</span>
+    <span class="info-value">弘前公園附近 Airbnb / Local Studio</span>
+    <p style="font-size: 12px; color: #666; margin-top: 10px;">
+      選擇鄰近中央溫泉與星巴克古蹟店的區域，步行即可抵達每日習作地點。
     </p>
   </div>
-  <div class="mobile-space">
-    <h3>Private Tutor</h3>
-    <p style="font-size: 14px; color: #555;">
-      <b>Mentor:</b> Native Instructor (Hirosaki Univ. Affiliate)<br>
-      <b>Session:</b> 3 Hours / Daily (Mon-Fri)<br>
-      <b>Base:</b> Selected Cafes (Starbucks, Taisho Roman, etc.)
+  <div>
+    <span class="info-label">Instructor</span>
+    <span class="info-value">1-on-1 Private Tutor</span>
+    <p style="font-size: 12px; color: #666; margin-top: 10px;">
+      每週五天，每日 3 小時沈浸式對話習作。
     </p>
   </div>
 </div>
 
----
-
-<h2>Projected Expenses (Budget)</h2>
-<table class="budget-table">
-  <tr><td>Stay (30 Nights / Local Studio)</td><td>NT$ 32,000</td></tr>
-  <tr><td>Private Tutor (40 Hours Session)</td><td>NT$ 18,500</td></tr>
-  <tr><td>Transportation (MaaS, JR Rail, Bike)</td><td>NT$ 8,000</td></tr>
-  <tr><td>Daily Life (Food, Onsen, Groceries)</td><td>NT$ 15,000</td></tr>
-  <tr style="font-weight: bold; border-bottom: 2px solid var(--text-main);"><td>Total Estimate</td><td>NT$ 73,500</td></tr>
-</table>
+<h2>Estimated Budget</h2>
+<div class="budget-list">
+  <div class="budget-row"><span>Accommodation (30 nights)</span><b>NT$ 32,000</b></div>
+  <div class="budget-row"><span>Private Language Support</span><b>NT$ 18,500</b></div>
+  <div class="budget-row"><span>Local Food & Onsen</span><b>NT$ 15,000</b></div>
+  <div class="budget-row"><span>Transportation (JR & Bike)</span><b>NT$ 8,000</b></div>
+  <div class="budget-row" style="border:none; margin-top: 10px; font-size: 16px;"><span>Total</span><b>NT$ 73,500</b></div>
+</div>
 
 ---
 
 <h2>Phase 01: Local Immersion</h2>
-<div class="itinerary-list">
-  <div class="itinerary-item">
-    <div class="day-index">D.01</div>
-    <div class="task-content"><b>Arrival & Settling</b> 抵達弘前、Airbnb Check-in、單車租借。</div>
-  </div>
-  <div class="itinerary-item">
-    <div class="day-index">D.02</div>
-    <div class="task-content"><b>Market Discovery</b> 虹之味市場實戰，練習詢問蘋果產地與口感。</div>
-  </div>
-  <div class="itinerary-item">
-    <div class="day-index">D.03</div>
-    <div class="task-content"><b>Coffee Session</b> 星巴克弘前公園前店，與語言顧問初次交流。</div>
-  </div>
-  <div class="itinerary-item">
-    <div class="day-index">D.05</div>
-    <div class="task-content"><b>Bathhouse Ritual</b> 體驗在地「中央溫泉」錢湯，感受庶民日常。</div>
-  </div>
+<div class="lifestyle-list">
+  <div class="lifestyle-item"><b>Arrival</b> 抵達與安頓：租借單車、建立在地生活動線。</div>
+  <div class="lifestyle-item"><b>Daily Ritual</b> 星巴克弘前公園前店：與老師見面、設定生活任務。</div>
+  <div class="lifestyle-item"><b>Social</b> 體驗「中央溫泉」錢湯文化：觀察在地人的社交禮儀。</div>
 </div>
 
-<h2>Phase 02: Nature & Arts</h2>
-<div class="itinerary-list">
-  <div class="itinerary-item">
-    <div class="day-index">D.12</div>
-    <div class="task-content"><b>Culinary Task</b> 前往超市購買在地食材，挑戰製作簡單的津輕料理。</div>
-  </div>
-  <div class="itinerary-item">
-    <div class="day-index">W.END</div>
-    <div class="task-content"><b>Mountain Retreat</b> 奧入瀨溪流與十和田湖，體驗「湯治」療癒。</div>
-  </div>
-</div>
-
-<h2>Visual Notes</h2>
-<div class="photo-grid">
-  <div class="photo-box">Plate 01: Market</div>
-  <div class="photo-box">Plate 02: Coffee</div>
-  <div class="photo-box">Plate 03: Street</div>
-  <div class="photo-box">Plate 04: Library</div>
-  <div class="photo-box">Plate 05: Onsen</div>
-  <div class="photo-box">Plate 06: Nature</div>
-</div>
-
-<p class="footer">CAPTURED BY LAN • AOMORI LIFESTYLE PROJECT • 2026</p>
+<p class="footer">Captured by LAN • AOMORI Living Archive</p>
