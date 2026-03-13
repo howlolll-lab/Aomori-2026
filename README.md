@@ -1,40 +1,166 @@
 <style>
-  body { font-family: -apple-system, system-ui, sans-serif; background-color: #f5f5f7; color: #1d1d1f; padding: 20px; max-width: 500px; margin: 0 auto; }
-  .app-card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #eee; }
-  h1 { color: #d7191f; text-align: center; font-size: 24px; letter-spacing: 1px; }
-  .tag { background: #d7191f; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-  .week-title { color: #4a7c59; border-bottom: 2px solid #4a7c59; padding-bottom: 5px; margin-bottom: 15px; }
-  li { margin-bottom: 15px; list-style: none; padding-left: 10px; border-left: 3px solid #d7191f; }
-  a { color: #007aff; text-decoration: none; font-weight: 500; }
-  .footer { text-align: center; font-size: 12px; color: #888; margin-top: 40px; }
+/* --- Minimalist & Elegant Journal Style (image_8.png Inspired) --- */
+:root {
+  --text-main: #333333; /* Soft Black */
+  --text-mute: #888888; /* Muted Grey */
+  --bg-color: #f7f3f0; /* Off-white textured paper feel */
+  --accent: #a33f3e; /* Deep Red for accents */
+}
+
+body {
+  font-family: 'SF Mono', Monaco, 'Courier New', 'PingFang TC', 'MicroSoft JhengHei', serif; /* Script-like monospaced serif */
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 40px;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+/* Subtle header numbering */
+.page-header {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 300;
+  margin-top: 60px;
+  margin-bottom: 50px;
+  color: var(--text-main);
+}
+
+h2 {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  color: var(--text-mute);
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+li {
+  margin-bottom: 18px;
+  font-size: 15px;
+  color: var(--text-main);
+  border-left: 2px solid transparent;
+  padding-left: 0;
+  transition: border-left 0.3s;
+}
+
+li:hover {
+  border-left: 2px solid var(--accent);
+  padding-left: 10px;
+}
+
+/* Day index styling */
+li b {
+  color: var(--text-mute);
+  font-weight: 400;
+  margin-right: 12px;
+  font-size: 12px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.3s;
+}
+
+a:hover {
+  border-bottom: 1px solid var(--accent);
+}
+
+/* Embedded Media Grid Style */
+.media-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.media-cell {
+  background-color: transparent;
+  padding: 0;
+  width: calc(33.33% - 13.33px);
+  position: relative;
+}
+
+.media-cell img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.media-cell-caption {
+  font-size: 10px;
+  color: var(--text-mute);
+  text-align: center;
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+.footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-mute);
+  margin-top: 80px;
+}
 </style>
 
-# 🍎 青森遊學行動手冊
-
-<div align="center"><span class="tag">MISSION IN PROGRESS</span></div>
-
-<div class="app-card">
-  <h3 class="week-title">🟢 Week 1: 津輕融入期</h3>
-  <ul>
-    <li><b>Day 1:</b> 抵達弘前、入住 Airbnb、租單車</li>
-    <li><b>Day 2:</b> 虹之味市場實戰：詢問「今日最推蘋果」</li>
-    <li><b>Day 3:</b> <a href="https://goo.gl/maps/starbucks_hirosaki">星巴克古蹟店</a> 上課、設定日文學習目標</li>
-    <li><b>Day 4:</b> 弘前市立圖書館自修、體驗中央溫泉錢湯</li>
-  </ul>
+<div class="page-header">
+  <span>02 / Hirosaki Life Journal</span>
+  <span>LAN - Aomori Connection</span>
 </div>
 
-<div class="app-card">
-  <h3 class="week-title">🟡 Week 2: 自然探索期</h3>
-  <ul>
-    <li><b>Weekend:</b> 奧入瀨溪流 2D1N、入住酸湯溫泉</li>
-    <li><b>Task:</b> 撰寫第一篇日文生活遊記</li>
-  </ul>
+# Aomori-2026<br><font size="4">🍎 30-Day Living in Tsugaru</font>
+
+---
+
+## Part 1: Immersion & Community (The First 7 Days)
+
+* **B01** Day 1: Arrive & Hirosaki Airbnb Check-in. (Setup local base, rent bicycle)
+* **B02** Day 2: Visit local 'Niji-no-aji' Market. (Rainbow Taste Market) | Task: Interact with vendors, find seasonal recommendations.
+* **B03** Day 3: Morning Ritual at [Starbucks Hirosaki (Taisho Roman Building)](https://goo.gl/maps/starbucks_hirosaki). | Task: Set personal study goals.
+* **B04** Day 4: Afternoon at Hirosaki Municipal Library. | Task: Study local architecture & history through print.
+* **B05** Day 5: 'Sento' Culture Experience (Central Onsen). | Task: Practice social etiquette for shared spaces.
+* **Weekend Task:** Aomori City Exploration. (Nebuta Museum Wa Rasse, A-Factory)
+
+---
+
+## Visual Notes & Finds (Curated Gallery)
+
+<div class="media-container">
+  <div class="media-cell">
+    <img src="https://raw.githubusercontent.com/howlo111-lab/Aomori-2026/main/media_01.jpg" alt="Local Snacks" />
+    <div class="media-cell-caption">I. Local Flavors</div>
+  </div>
+  <div class="media-cell">
+    <img src="https://raw.githubusercontent.com/howlo111-lab/Aomori-2026/main/media_02.jpg" alt="City View" />
+    <div class="media-cell-caption">II. Street Observations</div>
+  </div>
+  <div class="media-cell">
+    <img src="https://raw.githubusercontent.com/howlo111-lab/Aomori-2026/main/media_03.jpg" alt="Lesson Space" />
+    <div class="media-cell-caption">III. Workspace View</div>
+  </div>
 </div>
 
-<div class="app-card">
-  <h3 class="week-title">📍 學習基地 (地圖導航)</h3>
-  <p>🔗 <a href="https://goo.gl/maps/starbucks_hirosaki">星巴克 弘前公園前店</a></p>
-  <p>🔗 <a href="https://goo.gl/maps/taisho_roman">大正浪漫喫茶室</a></p>
-</div>
+---
 
-<div class="footer">由 GitHub Pages 驅動 • 隨時編輯 README 即可同步</div>
+<p class="footer">POWERED BY GITHUB PAGES • MINIMALIST JOURNAL STYLE • LIVE UPDATE ON README COMMIT</p>
