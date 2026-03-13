@@ -9,14 +9,21 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; background-color: var(--bg); font-family: 'PingFang TC', sans-serif; color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- 左側漢堡選單 --- */
+        /* --- 1. 左側選單按鈕：優化防遮擋 --- */
         .menu-trigger {
-            position: fixed; top: 25px; left: 25px; z-index: 2000;
-            font-size: 24px; cursor: pointer; padding: 5px;
+            position: fixed; top: 20px; left: 20px; z-index: 2000;
+            font-size: 22px; cursor: pointer; 
+            width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(239, 239, 239, 0.7); /* 半透明背景 */
+            backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+            border-radius: 50%;
+            border: 0.5px solid rgba(0,0,0,0.1);
         }
+
         nav {
             position: fixed; top: 0; left: -100%; width: 75%; height: 100vh;
-            background: #fff; z-index: 1999; display: flex; flex-direction: column;
+            background: #fff; z-index: 2001; display: flex; flex-direction: column;
             justify-content: center; align-items: center; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             box-shadow: 10px 0 30px rgba(0,0,0,0.05);
         }
@@ -24,11 +31,23 @@
         nav a { text-decoration: none; color: #888; font-size: 14px; font-weight: bold; letter-spacing: 4px; margin: 20px 0; }
         nav a.active { color: var(--text); border-bottom: 1px solid var(--text); }
 
+        /* --- 2. 首頁完全置中 --- */
         .page { display: none; width: 100vw; min-height: 100vh; padding: 100px 25px 80px; }
         .page.active { display: block; animation: fadeIn 0.5s ease; }
+        #home { 
+            display: none; /* 由 active 類別控制 */
+            height: 100vh; 
+            padding: 0; /* 首頁不使用通用的 padding */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #home.active { display: flex; }
+
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 卡片與格線 */
+        /* 內容卡片 */
         .info-card { background: #fff; padding: 25px; margin-bottom: 25px; border: 0.5px solid #000; }
         .info-card h3 { font-size: 13px; margin: 0 0 15px 0; letter-spacing: 2px; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 8px; }
 
@@ -38,7 +57,7 @@
         .zine-photo-box { width: 85%; height: 75%; background-color: #f2f2f0; background-size: cover; background-position: center; border: 0.5px solid rgba(0,0,0,0.05); }
         .zine-label { width: 100%; text-align: center; font-size: 8px; font-weight: 500; color: #666; letter-spacing: 1px; }
 
-        /* SIGHTS 樣式 */
+        /* SIGHTS 樣式更新 */
         .sight-item { margin-bottom: 25px; border-bottom: 0.5px solid #eee; padding-bottom: 20px; }
         .sight-header { display: flex; align-items: center; margin-bottom: 10px; }
         .sight-checkbox { width: 18px; height: 18px; border: 1px solid #000; margin-right: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -46,12 +65,10 @@
         .tag { display: inline-block; background: #f6f6f6; padding: 2px 6px; font-size: 9px; color: #888; margin-right: 5px; }
         .access { margin-top: 8px; color: var(--accent); font-weight: bold; font-size: 10px; }
 
-        /* 表格與小地圖 */
         table { width: 100%; border-collapse: collapse; font-size: 11px; }
         th, td { border: 0.5px solid #eee; padding: 10px; text-align: left; }
         .mini-map { width: 80px; height: 80px; margin: 10px 0; background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Cpath d="M0 40h80M40 0v80" stroke="%23ddd" stroke-width=".5"/%3E%3Ccircle cx="50" cy="30" r="3" fill="%23b03a2e"/%3E%3Crect x="0" y="0" width="80" height="80" fill="none" stroke="%23000" stroke-width=".5"/%3E%3C/svg%3E'); border: 0.5px solid #000; }
 
-        /* 彈窗：新增點擊外部關閉邏輯 */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; align-items: center; justify-content: center; padding: 30px; backdrop-filter: blur(8px); }
         .modal-content { background: #fff; width: 100%; max-width: 380px; padding: 40px 25px; position: relative; }
         .close-btn { position: absolute; top: 15px; right: 20px; font-size: 20px; color: #ccc; cursor: pointer; }
@@ -70,10 +87,8 @@
 </nav>
 
 <section id="home" class="page active">
-    <div style="height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-        <h1 style="font-size: 32px; font-weight: 200; letter-spacing: 12px;">AOMORI</h1>
-        <p style="font-size: 10px; color: #aaa; letter-spacing: 4px;">LIFE ARCHIVE / 2026</p>
-    </div>
+    <h1 style="font-size: 32px; font-weight: 200; letter-spacing: 12px; margin: 0;">AOMORI</h1>
+    <p style="font-size: 10px; color: #aaa; letter-spacing: 4px; margin-top: 15px;">LIFE ARCHIVE / 2026</p>
 </section>
 
 <section id="schedule" class="page">
@@ -87,7 +102,7 @@
         <div id="aomori-list"></div>
     </div>
     <div class="info-card">
-        <h3>🏯 弘前地區 (Hirosaki)</h3>
+        <h3>🏯 弘前與周邊 (Hirosaki & Beyond)</h3>
         <div id="hirosaki-list"></div>
     </div>
 </section>
@@ -95,18 +110,14 @@
 <section id="base" class="page">
     <div class="info-card">
         <h3>📍 STAY / 住宿詳細</h3>
-        <p><b>Aomori Furukawa Studio (Airbnb)</b><br>生活圈包含古川市場、中央溫泉與超市。</p>
+        <p><b>Aomori Furukawa Studio (Airbnb)</b></p>
         <div class="mini-map"></div>
         <p style="font-size: 10px; color: #aaa;">1 Chome-XX-XX Furukawa, Aomori-shi</p>
         <p><a href="https://www.airbnb.com.tw" target="_blank" style="color:var(--text); font-size: 11px; font-weight:bold;">👉 開啟 Airbnb 預訂頁面</a></p>
     </div>
     <div class="info-card">
         <h3>🔍 尋找老師步驟</h3>
-        <p>1. 使用 italki 篩選居住在「青森」的導師。<br>2. 私訊確認是否願意配合「市場實地習作」。<br>3. 第一週面談對齊計畫，確認每週兩次習作主題。</p>
-    </div>
-    <div class="info-card">
-        <h3>🎯 計畫目標與成果</h3>
-        <p>• 掌握 20 組津輕方言日常問候。<br>• 完成 30 頁 Aomori Zine 影像紀錄集。</p>
+        <p>1. 使用 italki 篩選居住在「青森」的導師。<br>2. 私訊確認是否願意配合「市場實地習作」。</p>
     </div>
 </section>
 
@@ -115,12 +126,12 @@
         <h3>💰 BUDGET / 詳細金額明細</h3>
         <table>
             <tr><th>項目</th><th>金額 (NTD)</th><th>說明</th></tr>
-            <tr><td>住宿 (Stay)</td><td>$32,000</td><td>Airbnb 月租折扣 (含水電費)</td></tr>
-            <tr><td>導師 (Tutor)</td><td>$18,500</td><td>私人對話習作 60 小時</td></tr>
-            <tr><td>食費 (Food)</td><td>$8,000</td><td>超市採買自炊為主</td></tr>
-            <tr><td>交通 (Trans)</td><td>$4,000</td><td>單車租借、機場巴士、JR</td></tr>
-            <tr><td>文化 (Life)</td><td>$3,000</td><td>錢湯入浴卷、美術館門票</td></tr>
-            <tr style="font-weight:bold; font-size:13px;"><td>TOTAL</td><td>$65,500</td><td>未含台灣-日本機票</td></tr>
+            <tr><td>住宿 (Stay)</td><td>$32,000</td><td>Airbnb 月租折扣</td></tr>
+            <tr><td>導師 (Tutor)</td><td>$18,500</td><td>私人習作 60hrs</td></tr>
+            <tr><td>食費 (Food)</td><td>$8,000</td><td>超市採買自炊</td></tr>
+            <tr><td>交通 (Trans)</td><td>$4,000</td><td>單車、巴士、JR</td></tr>
+            <tr><td>文化 (Life)</td><td>$3,000</td><td>錢湯、美術館</td></tr>
+            <tr style="font-weight:bold;"><td>TOTAL</td><td>$65,500</td><td>未含機票</td></tr>
         </table>
     </div>
 </section>
@@ -139,13 +150,17 @@
 
     const sightsData = {
         aomori: [
-            { name: "古川市場", time: "07:00-16:00 (週二休)", special: "自助海鮮丼(Nokke-don)實戰地，自選食材鋪在飯上。", access: "青森站步行 5 分鐘", link: "https://nokkedon.jp/" },
-            { name: "睡魔之家 Wa Rasse", time: "09:00-18:00", special: "展示震撼睡魔燈籠，每整點有打擊樂表演。", access: "青森站步行 1 分鐘", link: "http://www.nebuta.jp/warasse/" },
-            { name: "青森縣立美術館", time: "09:30-17:00", special: "必看奈良美智「青森犬」，純白壕溝建築設計。", access: "站前搭巴士約 20 分鐘", link: "https://www.aomori-museum.jp/" }
+            { name: "古川市場", time: "07:00-16:00 (週二休)", special: "自助海鮮丼(Nokke-don)實戰地。", access: "青森站步行 5 分鐘", link: "https://nokkedon.jp/" },
+            { name: "睡魔之家 Wa Rasse", time: "09:00-18:00", special: "展示巨大睡魔燈籠，每整點有打擊樂表演。", access: "青森站步行 1 分鐘", link: "http://www.nebuta.jp/warasse/" },
+            { name: "青森縣立美術館", time: "09:30-17:00", special: "必看奈良美智「青森犬」。", access: "站前搭巴士約 20 分鐘", link: "https://www.aomori-museum.jp/" },
+            { name: "淺蟲溫泉", time: "各設施不同", special: "擁有 1200 年歷史，可邊泡湯邊看陸奧灣夕陽。", access: "青森站搭乘青之森鐵路約 20 分鐘", link: "https://www.asamushi.com/" },
+            { name: "八甲田纜車", time: "09:00-15:30", special: "冬季可看震撼的「樹冰」，秋季是紅葉地毯。", access: "站前搭巴士約 1 小時", link: "http://www.hakkoda-ropeway.jp/" }
         ],
         hirosaki: [
-            { name: "弘前城 (弘前公園)", time: "09:00-17:00", special: "現存 12 天守之一，全日本最美櫻花/紅葉勝地。", access: "JR 弘前站搭巴士至市役所前", link: "https://www.hirosakipark.jp/" },
-            { name: "星巴克 弘前公園前店", time: "07:00-21:00", special: "古蹟建築(原師團長官舍)內的特色星巴克。", access: "弘前城追手門對面", link: "https://store.starbucks.co.jp/detail-1302/" }
+            { name: "弘前城 (弘前公園)", time: "09:00-17:00", special: "現存 12 天守之一，櫻花與紅葉名所。", access: "JR 弘前站搭巴士至市役所前", link: "https://www.hirosakipark.jp/" },
+            { name: "星巴克 弘前公園前店", time: "07:00-21:00", special: "登錄有形文化財內的古蹟星巴克。", access: "弘前城追手門對面", link: "https://store.starbucks.co.jp/detail-1302/" },
+            { name: "弘前市蘋果公園", time: "09:00-17:00", special: "有 80 種、約 2300 棵蘋果樹，可體驗採摘。", access: "弘前站搭公車約 20 分鐘", link: "https://www.hirosaki-kanko.or.jp/edit.html?id=applepark" },
+            { name: "弘前煉瓦倉庫美術館", time: "09:00-17:00", special: "由舊酒廠改建，屋頂會隨光影閃爍金色光芒。", access: "弘前中央站步行 2 分鐘", link: "https://www.hirosaki-moca.jp/" }
         ]
     };
 
@@ -173,7 +188,7 @@
     const scheduleData = [
         { title: "Arrival", img: "https://picsum.photos/id/10/400/500?grayscale", plan: [
             {t: "08:00", e: "TPE機場Check-in"}, {t: "10:30", e: "起飛：TPE → AOJ"}, {t: "15:00", e: "抵達青森機場"},
-            {t: "15:45", e: "機場巴士(2號月台)往青森站"}, {t: "16:30", e: "抵達車站、租借單車"},
+            {t: "15:45", e: "巴士往青森站"}, {t: "16:30", e: "租借單車"},
             {t: "17:30", e: "Airbnb Check-in"}, {t: "19:00", e: "A-Factory 買晚餐"}
         ]}
     ];
@@ -189,7 +204,8 @@
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         document.querySelectorAll('nav a').forEach(n => n.classList.remove('active'));
-        document.getElementById('nav-' + pageId).classList.add('active');
+        const navTarget = document.getElementById('nav-' + pageId);
+        if(navTarget) navTarget.classList.add('active');
         window.scrollTo(0, 0);
     }
 
@@ -207,7 +223,6 @@
     }
 
     function closeModal() { document.getElementById('infoModal').style.display = 'none'; }
-    // 點擊背景關閉邏輯
     function checkClose(e) { if(e.target.id === 'infoModal') closeModal(); }
 </script>
 
