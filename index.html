@@ -9,8 +9,13 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; background-color: var(--bg); font-family: 'PingFang TC', sans-serif; color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-        /* 選單按鈕邏輯：滑動隱藏 */
-        .menu-trigger { position: fixed; top: 25px; left: 25px; z-index: 2000; font-size: 24px; cursor: pointer; transition: 0.3s; opacity: 1; }
+        /* 選單按鈕邏輯 */
+        .menu-trigger {
+            position: fixed; top: 25px; left: 25px; z-index: 2000;
+            font-size: 24px; cursor: pointer; 
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 1;
+        }
         .menu-hidden { opacity: 0; pointer-events: none; transform: translateY(-10px); }
 
         nav {
@@ -25,6 +30,7 @@
 
         .page { display: none; width: 100vw; min-height: 100vh; padding: 100px 25px 80px; }
         .page.active { display: block; animation: fadeIn 0.5s ease; }
+        
         #home { display: none; height: 100vh; padding: 0 25px; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         #home.active { display: flex; }
 
@@ -33,24 +39,30 @@
         .info-card { background: #fff; padding: 25px; margin-bottom: 25px; border: 0.5px solid #000; }
         .info-card h3 { font-size: 13px; margin: 0 0 15px 0; letter-spacing: 2px; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 8px; }
 
-        /* 互動式景點清單樣式 */
-        .add-sight-box { display: flex; gap: 10px; margin-bottom: 20px; }
-        .add-sight-box input { flex: 1; border: 1px solid #ddd; padding: 8px; font-size: 12px; outline: none; }
-        .add-sight-box button { background: var(--text); color: #fff; border: none; padding: 8px 15px; font-size: 12px; cursor: pointer; }
-
-        .sight-item { display: flex; align-items: flex-start; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 0.5px solid #eee; }
-        .sight-checkbox { width: 18px; height: 18px; border: 1px solid #000; margin-right: 12px; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 3px; }
-        .sight-checkbox.checked::after { content: '✓'; font-size: 14px; }
-        .sight-content { flex: 1; font-size: 13px; }
-        .sight-content.done { text-decoration: line-through; color: #aaa; }
-        .delete-btn { color: #ccc; font-size: 10px; margin-left: 10px; cursor: pointer; }
-
-        /* 日曆網格與其他維持不變 */
         .calendar-zine-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 15px; margin-top: 40px; }
         .zine-item { position: relative; aspect-ratio: 1 / 1.3; background: var(--grid-bg); border: 0.5px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 5px; cursor: pointer; }
         .zine-num { font-family: 'Courier New', monospace; font-size: 10px; color: #888; position: absolute; top: -22px; width: 100%; text-align: center; }
-        .zine-photo-box { width: 85%; height: 75%; background-color: #f2f2f0; background-size: cover; background-position: center; }
-        .zine-label { width: 100%; text-align: center; font-size: 7px; color: #666; }
+        .zine-photo-box { width: 85%; height: 75%; background-color: #f2f2f0; background-size: cover; background-position: center; border: 0.5px solid rgba(0,0,0,0.05); }
+        .zine-label { width: 100%; text-align: center; font-size: 7px; font-weight: 500; color: #666; letter-spacing: 0.5px; }
+
+        .sight-item { margin-bottom: 25px; border-bottom: 0.5px solid #eee; padding-bottom: 20px; position: relative; }
+        .sight-header { display: flex; align-items: center; margin-bottom: 10px; }
+        .sight-checkbox { width: 18px; height: 18px; border: 1px solid #000; margin-right: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .sight-checkbox.checked::after { content: '✓'; font-size: 14px; }
+        .tag { display: inline-block; background: #f6f6f6; padding: 2px 6px; font-size: 9px; color: #888; margin-right: 5px; margin-bottom: 5px; }
+        .access { margin-top: 8px; color: var(--accent); font-weight: bold; font-size: 10px; }
+        .address-text { font-size: 9px; color: #999; display: block; margin-top: 4px; }
+
+        /* 手動新增輸入框樣式 */
+        .add-sight-input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+        .add-sight-input-group input, .add-sight-input-group textarea { 
+            width: 100%; border: 0.5px solid #000; padding: 10px; font-size: 11px; outline: none; background: #fafafa;
+        }
+        .add-btn { background: #1a1a1a; color: #fff; border: none; padding: 10px; font-size: 11px; cursor: pointer; letter-spacing: 2px; }
+        .delete-custom { position: absolute; top: 0; right: 0; font-size: 12px; color: #ccc; cursor: pointer; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        th, td { border: 0.5px solid #eee; padding: 10px; text-align: left; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 3000; align-items: center; justify-content: center; padding: 30px; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; width: 100%; max-width: 380px; padding: 40px 25px; position: relative; }
@@ -80,28 +92,66 @@
 </section>
 
 <section id="sights" class="page">
-    <div class="info-card">
-        <h3>📍 自定義景點清單</h3>
-        <div class="add-sight-box">
-            <input type="text" id="newSightInput" placeholder="輸入新景點 (如: 昭和大佛)...">
-            <button onclick="addNewSight()">新增</button>
-        </div>
-        <div id="sight-list-container">
-            </div>
+    <div class="info-card" style="background: #fdf2f2; border-color: var(--accent);">
+        <h3>🚆 交通與推薦來源</h3>
+        <p style="font-size: 11px;">
+            <b>JR 奧羽本線：</b>青森 ↔ 弘前 (¥680/45分)。<br>
+            <b>景點來源：</b><a href="https://www.threads.net/@likeit.aomoricity.tw" target="_blank" style="color:var(--accent); font-weight:bold;">青森市繁體中文官方 Threads</a>
+        </p>
     </div>
-    <div class="info-card" style="background: #f9f9f9; font-size: 10px; color: #999;">
-        <p>💡 提示：點擊方框標記已完成，點擊右側 X 刪除項目。</p>
-        <p>🔗 推薦參考：<a href="https://www.threads.net/@likeit.aomoricity.tw" target="_blank" style="color:#b03a2e;">青森市官方 Threads</a></p>
+
+    <div class="info-card">
+        <h3>➕ 手動新增景點 (Custom)</h3>
+        <div class="add-sight-input-group">
+            <input type="text" id="customName" placeholder="景點名稱...">
+            <input type="text" id="customTime" placeholder="營業時間/最佳時間...">
+            <textarea id="customSpecial" placeholder="特別之處/心得..." rows="2"></textarea>
+            <button class="add-btn" onclick="addPersonalSight()">加入個人清單</button>
+        </div>
+        <div id="custom-list"></div>
+    </div>
+
+    <div class="info-card">
+        <h3>🌸 櫻花與秘境 (Seasonal)</h3>
+        <div id="seasonal-list"></div>
+    </div>
+    <div class="info-card">
+        <h3>🍎 青森市深度遊 (Aomori Threads Choice)</h3>
+        <div id="aomori-list"></div>
+    </div>
+    <div class="info-card">
+        <h3>🏯 弘前與大自然 (Hirosaki & Nature)</h3>
+        <div id="hirosaki-list"></div>
     </div>
 </section>
 
 <section id="base" class="page">
-    <div class="info-card"><h3>📍 STAY</h3><p>Aomori Furukawa Studio (Airbnb)</p></div>
-    <div class="info-card"><h3>🔍 導師方案</h3><p>AmazingTalker / Preply (中日雙語)</p></div>
+    <div class="info-card">
+        <h3>📍 STAY / 住宿詳細</h3>
+        <p><b>Aomori Furukawa Studio (Airbnb)</b></p>
+        <p style="font-size: 10px; color: #aaa;">1 Chome-XX-XX Furukawa, Aomori-shi</p>
+    </div>
+    <div class="info-card">
+        <h3>🔍 導師方案 (雙語)</h3>
+        <p style="font-size: 11px;">
+            1. <b>AmazingTalker：</b>選中日雙語老師。<br>
+            2. <b>Preply：</b>找在地導師實地對話。<br>
+            3. <b>錢湯文化：</b>Threads 推薦去錢湯跟阿公阿嬤聊天，是最高階的方言練習。
+        </p>
+    </div>
 </section>
 
 <section id="budget" class="page">
-    <div class="info-card"><h3>💰 BUDGET</h3><p>預估 NT$ 72,000+ (不含機票)</p></div>
+    <div class="info-card">
+        <h3>💰 BUDGET / 2026 精算</h3>
+        <table>
+            <tr><th>項目</th><th>預估金額</th><th>說明</th></tr>
+            <tr><td>住宿/生活</td><td>NT$ 44,000</td><td>Airbnb + 伙食</td></tr>
+            <tr><td>交通</td><td>¥ 35,000</td><td>JR East Pass 東北</td></tr>
+            <tr><td>學習</td><td>NT$ 18,500</td><td>雙語導師課程</td></tr>
+            <tr style="font-weight:bold; color: var(--accent);"><td>合計</td><td>NT$ 72,000+</td><td>不含機票</td></tr>
+        </table>
+    </div>
 </section>
 
 <div class="modal" id="infoModal" onclick="checkClose(event)">
@@ -113,14 +163,102 @@
 </div>
 
 <script>
-    // --- 選單與捲動邏輯 ---
     const menuBtn = document.getElementById('menuBtn');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 20) { menuBtn.classList.add('menu-hidden'); } 
         else { menuBtn.classList.remove('menu-hidden'); }
     });
+
     function toggleMenu() { document.getElementById('sideNav').classList.toggle('open'); }
     function goTo(id) { toggleMenu(); showPage(id); }
+
+    const sightsData = {
+        seasonal: [
+            { name: "青森縣立中央醫院前 櫻花大道", time: "4月下旬", special: "Threads 網友激推！綿延數公里的櫻花隧道，超震撼攝影點。", access: "青森站搭公車至中央醫院前", link: "https://www.threads.net/search?q=%E9%9D%92%E6%A3%AE%E7%B8%A3%E7%AB%8B%E4%B8%AD%E5%A4%AE%E9%86%AB%E9%99%A2%20%E6%AB%BB%E8%8A%B1", addr: "青森市東造道2丁目1-1" },
+            { name: "蘆野公園", time: "24小時", special: "金木町櫻花名所，拍火車穿梭櫻花隧道的經典場景。", access: "津輕鐵道蘆野公園站", link: "https://www.aptinet.jp/Detail_display_00000028.html", addr: "五所川原市金木町蘆野" }
+        ],
+        aomori: [
+            { name: "昭和大佛 (全日本最大青銅坐像)", time: "09:00-16:30", special: "隱身森林的巨型大佛，視覺衝擊力極強，Threads 攝影愛好者必訪。", access: "青森站搭乘往「昭和大佛」公車", link: "http://www.seiryuji.or.jp/", addr: "青森市大字桑原字山崎243" },
+            { name: "善知鳥神社", time: "24小時", special: "青森市發源地，文青感十足的神社，市中心散步首選。", access: "青森站步行 10 分", link: "https://www.actv.ne.jp/~utou/", addr: "青森市安方2-7-18" },
+            { name: "古川市場", time: "07:00-16:00", special: "官方推薦！體驗自選海鮮丼，跟市場阿姨練習日文。", access: "青森站步行 5 分", link: "https://nokkedon.jp/", addr: "青森市古川1-11-16" },
+            { name: "青森市錢湯 (在地大眾浴場)", time: "晚間熱門", special: "Threads 分享：體驗在地人的社交場所，暖身又暖心。", access: "市區各處", link: "https://www.threads.net/@likeit.aomoricity.tw", addr: "青森市區內 (搜尋 銭湯)" }
+        ],
+        hirosaki: [
+            { name: "弘前城 (弘前公園)", time: "09:00-17:00", special: "世界級櫻花景觀。", access: "JR 弘前站轉巴士", link: "https://www.hirosakipark.jp/", addr: "弘前市下白銀町1" },
+            { name: "星巴克 弘前公園前店", time: "07:00-21:00", special: "在有形文化財裡喝咖啡。", access: "弘前公園對面", link: "https://store.starbucks.co.jp/detail-1302/", addr: "弘前市上白銀町1-1" }
+        ]
+    };
+
+    function renderSights(listId, data) {
+        const container = document.getElementById(listId);
+        data.forEach(s => {
+            container.innerHTML += `
+                <div class="sight-item">
+                    <div class="sight-header">
+                        <div class="sight-checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <div class="sight-title">${s.name}</div>
+                    </div>
+                    <div class="sight-detail">
+                        <span class="tag">🕒 ${s.time}</span><br>
+                        <p style="margin:8px 0;">${s.special}</p>
+                        <div class="access">📍 交通：${s.access}</div>
+                        <span class="address-text">🏠 地址：${s.addr}</span>
+                        <a href="${s.link}" target="_blank" style="font-size:10px; color:#aaa; text-decoration:none; border-bottom:1px solid #eee;">🌐 前往官網</a>
+                    </div>
+                </div>`;
+        });
+    }
+
+    // --- 新增個人景點邏輯 ---
+    function addPersonalSight() {
+        const name = document.getElementById('customName').value;
+        const time = document.getElementById('customTime').value;
+        const special = document.getElementById('customSpecial').value;
+        
+        if (!name) return alert("請輸入景點名稱");
+
+        const container = document.getElementById('custom-list');
+        const newDiv = document.createElement('div');
+        newDiv.className = 'sight-item';
+        newDiv.innerHTML = `
+            <span class="delete-custom" onclick="this.parentElement.remove()">✕</span>
+            <div class="sight-header">
+                <div class="sight-checkbox" onclick="this.classList.toggle('checked')"></div>
+                <div class="sight-title">${name}</div>
+            </div>
+            <div class="sight-detail">
+                <span class="tag">🕒 ${time || '未填寫'}</span><br>
+                <p style="margin:8px 0;">${special || '無備註'}</p>
+            </div>`;
+        
+        container.prepend(newDiv);
+        
+        // 清空輸入框
+        document.getElementById('customName').value = '';
+        document.getElementById('customTime').value = '';
+        document.getElementById('customSpecial').value = '';
+    }
+
+    renderSights('seasonal-list', sightsData.seasonal);
+    renderSights('aomori-list', sightsData.aomori);
+    renderSights('hirosaki-list', sightsData.hirosaki);
+
+    const scheduleData = [];
+    const routines = ["上午：雙語老師課 / 下午：美術館攝影", "上午：市場採買練習 / 下午：錢湯體驗", "全日：跨區弘前攝影任務", "上午：方言練習 / 下午：神社散策"];
+    for(let i=0; i<30; i++) {
+        scheduleData.push({ 
+            title: i === 0 ? "Arrival" : "Archive Day", 
+            detail: i === 0 ? "抵達青森，入住並採買。" : routines[i % routines.length], 
+            img: `https://picsum.photos/id/${i+10}/400/500?grayscale` 
+        });
+    }
+
+    const grid = document.getElementById('grid-content');
+    scheduleData.forEach((item, index) => {
+        const day = (index + 1).toString().padStart(2, '0');
+        grid.innerHTML += `<div class="zine-item" onclick="openModal(${index})"><div class="zine-num">${day}</div><div class="zine-photo-box" style="background-image: url('${item.img}')"></div><div class="zine-label">${item.title}</div></div>`;
+    });
+
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
@@ -129,60 +267,6 @@
         if(navTarget) navTarget.classList.add('active');
         window.scrollTo(0, 0);
     }
-
-    // --- SIGHTS 互動邏輯 ---
-    let mySights = [
-        { name: "青森縣立中央醫院前 櫻花大道", done: false },
-        { name: "昭和大佛 (全日本最大青銅坐像)", done: false },
-        { name: "古川市場 DIY 海鮮丼", done: false },
-        { name: "弘前城與星巴克文化財門市", done: false }
-    ];
-
-    function renderSights() {
-        const container = document.getElementById('sight-list-container');
-        container.innerHTML = '';
-        mySights.forEach((sight, index) => {
-            container.innerHTML += `
-                <div class="sight-item">
-                    <div class="sight-checkbox ${sight.done ? 'checked' : ''}" onclick="toggleSight(${index})"></div>
-                    <div class="sight-content ${sight.done ? 'done' : ''}">${sight.name}</div>
-                    <div class="delete-btn" onclick="deleteSight(${index})">✕</div>
-                </div>`;
-        });
-    }
-
-    function addNewSight() {
-        const input = document.getElementById('newSightInput');
-        if (input.value.trim() !== '') {
-            mySights.push({ name: input.value, done: false });
-            input.value = '';
-            renderSights();
-        }
-    }
-
-    function toggleSight(index) {
-        mySights[index].done = !mySights[index].done;
-        renderSights();
-    }
-
-    function deleteSight(index) {
-        mySights.splice(index, 1);
-        renderSights();
-    }
-
-    // 初始化渲染
-    renderSights();
-
-    // --- SCHEDULE 網格邏輯 ---
-    const scheduleData = [];
-    for(let i=0; i<30; i++) {
-        scheduleData.push({ title: "Archive Day", detail: `第 ${i+1} 天：上午導師課程，下午進行 Zine 攝影實踐。`, img: `https://picsum.photos/id/${i+10}/400/500?grayscale` });
-    }
-    const grid = document.getElementById('grid-content');
-    scheduleData.forEach((item, index) => {
-        const day = (index + 1).toString().padStart(2, '0');
-        grid.innerHTML += `<div class="zine-item" onclick="openModal(${index})"><div class="zine-num">${day}</div><div class="zine-photo-box" style="background-image: url('${item.img}')"></div><div class="zine-label">${item.title}</div></div>`;
-    });
 
     function openModal(index) {
         const data = scheduleData[index];
