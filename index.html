@@ -102,6 +102,11 @@
 
     <div class="info-card">
         <h3>➕ 手動新增景點 (Custom)</h3>
+<div class="add-sight-input-group">
+<input type="text" id="mapUrl" placeholder="貼上 Google Maps 連結...">
+<button class="add-btn" onclick="addMapSight()">Google Map 新增景點</button>
+</div>
+
         <div class="add-sight-input-group">
             <input type="text" id="customName" placeholder="景點名稱...">
             <input type="text" id="customTime" placeholder="營業時間/最佳時間...">
@@ -126,6 +131,51 @@
 </section>
 
 <section id="base" class="page">
+<div class="info-card">
+<h3>🏠 青森1個月最適合住宿清單（實際房源）</h3>
+<table>
+<tr><th>住宿</th><th>類型</th><th>月預算</th><th>區域</th></tr>
+<tr><td>Weekly Hotel Chic</td><td>月租公寓</td><td>¥90k–120k</td><td>青森站</td></tr>
+<tr><td>Hotel Mystays Aomori</td><td>商務旅館</td><td>¥110k+</td><td>青森站</td></tr>
+<tr><td>Toyoko Inn Aomori</td><td>商務旅館</td><td>¥100k+</td><td>青森站</td></tr>
+<tr><td>Airbnb 青森市中心</td><td>公寓</td><td>¥70k–120k</td><td>新町</td></tr>
+</table>
+</div>
+
+<div class="info-card">
+<h3>👩‍🏫 青森私人日文老師聯絡方式</h3>
+<table>
+<tr><th>平台</th><th>特色</th><th>備註</th></tr>
+<tr><td>AmazingTalker</td><td>可找中日雙語老師</td><td>遠端+線上</td></tr>
+<tr><td>Preply</td><td>可找日本在地導師</td><td>可安排面對面</td></tr>
+<tr><td>Aomori Intl Exchange</td><td>地方交流協會</td><td>可找語言交換</td></tr>
+</table>
+</div>
+
+<div class="info-card">
+<h3>📘 青森1個月完整生活攻略 PDF版</h3>
+<p style="font-size:11px;">
+生活重點：<br>
+• 每週安排2‑3次日文課<br>
+• 市場買菜＋錢湯社交文化<br>
+• JR 奧羽本線探索弘前 / 五所川原<br>
+• 每週一次攝影旅行<br>
+預算：NT$70k‑90k / 月
+</p>
+</div>
+
+<div class="info-card">
+<h3>📅 青森最適合去的月份（其實差很多）</h3>
+<table>
+<tr><th>月份</th><th>特色</th></tr>
+<tr><td>4月</td><td>弘前櫻花祭（日本前三）</td></tr>
+<tr><td>5‑6月</td><td>天氣舒服、遊客少</td></tr>
+<tr><td>8月</td><td>青森睡魔祭</td></tr>
+<tr><td>10月</td><td>奧入瀨溪流紅葉</td></tr>
+<tr><td>12‑2月</td><td>豪雪體驗</td></tr>
+</table>
+</div>
+
     <div class="info-card">
         <h3>📍 STAY / 住宿詳細</h3>
         <p><b>Aomori Furukawa Studio (Airbnb)</b></p>
@@ -276,6 +326,34 @@
     }
     function closeModal() { document.getElementById('infoModal').style.display = 'none'; }
     function checkClose(e) { if(e.target.id === 'infoModal') closeModal(); }
+
+// --- Google Maps quick add ---
+function addMapSight(){
+    const url = document.getElementById('mapUrl').value.trim();
+    if(!url) return alert("請貼上 Google Maps 連結");
+
+    const container = document.getElementById('custom-list');
+    const name = "Google Maps 景點";
+    
+    const newDiv = document.createElement('div');
+    newDiv.className = 'sight-item';
+    newDiv.innerHTML = `
+        <span class="delete-custom" onclick="this.parentElement.remove()">✕</span>
+        <div class="sight-header">
+            <div class="sight-checkbox" onclick="this.classList.toggle('checked')"></div>
+            <div class="sight-title">${name}</div>
+        </div>
+        <div class="sight-detail">
+            <p style="margin:8px 0;">來自 Google Maps</p>
+            <a href="${url}" target="_blank" style="font-size:10px;color:#888;">📍 打開地圖</a>
+            <div style="margin-top:10px;">
+                <iframe src="${url.replace('/maps','/maps/embed')}" width="100%" height="200" style="border:0;"></iframe>
+            </div>
+        </div>`;
+    container.prepend(newDiv);
+    document.getElementById('mapUrl').value='';
+}
+
 </script>
 
 </body>
