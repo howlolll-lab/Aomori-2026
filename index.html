@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Aomori Life Archive 2026 V6</title>
+<title>Aomori Life Archive 2026 V7</title>
 <style>
 :root {
   --bg:#f2f2f2; --text:#1a1a1a; --accent:#b03a2e; --card:#fff; --muted:#777; --line:#dcdcdc;
@@ -18,7 +18,7 @@ nav {
   transition:.4s cubic-bezier(0.19,1,0.22,1); box-shadow:10px 0 30px rgba(0,0,0,.05);
 }
 nav.open { left:0; }
-nav a { text-decoration:none; color:#888; font-size:13px; font-weight:600; letter-spacing:3px; margin:18px 0; }
+nav a { text-decoration:none; color:#888; font-size:13px; font-weight:600; letter-spacing:3px; margin:14px 0; }
 nav a.active { color:var(--text); border-bottom:1px solid var(--text); }
 .page { display:none; width:100vw; min-height:100vh; padding:96px 20px 72px; }
 .page.active { display:block; animation:fadeIn .35s ease; }
@@ -38,33 +38,32 @@ input, textarea, select {
 .ghost-btn { background:#fff; color:#1a1a1a; border:.5px solid var(--line); padding:10px; font-size:11px; cursor:pointer; letter-spacing:.6px; }
 table { width:100%; border-collapse:collapse; font-size:11px; }
 th, td { border:.5px solid #e7e7e7; padding:10px; text-align:left; vertical-align:top; }
+th { background:#f9f9f9; font-weight:600; }
 
+/* Schedule */
 .schedule-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:22px 12px; margin-top:20px; }
-.sights-two-col {
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:16px;
-  align-items:start;
-}
-@media (max-width: 900px) {
-  .sights-two-col { grid-template-columns: 1fr; }
-}
-
 @media (min-width: 860px) { .schedule-grid { grid-template-columns:repeat(4, 1fr); } }
-.day-card { position:relative; border:.5px solid var(--line); background:#fff; padding:8px; cursor:pointer; }
+.day-card {
+  position:relative; border:.5px solid var(--line); background:#fff; padding:8px; cursor:pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.day-card:hover { transform:translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
 .day-num { position:absolute; top:-18px; left:0; width:100%; text-align:center; font-family:'Courier New', monospace; font-size:10px; color:#999; }
-.day-image { width:100%; aspect-ratio:1 / 1.18; background:#efefef; background-size:cover; background-position:center; border:.5px solid var(--line); }
+.day-image {
+  width:100%; aspect-ratio:1 / 1.18; border:.5px solid var(--line);
+  overflow:hidden; display:flex; align-items:center; justify-content:center;
+}
+.day-image svg { width:100%; height:100%; display:block; }
 .day-meta { padding-top:8px; text-align:center; }
 .day-title { font-size:10px; font-weight:600; letter-spacing:.4px; }
 .day-subtitle { font-size:9px; color:#8a8a8a; margin-top:2px; }
 
-
+/* Sights */
+.sights-two-col { display:grid; grid-template-columns: 1fr 1fr; gap:16px; align-items:start; }
+@media (max-width: 900px) { .sights-two-col { grid-template-columns: 1fr; } }
 .sight-item { margin-bottom:14px; padding-bottom:14px; border-bottom:.5px solid #ededed; position:relative; }
 .sight-header { display:flex; align-items:flex-start; gap:10px; margin-bottom:6px; }
-.sight-checkbox {
-  width:18px; height:18px; border:1px solid #000; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; margin-top:2px;
-}
+.sight-checkbox { width:18px; height:18px; border:1px solid #000; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
 .sight-checkbox.checked::after { content:'✓'; font-size:14px; }
 .sight-title { font-size:12px; font-weight:600; min-height:18px; }
 .delete-custom { position:absolute; top:0; right:0; font-size:12px; color:#c7c7c7; cursor:pointer; }
@@ -72,16 +71,16 @@ th, td { border:.5px solid #e7e7e7; padding:10px; text-align:left; vertical-alig
 .link-text a { color:#7f7f7f; word-break:break-all; }
 [contenteditable="true"]:focus { outline:1px dashed #cfcfcf; background:#fcfcfc; }
 
+/* Base */
 .base-section { margin-bottom:24px; }
-.base-section-title {
-  font-size:15px; font-weight:700; letter-spacing:1.4px; color:#9a9a9a; margin-bottom:12px; padding-bottom:8px; border-bottom:.5px solid var(--line);
-}
+.base-section-title { font-size:15px; font-weight:700; letter-spacing:1.4px; color:#9a9a9a; margin-bottom:12px; padding-bottom:8px; border-bottom:.5px solid var(--line); }
 .base-item { padding:12px 0 14px; border-bottom:.5px solid #f0f0f0; }
 .base-item:last-child { border-bottom:none; }
 .base-title { font-size:12px; font-weight:600; margin-bottom:4px; color:#555; }
 .base-content { font-size:11px; color:#555; }
 .inline-actions { display:flex; gap:8px; flex-wrap:wrap; }
 
+/* Modal */
 .modal {
   display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.38); z-index:3000;
   align-items:center; justify-content:center; padding:22px; backdrop-filter: blur(3px);
@@ -97,6 +96,20 @@ th, td { border:.5px solid #e7e7e7; padding:10px; text-align:left; vertical-alig
 #scheduleEditBtn { right:52px; }
 #scheduleSaveBtn { right:84px; display:none; }
 .section-note { font-size:11px; color:#666; line-height:1.7; }
+
+/* Transport tabs */
+.tab-bar { display:flex; gap:0; border-bottom:.5px solid var(--line); margin-bottom:16px; overflow-x:auto; }
+.tab-btn { padding:8px 14px; font-size:11px; font-weight:600; letter-spacing:.5px; border:none; background:none; cursor:pointer; color:#aaa; white-space:nowrap; border-bottom:2px solid transparent; }
+.tab-btn.active { color:var(--text); border-bottom:2px solid var(--text); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+.route-card { background:#f9f9f9; border:.5px solid var(--line); padding:14px; margin-bottom:12px; }
+.route-title { font-size:12px; font-weight:700; margin-bottom:6px; }
+.route-detail { font-size:11px; color:#555; line-height:1.8; }
+.route-tag { display:inline-block; background:#1a1a1a; color:#fff; font-size:9px; padding:2px 7px; margin-right:4px; }
+.route-tag.green { background:#3a7a4a; }
+.route-tag.blue { background:#3a4a8a; }
+.route-tag.red { background:#b03a2e; }
 </style>
 </head>
 <body>
@@ -107,35 +120,39 @@ th, td { border:.5px solid #e7e7e7; padding:10px; text-align:left; vertical-alig
   <a href="javascript:void(0)" onclick="goTo('home')" id="nav-home">INDEX</a>
   <a href="javascript:void(0)" onclick="goTo('schedule')" id="nav-schedule">SCHEDULE</a>
   <a href="javascript:void(0)" onclick="goTo('sights')" id="nav-sights">SIGHTS</a>
+  <a href="javascript:void(0)" onclick="goTo('transport')" id="nav-transport">TRANSPORT</a>
+  <a href="javascript:void(0)" onclick="goTo('japanese')" id="nav-japanese">日文學習</a>
   <a href="javascript:void(0)" onclick="goTo('base')" id="nav-base">BASE & PLAN</a>
   <a href="javascript:void(0)" onclick="goTo('budget')" id="nav-budget">BUDGET</a>
 </nav>
 
+<!-- HOME -->
 <section id="home" class="page active">
   <h1 style="font-size:31px; font-weight:200; letter-spacing:12px; margin:0;">AOMORI</h1>
-  <p style="font-size:10px; color:#aaa; letter-spacing:4px; margin-top:14px;">LIFE ARCHIVE / 2026 / V6</p>
+  <p style="font-size:10px; color:#aaa; letter-spacing:4px; margin-top:14px;">LIFE ARCHIVE / 2026 / V7</p>
 </section>
 
+<!-- SCHEDULE -->
 <section id="schedule" class="page">
   <div class="info-card">
     <h3>🗓 30-DAY SCHEDULE</h3>
-    <p class="section-note">已把每日安排再細化，改成更接近實際住一個月的生活節奏。</p>
+    <p class="section-note">30 天行程依週次分色，點擊每天卡片可查看詳細安排與編輯。</p>
   </div>
   <div class="schedule-grid" id="schedule-grid"></div>
 </section>
 
+<!-- SIGHTS -->
 <section id="sights" class="page">
   <div class="info-card">
     <h3>📍 SIGHTS</h3>
     <p class="section-note">
-      這版 SIGHTS 只保留兩區：<b>🍎 Aomori City</b> 與 <b>🏯 Hirosaki & Nature</b>。系統會先看名稱、地區、地址與 Google Maps 連結中的關鍵字，自動幫你分類；沒有明確判到青森市的，會先放到 <b>Hirosaki & Nature</b>。連結欄可直接點選。
+      分兩區：<b>🍎 Aomori City（青森市）</b> 與 <b>🏯 Hirosaki & Nature（弘前・自然・其他）</b>。可貼上 Google Maps 連結自動抓取，或手動新增。連結可直接點選。
     </p>
   </div>
-
   <div class="info-card">
     <h3>➕ 新增景點</h3>
     <div class="add-sight-input-group">
-      <textarea id="mapRawInput" rows="4" placeholder="貼上 Google Maps 分享文字或完整連結&#10;例如：&#10;https://www.google.com/maps/place/串燒+鳥勝/@40.8012959,140.7645796,16z/..."></textarea>
+      <textarea id="mapRawInput" rows="4" placeholder="貼上 Google Maps 分享文字或完整連結"></textarea>
       <button class="add-btn" onclick="addFromGoogleMaps()">貼上後自動抓取</button>
     </div>
     <div class="add-sight-input-group">
@@ -156,40 +173,355 @@ th, td { border:.5px solid #e7e7e7; padding:10px; text-align:left; vertical-alig
       <button class="ghost-btn" onclick="resetSights()">重置 SIGHTS</button>
     </div>
   </div>
-
   <div class="sights-two-col">
     <div class="info-card"><h3>🍎 Aomori City</h3><div id="aomori-list"></div></div>
     <div class="info-card"><h3>🏯 Hirosaki & Nature</h3><div id="hirosaki-list"></div></div>
   </div>
 </section>
 
+<!-- TRANSPORT -->
+<section id="transport" class="page">
+  <div class="info-card">
+    <h3>🚃 TRANSPORT — 交通完整指南</h3>
+    <p class="section-note">青森市內、跨區移動到各景點的詳細交通方式。</p>
+  </div>
+  <div class="info-card">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('tr-city')">市內交通</button>
+      <button class="tab-btn" onclick="switchTab('tr-hirosaki')">→ 弘前</button>
+      <button class="tab-btn" onclick="switchTab('tr-goshogawara')">→ 五所川原</button>
+      <button class="tab-btn" onclick="switchTab('tr-towada')">→ 十和田</button>
+      <button class="tab-btn" onclick="switchTab('tr-hakkoda')">→ 八甲田</button>
+      <button class="tab-btn" onclick="switchTab('tr-kuroishi')">→ 黑石</button>
+      <button class="tab-btn" onclick="switchTab('tr-hachinohe')">→ 八戶</button>
+    </div>
+
+    <div id="tr-city" class="tab-panel active">
+      <div class="route-card">
+        <div class="route-title">🚌 市內巴士（最常用）</div>
+        <div class="route-detail">
+          <span class="route-tag blue">青森市營巴士</span><span class="route-tag">ねぶたん号</span><br>
+          ・均一票價：市區大部分路線 ¥200<br>
+          ・一日乘車券：¥500（推薦長住者購買）<br>
+          ・主要路線：青森站 ↔ 三內丸山 ↔ 縣立美術館<br>
+          ・購票：車內現金 / 交通系 IC 卡（Suica 可用）<br>
+          ・時刻表查詢：<a href="https://www.aomori-ctb.jp/" target="_blank" style="color:#666">aomori-ctb.jp</a>
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-title">🚲 自行車（強烈推薦長住者）</div>
+        <div class="route-detail">
+          <span class="route-tag green">租借</span><br>
+          ・青森站附近有多家租車店，¥500–800/天<br>
+          ・市區大部分景點騎車 15–30 分可達<br>
+          ・冬季（12–3月）積雪，不建議騎車<br>
+          ・A-FACTORY、善知鳥神社、昭和大佛等都騎車可達
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-title">🚖 計程車 / 租車</div>
+        <div class="route-detail">
+          <span class="route-tag red">計程車</span><br>
+          ・起跳：¥690 前後<br>
+          ・市內短程（車站到住宿）約 ¥800–1,200<br><br>
+          <span class="route-tag red">租車</span><br>
+          ・青森站附近有 Toyota Rent a Car、Times Car 等<br>
+          ・適合跑郊外景點（八甲田、酸ヶ湯、奧入瀨）<br>
+          ・費用：¥5,000–9,000/天（含基本保險）<br>
+          ・需持國際駕照
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-title">🚃 JR 市內利用</div>
+        <div class="route-detail">
+          <span class="route-tag">JR 奥羽本線</span><br>
+          ・青森站 ← 青森縣內移動起點<br>
+          ・Suica / 交通系 IC 卡可直接刷乘<br>
+          ・推薦購買：青森 Freepass（視季節發售）可無限搭 JR 青森縣內路線
+        </div>
+      </div>
+    </div>
+
+    <div id="tr-hirosaki" class="tab-panel">
+      <div class="route-card">
+        <div class="route-title">🚃 電車（最推薦）</div>
+        <div class="route-detail">
+          <span class="route-tag">JR 奥羽本線</span><br>
+          ・青森站 → 弘前站：約 45–50 分<br>
+          ・票價：¥860（自由席）<br>
+          ・班次：每小時約 1–2 班<br>
+          ・IC 卡可刷，也可現場購票<br><br>
+          ・弘前站到弘前公園：步行 25 分 / 巴士 5 分 / タクシー約 ¥700
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-title">🚌 高速巴士</div>
+        <div class="route-detail">
+          <span class="route-tag blue">弘南バス</span><br>
+          ・青森站前 → 弘前巴士 terminal：約 65 分<br>
+          ・票價：¥700 前後<br>
+          ・班次多，適合行李多時使用
+        </div>
+      </div>
+    </div>
+
+    <div id="tr-goshogawara" class="tab-panel">
+      <div class="route-card">
+        <div class="route-title">🚃 電車（推薦）</div>
+        <div class="route-detail">
+          <span class="route-tag">JR 五能線</span><br>
+          ・青森站 → 五所川原站：約 1 小時 10 分<br>
+          ・票價：¥990<br>
+          ・班次少，請事先確認時刻表<br><br>
+          <span class="route-tag">津輕鐵道（金木・蘆野公園）</span><br>
+          ・五所川原站 → 金木站：約 20 分（¥490）<br>
+          ・金木站 → 蘆野公園站：約 10 分<br>
+          ・可拍到列車穿越蘆野公園櫻花隧道（4月限定絕景）
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-title">🚌 巴士</div>
+        <div class="route-detail">
+          <span class="route-tag blue">弘南バス</span><br>
+          ・青森站 → 五所川原：約 1 小時 20 分<br>
+          ・班次比電車多，彈性較大
+        </div>
+      </div>
+    </div>
+
+    <div id="tr-towada" class="tab-panel">
+      <div class="route-card">
+        <div class="route-title">🚌 巴士（主要方式）</div>
+        <div class="route-detail">
+          <span class="route-tag blue">JR バス東北「みずうみ号」</span><br>
+          ・青森站 → 十和田湖：約 2 小時 30 分<br>
+          ・票價：¥2,330（單程）<br>
+          ・班次少（1天約 2–3 班），請提前查詢並訂位<br>
+          ・奧入瀨溪流各站停靠，可中途下車健行後再搭下一班<br><br>
+          ・推薦：在「石ヶ戸」下車步行到「雲井の滝」段落（約 4km），再搭車到十和田湖
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-title">🚗 租車（自駕）</div>
+        <div class="route-detail">
+          <span class="route-tag red">自駕</span><br>
+          ・青森市出發：約 1.5 小時<br>
+          ・奧入瀨溪流沿線可自由停車拍照<br>
+          ・冬季（11月–4月）路況複雜，建議只在夏秋自駕
+        </div>
+      </div>
+    </div>
+
+    <div id="tr-hakkoda" class="tab-panel">
+      <div class="route-card">
+        <div class="route-title">🚌 巴士</div>
+        <div class="route-detail">
+          <span class="route-tag blue">JR バス東北</span><br>
+          ・青森站 → 八甲田ロープウェー前：約 1 小時 5 分<br>
+          ・票價：約 ¥1,150<br>
+          ・夏季較多班次，冬季滑雪期也有<br><br>
+          ・酸ヶ湯溫泉：同路線，青森站出發約 1 小時（¥1,050）<br>
+          ・八甲田纜車：成人來回 ¥1,850，可俯瞰整個八甲田連峰
+        </div>
+      </div>
+    </div>
+
+    <div id="tr-kuroishi" class="tab-panel">
+      <div class="route-card">
+        <div class="route-title">🚃 電車</div>
+        <div class="route-detail">
+          <span class="route-tag">JR 奥羽本線</span> → 弘前站換乘 <span class="route-tag">弘南鐵道</span><br>
+          ・青森站 → 弘前站：約 45 分（¥860）<br>
+          ・弘前站 → 黑石站：約 28 分（¥440）<br>
+          ・黑石站 → こみせ通り：步行約 10 分<br><br>
+          ・也可從青森搭巴士到弘前，再轉弘南鐵道
+        </div>
+      </div>
+    </div>
+
+    <div id="tr-hachinohe" class="tab-panel">
+      <div class="route-card">
+        <div class="route-title">🚃 新幹線（最快）</div>
+        <div class="route-detail">
+          <span class="route-tag red">東北新幹線</span><br>
+          ・新青森站 → 八戶站：約 25 分<br>
+          ・票價：自由席 ¥3,040 / 指定席 ¥3,560<br>
+          ・新青森站：青森站轉 JR 奥羽本線 2 站（4分）<br><br>
+          ・八戶朝市（館鼻岸壁朝市）：週日早上 3:00–9:00，日本規模最大級的朝市
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-title">🚃 在來線（省錢）</div>
+        <div class="route-detail">
+          <span class="route-tag">JR 青い森鉄道</span><br>
+          ・青森站 → 八戶站：約 1 小時 25 分<br>
+          ・票價：¥1,690<br>
+          ・班次少，適合不趕時間時使用
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JAPANESE 日文學習 -->
+<section id="japanese" class="page">
+  <div class="info-card">
+    <h3>📚 日文學習 — 私人老師 & 語言學校</h3>
+    <p class="section-note">在青森學日文的完整選項，從完全零基礎到想加強會話都適用。</p>
+  </div>
+
+  <div class="info-card">
+    <h3>🧑‍🏫 私人老師（家教）— 推薦首選</h3>
+    <div class="base-section">
+      <div class="base-item">
+        <div class="base-title">✅ 為什麼選私人老師？</div>
+        <div class="base-content">上課時間完全彈性、可要求只練你最需要的主題（點餐、購物、會話）、可在咖啡店上課兼生活練習、費用比學校低。對一個月短期旅居來說，私人老師通常是最划算的選擇。</div>
+      </div>
+      <div class="base-item">
+        <div class="base-title">📱 找老師的平台</div>
+        <div class="base-content">
+          <b>italki</b>（https://www.italki.com）：全球最大語言家教平台，有大量日本母語老師，線上上課為主。費用：¥1,200–3,500 / 50 分鐘。<br><br>
+          <b>Preply</b>（https://preply.com）：同類平台，師資質量穩定，可試堂。<br><br>
+          <b>HelloTalk / Tandem</b>：語言交換 App，可找日本人免費互相練習（你教中文，對方教日文），适合補充會話練習。<br><br>
+          <b>じゅげむ（Jugem）/ ティーチャービズ（TeacherBiz）</b>：日本國內家教媒合平台，有青森在地老師，適合到了當地找面對面家教。
+        </div>
+      </div>
+      <div class="base-item">
+        <div class="base-title">💴 私人老師費用參考（青森在地・面對面）</div>
+        <div class="base-content">
+          ・在地家教（大學生或一般教師）：¥2,000–4,000 / 60 分鐘<br>
+          ・有教學資格的老師：¥4,000–8,000 / 60 分鐘<br>
+          ・一週 2 堂 × 4 週 = 約 ¥16,000–64,000（依等級）<br>
+          ・線上老師（italki）：一週 2 堂 × 4 週 = 約 ¥10,000–28,000
+        </div>
+      </div>
+      <div class="base-item">
+        <div class="base-title">🗣 如何用日文問到家教？</div>
+        <div class="base-content">
+          可以在青森的公告欄、大學布告欄（弘前大學、青森大學）、市圖書館公布欄張貼：<br>
+          「日本語を教えてくれる先生を探しています。週に2回、1時間程度希望です。」<br>
+          （我在找可以教我日文的老師，希望每週2次、每次約1小時。）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>🏫 短期語言學校 — 青森縣內選項</h3>
+    <div class="base-section">
+      <div class="base-item">
+        <div class="base-title">🌟 弘前日本語學校（弘前日本語学校）</div>
+        <div class="base-content">
+          地址：青森県弘前市（弘前大學周邊）<br>
+          特色：以留學生長期班為主，但有提供短期集中課程（2週–1個月）<br>
+          費用參考：短期集中 2 週約 ¥40,000–70,000<br>
+          上課方式：小班制（4–8人），每天上午授課 3–4 小時<br>
+          適合：想有結構化學習進度的人<br>
+          聯絡：可先 Email 詢問短期班名額，建議出發前 1 個月預約
+        </div>
+      </div>
+      <div class="base-item">
+        <div class="base-title">🌟 青森市內文化中心・カルチャースクール</div>
+        <div class="base-content">
+          青森市內的「文化センター」或「カルチャースクール」（文化教室）通常有日本語課程，主要面向外國居民。<br>
+          費用：非常便宜，月費 ¥2,000–5,000<br>
+          缺點：班級進度固定，不一定適合短期旅居者；班次可能排在白天平日<br>
+          查詢：青森市役所（市公所）的「国際交流センター」可取得資訊
+        </div>
+      </div>
+      <div class="base-item">
+        <div class="base-title">🌟 國際交流協會（AICF）提供的語言資源</div>
+        <div class="base-content">
+          青森縣國際交流協會（AIA）：https://www.aianet.ne.jp/<br>
+          提供：日語志工老師媒合（免費或低費）、語言交換活動、外國人生活支援<br>
+          特色：完全免費或低費，適合預算有限的人<br>
+          方式：可 Email 或直接到訪詢問，工作人員英文可溝通<br>
+          地址：青森市荒川字藤戸119-7（AIA 会館）
+        </div>
+      </div>
+      <div class="base-item">
+        <div class="base-title">📋 怎麼選？快速決策表</div>
+        <div class="base-content">
+          <table>
+            <tr><th>情況</th><th>建議</th></tr>
+            <tr><td>預算有限，想省錢</td><td>AIA 志工老師 + HelloTalk 語言交換</td></tr>
+            <tr><td>想有彈性、速成會話</td><td>italki 線上私人老師（出發前就可以開始）</td></tr>
+            <tr><td>想在當地面對面互動</td><td>到了青森後找在地家教（弘前大學布告欄）</td></tr>
+            <tr><td>想有系統課程進度</td><td>弘前日本語學校短期班（需提前預約）</td></tr>
+            <tr><td>完全零基礎</td><td>出發前先上 1 個月 italki，到了再找在地老師</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>📖 自學資源推薦</h3>
+    <div class="base-section">
+      <div class="base-item">
+        <div class="base-title">App</div>
+        <div class="base-content">
+          ・<b>Duolingo</b>：零基礎入門，建立每日習慣<br>
+          ・<b>Anki</b>：自製單字卡，背景點餐、購物、交通詞彙<br>
+          ・<b>NHK Web Easy</b>：簡化版日文新聞，附假名標注<br>
+          ・<b>Todai</b>：日文新聞閱讀 App，可調難度
+        </div>
+      </div>
+      <div class="base-item">
+        <div class="base-title">最值得學的生活日文（優先順序）</div>
+        <div class="base-content">
+          1. 數字、金錢（點餐結帳）<br>
+          2. 餐廳點餐用語（すみません、〜をください、おすすめは？）<br>
+          3. 購物用語（いくらですか、試著問店員）<br>
+          4. 交通問路（〜はどこですか、〜に行きたいです）<br>
+          5. 購票用語（〜まで一枚ください）<br>
+          6. 感謝與道歉（ありがとうございます、すみません）<br>
+          7. 基本寒暄（おはようございます、よろしくお願いします）
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BASE & PLAN -->
 <section id="base" class="page">
   <div class="info-card">
     <h3>🧩 BASE & PLAN</h3>
-    <p class="section-note">只放整理內容，並把各分類標題放大以方便區分。</p>
+    <p class="section-note">住宿、月份選擇、生活策略整理。</p>
   </div>
   <div class="info-card"><div id="base-sections"></div></div>
 </section>
 
+<!-- BUDGET -->
 <section id="budget" class="page">
   <div class="info-card">
-    <h3>💰 BUDGET / 青森 1 個月預計費用 V6</h3>
+    <h3>💰 BUDGET / 青森 1 個月預計費用 V7</h3>
     <table>
       <tr><th>類別</th><th>JPY</th><th>TWD 估算</th><th>備註</th></tr>
       <tr><td>住宿（商旅型）</td><td>¥90,000–160,000</td><td>約 NT$19,800–35,200</td><td>站前商旅最穩，但 1 個月通常比較貴</td></tr>
       <tr><td>住宿（Airbnb / 公寓型）</td><td>¥120,000–220,000</td><td>約 NT$26,400–48,400</td><td>若含廚房與洗衣，生活體驗更好</td></tr>
       <tr><td>伙食（自己煮＋部分外食）</td><td>¥45,000–70,000</td><td>約 NT$9,900–15,400</td><td>超市為主較省；咖啡店與市場會拉高</td></tr>
-      <tr><td>市區交通</td><td>¥4,000–10,000</td><td>約 NT$880–2,200</td><td>公車 / 少量 JR</td></tr>
+      <tr><td>市區交通（巴士・自行車）</td><td>¥4,000–10,000</td><td>約 NT$880–2,200</td><td>巴士一日券 ¥500 / 自行車租借月費</td></tr>
       <tr><td>跨區移動（弘前、五所川原、十和田等）</td><td>¥8,000–25,000</td><td>約 NT$1,760–5,500</td><td>看你外出頻率；若跑很多次會上升</td></tr>
-      <tr><td>日文課（線上）</td><td>¥20,000–60,000</td><td>約 NT$4,400–13,200</td><td>依一週 2–3 堂估算</td></tr>
-      <tr><td>日文課（面對面 / 在地）</td><td>¥30,000–90,000</td><td>約 NT$6,600–19,800</td><td>1 對 1 價差很大</td></tr>
+      <tr><td>日文課（線上，如 italki）</td><td>¥10,000–28,000</td><td>約 NT$2,200–6,160</td><td>一週 2 堂估算</td></tr>
+      <tr><td>日文課（在地私人老師・面對面）</td><td>¥16,000–64,000</td><td>約 NT$3,520–14,080</td><td>一週 2 堂；費用差距大</td></tr>
+      <tr><td>日文課（短期語言學校 2 週）</td><td>¥40,000–70,000</td><td>約 NT$8,800–15,400</td><td>弘前日本語學校等短期班</td></tr>
       <tr><td>景點 / 咖啡 / 雜支</td><td>¥20,000–50,000</td><td>約 NT$4,400–11,000</td><td>紀念品、入場、喫茶店、臨時支出</td></tr>
       <tr style="font-weight:bold; color:var(--accent);"><td>合計（偏省）</td><td>¥187,000+</td><td>約 NT$41,140+</td><td>住較省、移動較少、線上課為主</td></tr>
       <tr style="font-weight:bold; color:var(--accent);"><td>合計（較舒服）</td><td>¥300,000–525,000</td><td>約 NT$66,000–115,500</td><td>更接近「生活＋學習＋偶爾旅行」的現實區間</td></tr>
     </table>
-    <p style="font-size:10px; color:#888; margin-top:10px;">
-      TWD 這裡先以 1 JPY ≈ 0.22 TWD 粗估，方便你抓預算。實際仍會隨匯率變動。
-    </p>
+    <p style="font-size:10px; color:#888; margin-top:10px;">TWD 以 1 JPY ≈ 0.22 TWD 粗估。實際隨匯率變動。</p>
+  </div>
+
+  <div class="info-card">
+    <h3>📌 日文課費用比較</h3>
+    <table>
+      <tr><th>方式</th><th>費用（1個月）</th><th>優點</th><th>缺點</th></tr>
+      <tr><td>AIA 志工老師</td><td>免費 / 低費</td><td>完全省錢，在地交流</td><td>班次不固定</td></tr>
+      <tr><td>italki 線上</td><td>¥10,000–28,000</td><td>彈性高，出發前就能開始</td><td>少了面對面感</td></tr>
+      <tr><td>在地私人家教</td><td>¥16,000–64,000</td><td>客製化內容，面對面</td><td>需在當地找，費用差異大</td></tr>
+      <tr><td>短期語言學校</td><td>¥40,000–70,000</td><td>有系統課程，班上有同學</td><td>需提前預約，進度固定</td></tr>
+    </table>
   </div>
 
   <div class="info-card">
@@ -197,22 +529,14 @@ th, td { border:.5px solid #e7e7e7; padding:10px; text-align:left; vertical-alig
     <table>
       <tr><th>影響最大</th><th>原因</th></tr>
       <tr><td>住宿類型</td><td>同樣住 1 個月，商旅、Airbnb、公寓差距會非常大</td></tr>
-      <tr><td>是否常跑遠程景點</td><td>如果頻繁跑弘前、五所川原、十和田，交通費會很明顯</td></tr>
-      <tr><td>日文課密度</td><td>一週 1 堂與一週 3 堂，整月預算差很多</td></tr>
-      <tr><td>外食比例</td><td>青森自己煮可以壓預算；市場 / 咖啡 / 外食多就會往上</td></tr>
+      <tr><td>是否常跑遠程景點</td><td>頻繁跑弘前、五所川原、十和田，交通費很明顯</td></tr>
+      <tr><td>日文課密度與方式</td><td>選擇差距從 0 到 ¥70,000，影響最大</td></tr>
+      <tr><td>外食比例</td><td>青森自己煮可以壓預算；市場 / 咖啡 / 外食多就往上</td></tr>
     </table>
-  </div>
-
-  <div class="info-card">
-    <h3>📌 預算建議版本</h3>
-    <p style="font-size:11px;">
-      <b>偏省版本：</b>住青森站周邊便宜房、每週 1–2 次外出、日文課先線上打底。<br>
-      <b>平衡版本：</b>住感較好的公寓或 Airbnb、每週 2–3 次課、每週 1 次跨區移動。<br>
-      <b>舒服版本：</b>住宿品質提高、面對面家教、跑比較多弘前 / 奧入瀨 / 五所川原。
-    </p>
   </div>
 </section>
 
+<!-- MODAL -->
 <div class="modal" id="infoModal" onclick="checkClose(event)">
   <div class="modal-content" onclick="event.stopPropagation()">
     <span id="scheduleSaveBtn" class="modal-action-btn" onclick="saveCurrentScheduleDay()">✓</span>
@@ -224,30 +548,241 @@ th, td { border:.5px solid #e7e7e7; padding:10px; text-align:left; vertical-alig
 </div>
 
 <script>
-const STORAGE = { sights: 'aomori_v6_sights', schedule: 'aomori_v8_schedule' };
-const defaultSights = [{"id": "s1", "name": "弘前公園（弘前城）", "region": "弘前", "address": "青森県弘前市下白銀町1", "time": "4月下旬～5月上旬 / 櫻花祭", "note": "代表級櫻花景點；平時也適合散步。", "access": "JR弘前站轉巴士或步行", "link": "https://www.hirosakipark.jp/", "checked": false, "category": "Seasonal"}, {"id": "s2", "name": "蘆野公園", "region": "五所川原", "address": "青森県五所川原市金木町芦野", "time": "4月下旬", "note": "可拍津輕鐵道穿越櫻花。", "access": "津輕鐵道 蘆野公園站", "link": "https://www.aptinet.jp/Detail_display_00000028.html", "checked": false, "category": "Seasonal"}, {"id": "s3", "name": "古川市場・のっけ丼", "region": "青森市", "address": "青森県青森市古川1-11-16", "time": "早上～下午", "note": "很適合練點餐日文。", "access": "青森站步行約5分", "link": "https://nokkedon.jp/", "checked": false, "category": "Aomori City"}, {"id": "s4", "name": "善知鳥神社", "region": "青森市", "address": "青森県青森市安方2-7-18", "time": "24小時", "note": "市中心散步首選。", "access": "青森站步行約10分", "link": "https://www.utoujinja.or.jp/", "checked": false, "category": "Aomori City"}, {"id": "s5", "name": "昭和大佛（青龍寺）", "region": "青森市", "address": "青森県青森市桑原山崎45-2", "time": "白天建議", "note": "視覺記憶點很強。", "access": "青森站轉巴士", "link": "http://www.seiryuji.or.jp/", "checked": false, "category": "Aomori City"}, {"id": "s6", "name": "星巴克 弘前公園前店", "region": "弘前", "address": "青森県弘前市上白銀町1-1", "time": "白天 / 傍晚", "note": "在有形文化財裡喝咖啡。", "access": "弘前公園對面", "link": "https://store.starbucks.co.jp/detail-1302/", "checked": false, "category": "Hirosaki & Nature"}, {"id": "s7", "name": "奧入瀨溪流", "region": "十和田", "address": "青森県十和田市奥瀬", "time": "5–10月 / 紅葉高峰約10月底–11月初", "note": "秋天非常強，5–6月新綠也很美。", "access": "巴士 / 自駕較方便", "link": "https://aomori-tourism.com/en/spot/detail_339.html", "checked": false, "category": "Hirosaki & Nature"}];
-const baseSections = {"住宿": [{"title": "最適合長住的區域排序", "content": "1. 青森站周邊：最適合第一次住 1 個月，交通、超市、餐飲、JR 移動最穩。 2. 新町 / 古川：生活感較強，步行可處理大多數日常。 3. 弘前站周邊：如果你更偏好咖啡店、洋館、散步感，可以把弘前當第二選項。"}, {"title": "找房時最優先的 5 個條件", "content": "步行 10 分內可到車站或大型超市、有洗衣設備、有簡易廚房或微波設備、可住 28–31 晚、晚上周邊不會太偏。這幾個比單純房價更重要。"}, {"title": "住宿類型怎麼選", "content": "商旅適合第一次住青森、怕出錯；Airbnb / 公寓型適合想要更像在生活、能自己煮飯的人。如果你想控制預算又保留舒適感，建議先看站前商旅，再看有廚房的公寓。"}], "老師": [{"title": "最適合你的方式", "content": "先用線上老師打底 2–4 週，再到當地補會話與生活練習。這樣不會一到青森就因為零基礎完全聽不懂而卡住。"}, {"title": "老師類型建議", "content": "文法型老師：幫你建立句型骨架。會話型老師：幫你把『敢講』練出來。最理想是一週 1 次文法 + 1 次會話。"}, {"title": "到青森後怎麼練最快", "content": "把課堂內容拿去市場、超市、咖啡店重複使用。你真正進步最快的，不是上課當下，而是課後把句子拿去實戰。"}], "月份": [{"title": "最推薦：5 月", "content": "櫻花季後價格通常比較回穩，氣溫舒服，生活感與觀光感最平衡。適合第一次住 1 個月。"}, {"title": "也很推薦：6 月", "content": "人更少，新綠舒服，很適合想安靜過生活、學日文、慢慢建立節奏的人。"}, {"title": "景色派最強：10 月", "content": "奧入瀨溪流、十和田湖周邊秋色很強，但體感溫度已開始降。適合喜歡秋天、攝影、散步的人。"}, {"title": "第一次不建議：1–2 月", "content": "雪量、風、移動難度都高。除非你就是為了北國雪景與冬季體驗，否則第一次住一個月不建議從冬天開始。"}], "生活策略": [{"title": "不要每天排景點", "content": "一個月不是 30 天觀光。真正好住的行程應該是：每週 1 次遠一點移動、2–3 次課、2 天空白日，其餘時間回到固定生活圈。"}, {"title": "建立自己的日常動線", "content": "第一週先找到超市、便利商店、車站、咖啡店、洗衣點與散步路線。只要生活動線穩了，後面整個月會輕鬆很多。"}, {"title": "最值得練的日文情境", "content": "點餐、買東西、問路、買票、結帳、確認營業時間。這些比背太難的文法更快有感。"}]};
-const DEFAULT_SCHEDULE_DATA = [{"title": "Day 01", "theme": "抵達與安頓", "subtitle": "第 1 週：建立生活圈", "items": [["08:30–09:30", "抵達機場或轉乘點，確認網路、交通票券與住宿資訊。"], ["09:30–11:00", "移動到青森市區，途中記錄沿路地標與之後常用的交通站點。"], ["11:00–12:00", "辦理入住、確認鑰匙／自助入住方式、整理大件行李。"], ["12:00–13:00", "在住宿附近吃第一餐，先熟悉最近的餐廳與便利商店。"], ["13:30–15:00", "步行確認青森站、巴士站、超市、藥妝店、ATM 位置。"], ["15:00–16:30", "回住宿整理衣物、分類票券、充電設備與日常用品。"], ["17:00–18:30", "到超市採買一週基本用品：水、早餐、即食品、清潔用品。"], ["19:00–20:00", "簡單記帳，寫下今天最需要記住的生活動線。"], ["20:00–21:00", "早睡調整節奏，讓隔天開始進入真正生活模式。"]], "img": "https://picsum.photos/id/30/600/800?grayscale"}, {"title": "Day 02", "theme": "生活圈建立", "subtitle": "第 1 週：建立生活圈", "items": [["08:00–09:00", "早餐＋整理昨日採買清單，補齊缺少的生活用品。"], ["09:30–11:00", "青森站周邊慢走，記錄最順的步行動線與回住宿路線。"], ["11:00–12:00", "找一間適合久坐的咖啡店，建立未來自修與寫筆記的固定場所。"], ["12:30–14:00", "到古川市場或附近商店街練習點餐、付款、詢問價格。"], ["14:30–16:00", "回住宿整理票據、超市價格、自己最常用日文句子。"], ["16:00–17:30", "安排輕鬆散步，熟悉白天與傍晚的街區感覺。"], ["19:00–20:00", "複習今天實際用到的句子：請問、多少錢、可以刷卡嗎。"], ["20:00–21:00", "寫生活筆記，記錄哪裡最方便、哪裡想再去。"]], "img": "https://picsum.photos/id/31/600/800?grayscale"}, {"title": "Day 03", "theme": "第一次日文課", "subtitle": "第 1 週：建立生活圈", "items": [["08:00–09:00", "早餐＋複習自我介紹、五十音、數字與結帳用語。"], ["09:30–10:00", "整理上課要問的內容：點餐、買東西、搭車。"], ["10:00–11:30", "日文課①：自我介紹、在店裡會用到的基本句型。"], ["11:30–12:00", "課後立刻記下老師修正過的句子與發音。"], ["13:00–14:30", "去咖啡店把今天句型改寫成自己的版本。"], ["15:00–16:30", "去超商或小店實際用一次今天學到的句子。"], ["17:00–18:00", "散步到善知鳥神社或市區附近，當作輕鬆收尾。"], ["20:00–21:00", "再複習一次今天真正開口講出去的句子。"]], "img": "https://picsum.photos/id/32/600/800?grayscale"}, {"title": "Day 04", "theme": "空白生活日", "subtitle": "第 1 週：建立生活圈", "items": [["09:00–10:00", "晚起、慢慢吃早餐，不特別安排高密度行程。"], ["10:30–12:00", "去超市補貨，練習看折扣標示與價格。"], ["12:00–13:00", "回住宿簡單煮飯或買回來吃。"], ["13:30–15:00", "洗衣、整理桌面、照片與票券，維持生活秩序。"], ["15:00–16:30", "留一段完全空白時間，休息或隨興散步。"], ["17:00–18:30", "到附近街區拍照，記錄自己喜歡的街角與店面。"], ["19:30–20:30", "寫生活日記與簡單記帳。"]], "img": "https://picsum.photos/id/33/600/800?grayscale"}, {"title": "Day 05", "theme": "青森市區深度日", "subtitle": "第 1 週：建立生活圈", "items": [["08:00–09:00", "早餐，確認今天想走的市區路線。"], ["09:30–11:00", "A-FACTORY 一帶散步，看海邊與車站周邊景觀。"], ["11:00–12:00", "找一家店坐下，整理最近幾天青森市區的印象。"], ["12:30–14:00", "午餐＋練習點餐與結帳。"], ["14:00–15:30", "ASPAM 周邊、港邊或商店街慢走。"], ["16:00–17:30", "去咖啡店整理照片，挑出值得記錄的地方。"], ["19:00–20:00", "查之後想去的弘前、五所川原、十和田交通。"]], "img": "https://picsum.photos/id/34/600/800?grayscale"}, {"title": "Day 06", "theme": "弘前預備日", "subtitle": "第 1 週：建立生活圈", "items": [["08:30–09:30", "早餐與洗衣，準備隔天移動的小包與票券。"], ["10:00–11:30", "日文課②：問路、買票、看不懂站名時怎麼問。"], ["12:00–13:00", "把移動日需要的句子整理成手機備忘錄。"], ["13:30–15:00", "到車站模擬看時刻表、月台與轉乘動線。"], ["15:30–16:30", "去超市買隔天可帶著走的小點心與飲料。"], ["17:00–18:00", "早點回住宿整理，避免隔天匆忙。"], ["20:00–21:00", "提早休息。"]], "img": "https://picsum.photos/id/35/600/800?grayscale"}, {"title": "Day 07", "theme": "弘前一日來回", "subtitle": "第 1 週：建立生活圈", "items": [["07:00–08:00", "早餐、出門、確認列車時刻與月台。"], ["08:00–09:00", "搭車前往弘前，沿途看車窗外景色與站名。"], ["09:30–11:30", "弘前公園、城區周邊慢走，不急著一次走完。"], ["11:30–12:30", "在弘前市區吃午餐，練習簡單日文點餐。"], ["13:00–14:30", "老街、咖啡店、洋館周邊散步。"], ["14:30–15:30", "找地方坐下，整理今天看到的城市氛圍。"], ["16:00–17:00", "返回車站，搭車回青森。"], ["18:00–19:00", "回住宿休息、整理票券與花費。"], ["20:00–20:40", "寫下弘前與青森的生活感差別。"]], "img": "https://picsum.photos/id/36/600/800?grayscale"}, {"title": "Day 08", "theme": "恢復日", "subtitle": "第 2 週：穩定上課與外出", "items": [["09:30–10:30", "晚起，慢慢吃早餐。"], ["11:00–12:30", "附近吃飯或買熟食回去。"], ["13:00–15:00", "休息、照片整理、把前幾天的支出補齊。"], ["15:30–17:00", "散步或去澡堂放鬆。"], ["17:30–18:30", "回住宿泡澡、整理衣物。"], ["20:00–21:00", "看日文影片或回顧之前上課內容。"]], "img": "https://picsum.photos/id/37/600/800?grayscale"}, {"title": "Day 09", "theme": "會話練習日", "subtitle": "第 2 週：穩定上課與外出", "items": [["08:00–09:00", "早餐＋複習昨天沒講順的句子。"], ["10:00–11:30", "日文課③：把句子從『知道』變成『講得出來』。"], ["12:00–13:00", "整理老師補充的自然說法。"], ["13:30–15:00", "去咖啡店把句子改成自己會真的用到的版本。"], ["15:30–17:00", "出門實戰：點餐、結帳、問店員。"], ["17:30–18:30", "記錄今天哪些表達最自然、哪些卡住。"], ["20:00–21:00", "再讀一次今天講過的內容。"]], "img": "https://picsum.photos/id/38/600/800?grayscale"}, {"title": "Day 10", "theme": "青森美術 / 文化日", "subtitle": "第 2 週：穩定上課與外出", "items": [["08:30–09:30", "早餐，輕鬆出門。"], ["10:00–12:30", "安排一個文化點、美術館或展覽相關行程。"], ["12:30–13:30", "午餐。"], ["14:00–15:30", "找安靜的地方寫觀察筆記。"], ["16:00–17:30", "回市區途中買生活用品。"], ["19:00–20:00", "整理照片與今天的感受。"]], "img": "https://picsum.photos/id/39/600/800?grayscale"}, {"title": "Day 11", "theme": "抵達與安頓", "subtitle": "第 2 週：穩定上課與外出", "items": [["08:30–09:30", "抵達機場或轉乘點，確認網路、交通票券與住宿資訊。"], ["09:30–11:00", "移動到青森市區，途中記錄沿路地標與之後常用的交通站點。"], ["11:00–12:00", "辦理入住、確認鑰匙／自助入住方式、整理大件行李。"], ["12:00–13:00", "在住宿附近吃第一餐，先熟悉最近的餐廳與便利商店。"], ["13:30–15:00", "步行確認青森站、巴士站、超市、藥妝店、ATM 位置。"], ["15:00–16:30", "回住宿整理衣物、分類票券、充電設備與日常用品。"], ["17:00–18:30", "到超市採買一週基本用品：水、早餐、即食品、清潔用品。"], ["19:00–20:00", "簡單記帳，寫下今天最需要記住的生活動線。"], ["20:00–21:00", "早睡調整節奏，讓隔天開始進入真正生活模式。"]], "img": "https://picsum.photos/id/40/600/800?grayscale"}, {"title": "Day 12", "theme": "生活圈建立", "subtitle": "第 2 週：穩定上課與外出", "items": [["08:00–09:00", "早餐＋整理昨日採買清單，補齊缺少的生活用品。"], ["09:30–11:00", "青森站周邊慢走，記錄最順的步行動線與回住宿路線。"], ["11:00–12:00", "找一間適合久坐的咖啡店，建立未來自修與寫筆記的固定場所。"], ["12:30–14:00", "到古川市場或附近商店街練習點餐、付款、詢問價格。"], ["14:30–16:00", "回住宿整理票據、超市價格、自己最常用日文句子。"], ["16:00–17:30", "安排輕鬆散步，熟悉白天與傍晚的街區感覺。"], ["19:00–20:00", "複習今天實際用到的句子：請問、多少錢、可以刷卡嗎。"], ["20:00–21:00", "寫生活筆記，記錄哪裡最方便、哪裡想再去。"]], "img": "https://picsum.photos/id/41/600/800?grayscale"}, {"title": "Day 13", "theme": "第一次日文課", "subtitle": "第 2 週：穩定上課與外出", "items": [["08:00–09:00", "早餐＋複習自我介紹、五十音、數字與結帳用語。"], ["09:30–10:00", "整理上課要問的內容：點餐、買東西、搭車。"], ["10:00–11:30", "日文課①：自我介紹、在店裡會用到的基本句型。"], ["11:30–12:00", "課後立刻記下老師修正過的句子與發音。"], ["13:00–14:30", "去咖啡店把今天句型改寫成自己的版本。"], ["15:00–16:30", "去超商或小店實際用一次今天學到的句子。"], ["17:00–18:00", "散步到善知鳥神社或市區附近，當作輕鬆收尾。"], ["20:00–21:00", "再複習一次今天真正開口講出去的句子。"]], "img": "https://picsum.photos/id/42/600/800?grayscale"}, {"title": "Day 14", "theme": "空白生活日", "subtitle": "第 2 週：穩定上課與外出", "items": [["09:00–10:00", "晚起、慢慢吃早餐，不特別安排高密度行程。"], ["10:30–12:00", "去超市補貨，練習看折扣標示與價格。"], ["12:00–13:00", "回住宿簡單煮飯或買回來吃。"], ["13:30–15:00", "洗衣、整理桌面、照片與票券，維持生活秩序。"], ["15:00–16:30", "留一段完全空白時間，休息或隨興散步。"], ["17:00–18:30", "到附近街區拍照，記錄自己喜歡的街角與店面。"], ["19:30–20:30", "寫生活日記與簡單記帳。"]], "img": "https://picsum.photos/id/43/600/800?grayscale"}, {"title": "Day 15", "theme": "青森市區深度日", "subtitle": "第 3 週：擴大移動範圍", "items": [["08:00–09:00", "早餐，確認今天想走的市區路線。"], ["09:30–11:00", "A-FACTORY 一帶散步，看海邊與車站周邊景觀。"], ["11:00–12:00", "找一家店坐下，整理最近幾天青森市區的印象。"], ["12:30–14:00", "午餐＋練習點餐與結帳。"], ["14:00–15:30", "ASPAM 周邊、港邊或商店街慢走。"], ["16:00–17:30", "去咖啡店整理照片，挑出值得記錄的地方。"], ["19:00–20:00", "查之後想去的弘前、五所川原、十和田交通。"]], "img": "https://picsum.photos/id/44/600/800?grayscale"}, {"title": "Day 16", "theme": "弘前預備日", "subtitle": "第 3 週：擴大移動範圍", "items": [["08:30–09:30", "早餐與洗衣，準備隔天移動的小包與票券。"], ["10:00–11:30", "日文課②：問路、買票、看不懂站名時怎麼問。"], ["12:00–13:00", "把移動日需要的句子整理成手機備忘錄。"], ["13:30–15:00", "到車站模擬看時刻表、月台與轉乘動線。"], ["15:30–16:30", "去超市買隔天可帶著走的小點心與飲料。"], ["17:00–18:00", "早點回住宿整理，避免隔天匆忙。"], ["20:00–21:00", "提早休息。"]], "img": "https://picsum.photos/id/45/600/800?grayscale"}, {"title": "Day 17", "theme": "弘前一日來回", "subtitle": "第 3 週：擴大移動範圍", "items": [["07:00–08:00", "早餐、出門、確認列車時刻與月台。"], ["08:00–09:00", "搭車前往弘前，沿途看車窗外景色與站名。"], ["09:30–11:30", "弘前公園、城區周邊慢走，不急著一次走完。"], ["11:30–12:30", "在弘前市區吃午餐，練習簡單日文點餐。"], ["13:00–14:30", "老街、咖啡店、洋館周邊散步。"], ["14:30–15:30", "找地方坐下，整理今天看到的城市氛圍。"], ["16:00–17:00", "返回車站，搭車回青森。"], ["18:00–19:00", "回住宿休息、整理票券與花費。"], ["20:00–20:40", "寫下弘前與青森的生活感差別。"]], "img": "https://picsum.photos/id/46/600/800?grayscale"}, {"title": "Day 18", "theme": "恢復日", "subtitle": "第 3 週：擴大移動範圍", "items": [["09:30–10:30", "晚起，慢慢吃早餐。"], ["11:00–12:30", "附近吃飯或買熟食回去。"], ["13:00–15:00", "休息、照片整理、把前幾天的支出補齊。"], ["15:30–17:00", "散步或去澡堂放鬆。"], ["17:30–18:30", "回住宿泡澡、整理衣物。"], ["20:00–21:00", "看日文影片或回顧之前上課內容。"]], "img": "https://picsum.photos/id/47/600/800?grayscale"}, {"title": "Day 19", "theme": "會話練習日", "subtitle": "第 3 週：擴大移動範圍", "items": [["08:00–09:00", "早餐＋複習昨天沒講順的句子。"], ["10:00–11:30", "日文課③：把句子從『知道』變成『講得出來』。"], ["12:00–13:00", "整理老師補充的自然說法。"], ["13:30–15:00", "去咖啡店把句子改成自己會真的用到的版本。"], ["15:30–17:00", "出門實戰：點餐、結帳、問店員。"], ["17:30–18:30", "記錄今天哪些表達最自然、哪些卡住。"], ["20:00–21:00", "再讀一次今天講過的內容。"]], "img": "https://picsum.photos/id/48/600/800?grayscale"}, {"title": "Day 20", "theme": "青森美術 / 文化日", "subtitle": "第 3 週：擴大移動範圍", "items": [["08:30–09:30", "早餐，輕鬆出門。"], ["10:00–12:30", "安排一個文化點、美術館或展覽相關行程。"], ["12:30–13:30", "午餐。"], ["14:00–15:30", "找安靜的地方寫觀察筆記。"], ["16:00–17:30", "回市區途中買生活用品。"], ["19:00–20:00", "整理照片與今天的感受。"]], "img": "https://picsum.photos/id/49/600/800?grayscale"}, {"title": "Day 21", "theme": "抵達與安頓", "subtitle": "第 3 週：擴大移動範圍", "items": [["08:30–09:30", "抵達機場或轉乘點，確認網路、交通票券與住宿資訊。"], ["09:30–11:00", "移動到青森市區，途中記錄沿路地標與之後常用的交通站點。"], ["11:00–12:00", "辦理入住、確認鑰匙／自助入住方式、整理大件行李。"], ["12:00–13:00", "在住宿附近吃第一餐，先熟悉最近的餐廳與便利商店。"], ["13:30–15:00", "步行確認青森站、巴士站、超市、藥妝店、ATM 位置。"], ["15:00–16:30", "回住宿整理衣物、分類票券、充電設備與日常用品。"], ["17:00–18:30", "到超市採買一週基本用品：水、早餐、即食品、清潔用品。"], ["19:00–20:00", "簡單記帳，寫下今天最需要記住的生活動線。"], ["20:00–21:00", "早睡調整節奏，讓隔天開始進入真正生活模式。"]], "img": "https://picsum.photos/id/50/600/800?grayscale"}, {"title": "Day 22", "theme": "生活圈建立", "subtitle": "第 4 週：回收與整理", "items": [["08:00–09:00", "早餐＋整理昨日採買清單，補齊缺少的生活用品。"], ["09:30–11:00", "青森站周邊慢走，記錄最順的步行動線與回住宿路線。"], ["11:00–12:00", "找一間適合久坐的咖啡店，建立未來自修與寫筆記的固定場所。"], ["12:30–14:00", "到古川市場或附近商店街練習點餐、付款、詢問價格。"], ["14:30–16:00", "回住宿整理票據、超市價格、自己最常用日文句子。"], ["16:00–17:30", "安排輕鬆散步，熟悉白天與傍晚的街區感覺。"], ["19:00–20:00", "複習今天實際用到的句子：請問、多少錢、可以刷卡嗎。"], ["20:00–21:00", "寫生活筆記，記錄哪裡最方便、哪裡想再去。"]], "img": "https://picsum.photos/id/51/600/800?grayscale"}, {"title": "Day 23", "theme": "第一次日文課", "subtitle": "第 4 週：回收與整理", "items": [["08:00–09:00", "早餐＋複習自我介紹、五十音、數字與結帳用語。"], ["09:30–10:00", "整理上課要問的內容：點餐、買東西、搭車。"], ["10:00–11:30", "日文課①：自我介紹、在店裡會用到的基本句型。"], ["11:30–12:00", "課後立刻記下老師修正過的句子與發音。"], ["13:00–14:30", "去咖啡店把今天句型改寫成自己的版本。"], ["15:00–16:30", "去超商或小店實際用一次今天學到的句子。"], ["17:00–18:00", "散步到善知鳥神社或市區附近，當作輕鬆收尾。"], ["20:00–21:00", "再複習一次今天真正開口講出去的句子。"]], "img": "https://picsum.photos/id/52/600/800?grayscale"}, {"title": "Day 24", "theme": "空白生活日", "subtitle": "第 4 週：回收與整理", "items": [["09:00–10:00", "晚起、慢慢吃早餐，不特別安排高密度行程。"], ["10:30–12:00", "去超市補貨，練習看折扣標示與價格。"], ["12:00–13:00", "回住宿簡單煮飯或買回來吃。"], ["13:30–15:00", "洗衣、整理桌面、照片與票券，維持生活秩序。"], ["15:00–16:30", "留一段完全空白時間，休息或隨興散步。"], ["17:00–18:30", "到附近街區拍照，記錄自己喜歡的街角與店面。"], ["19:30–20:30", "寫生活日記與簡單記帳。"]], "img": "https://picsum.photos/id/53/600/800?grayscale"}, {"title": "Day 25", "theme": "青森市區深度日", "subtitle": "第 4 週：回收與整理", "items": [["08:00–09:00", "早餐，確認今天想走的市區路線。"], ["09:30–11:00", "A-FACTORY 一帶散步，看海邊與車站周邊景觀。"], ["11:00–12:00", "找一家店坐下，整理最近幾天青森市區的印象。"], ["12:30–14:00", "午餐＋練習點餐與結帳。"], ["14:00–15:30", "ASPAM 周邊、港邊或商店街慢走。"], ["16:00–17:30", "去咖啡店整理照片，挑出值得記錄的地方。"], ["19:00–20:00", "查之後想去的弘前、五所川原、十和田交通。"]], "img": "https://picsum.photos/id/54/600/800?grayscale"}, {"title": "Day 26", "theme": "弘前預備日", "subtitle": "第 4 週：回收與整理", "items": [["08:30–09:30", "早餐與洗衣，準備隔天移動的小包與票券。"], ["10:00–11:30", "日文課②：問路、買票、看不懂站名時怎麼問。"], ["12:00–13:00", "把移動日需要的句子整理成手機備忘錄。"], ["13:30–15:00", "到車站模擬看時刻表、月台與轉乘動線。"], ["15:30–16:30", "去超市買隔天可帶著走的小點心與飲料。"], ["17:00–18:00", "早點回住宿整理，避免隔天匆忙。"], ["20:00–21:00", "提早休息。"]], "img": "https://picsum.photos/id/55/600/800?grayscale"}, {"title": "Day 27", "theme": "弘前一日來回", "subtitle": "第 4 週：回收與整理", "items": [["07:00–08:00", "早餐、出門、確認列車時刻與月台。"], ["08:00–09:00", "搭車前往弘前，沿途看車窗外景色與站名。"], ["09:30–11:30", "弘前公園、城區周邊慢走，不急著一次走完。"], ["11:30–12:30", "在弘前市區吃午餐，練習簡單日文點餐。"], ["13:00–14:30", "老街、咖啡店、洋館周邊散步。"], ["14:30–15:30", "找地方坐下，整理今天看到的城市氛圍。"], ["16:00–17:00", "返回車站，搭車回青森。"], ["18:00–19:00", "回住宿休息、整理票券與花費。"], ["20:00–20:40", "寫下弘前與青森的生活感差別。"]], "img": "https://picsum.photos/id/56/600/800?grayscale"}, {"title": "Day 28", "theme": "恢復日", "subtitle": "第 4 週：回收與整理", "items": [["09:30–10:30", "晚起，慢慢吃早餐。"], ["11:00–12:30", "附近吃飯或買熟食回去。"], ["13:00–15:00", "休息、照片整理、把前幾天的支出補齊。"], ["15:30–17:00", "散步或去澡堂放鬆。"], ["17:30–18:30", "回住宿泡澡、整理衣物。"], ["20:00–21:00", "看日文影片或回顧之前上課內容。"]], "img": "https://picsum.photos/id/57/600/800?grayscale"}, {"title": "Day 29", "theme": "會話練習日", "subtitle": "第 5 週：回收與整理", "items": [["08:00–09:00", "早餐＋複習昨天沒講順的句子。"], ["10:00–11:30", "日文課③：把句子從『知道』變成『講得出來』。"], ["12:00–13:00", "整理老師補充的自然說法。"], ["13:30–15:00", "去咖啡店把句子改成自己會真的用到的版本。"], ["15:30–17:00", "出門實戰：點餐、結帳、問店員。"], ["17:30–18:30", "記錄今天哪些表達最自然、哪些卡住。"], ["20:00–21:00", "再讀一次今天講過的內容。"]], "img": "https://picsum.photos/id/58/600/800?grayscale"}, {"title": "Day 30", "theme": "青森美術 / 文化日", "subtitle": "第 5 週：回收與整理", "items": [["08:30–09:30", "早餐，輕鬆出門。"], ["10:00–12:30", "安排一個文化點、美術館或展覽相關行程。"], ["12:30–13:30", "午餐。"], ["14:00–15:30", "找安靜的地方寫觀察筆記。"], ["16:00–17:30", "回市區途中買生活用品。"], ["19:00–20:00", "整理照片與今天的感受。"]], "img": "https://picsum.photos/id/59/600/800?grayscale"}];
+// ─── STORAGE KEYS ───
+const STORAGE = { sights: 'aomori_v7_sights', schedule: 'aomori_v7_schedule' };
 
-const knownPlaces = [
-  { keys:['弘前城','弘前公園','弘前公園（弘前城）'], data:{name:'弘前公園（弘前城）', region:'弘前', address:'青森県弘前市下白銀町1', time:'4月下旬～5月上旬 / 櫻花祭', note:'代表級櫻花景點；平時也適合散步。', access:'JR弘前站轉巴士或步行', category:'Seasonal'} },
-  { keys:['蘆野公園'], data:{name:'蘆野公園', region:'五所川原', address:'青森県五所川原市金木町芦野', time:'4月下旬', note:'可拍津輕鐵道穿越櫻花。', access:'津輕鐵道 蘆野公園站', category:'Seasonal'} },
-  { keys:['古川市場','のっけ丼','古川市場・のっけ丼'], data:{name:'古川市場・のっけ丼', region:'青森市', address:'青森県青森市古川1-11-16', time:'早上～下午', note:'很適合練點餐日文。', access:'青森站步行約5分', category:'Aomori City'} },
-  { keys:['善知鳥神社'], data:{name:'善知鳥神社', region:'青森市', address:'青森県青森市安方2-7-18', time:'24小時', note:'市中心散步首選。', access:'青森站步行約10分', category:'Aomori City'} },
-  { keys:['昭和大佛','青龍寺'], data:{name:'昭和大佛（青龍寺）', region:'青森市', address:'青森県青森市桑原山崎45-2', time:'白天建議', note:'視覺記憶點很強。', access:'青森站轉巴士', category:'Aomori City'} },
-  { keys:['星巴克 弘前公園前店','スターバックス 弘前公園前店'], data:{name:'星巴克 弘前公園前店', region:'弘前', address:'青森県弘前市上白銀町1-1', time:'白天 / 傍晚', note:'在有形文化財裡喝咖啡。', access:'弘前公園對面', category:'Hirosaki & Nature'} },
-  { keys:['奧入瀨溪流','奥入瀬渓流'], data:{name:'奧入瀨溪流', region:'十和田', address:'青森県十和田市奥瀬', time:'5–10月 / 紅葉高峰約10月底–11月初', note:'秋天非常強，5–6月新綠也很美。', access:'巴士 / 自駕較方便', category:'Hirosaki & Nature'} }
+// ─── SVG CARD GENERATOR ───
+const DAY_THEMES = {
+  "抵達與安頓":     { bg:"#e8e4de", fg:"#7a6a58", shape:"plane" },
+  "生活圈建立":     { bg:"#dde8e4", fg:"#4a7a6a", shape:"map" },
+  "第一次日文課":   { bg:"#e4e8dd", fg:"#5a7a4a", shape:"book" },
+  "市場・食文化日": { bg:"#f5f0e4", fg:"#9a7a2a", shape:"food" },
+  "青森市區深度日": { bg:"#dde4e8", fg:"#4a6a7a", shape:"city" },
+  "寺社巡禮日":     { bg:"#f0eae4", fg:"#8a5a3a", shape:"torii" },
+  "弘前一日來回":   { bg:"#f5e4e8", fg:"#a05060", shape:"sakura" },
+  "恢復日":         { bg:"#e4ecf5", fg:"#4a6a9a", shape:"bath" },
+  "會話練習日":     { bg:"#e4f5ec", fg:"#3a8a5a", shape:"chat" },
+  "海邊散步日":     { bg:"#dde8f0", fg:"#3a6a8a", shape:"wave" },
+  "溫泉・銭湯日":   { bg:"#f5e8e8", fg:"#9a4a4a", shape:"onsen" },
+  "文化日":         { bg:"#f5ece4", fg:"#9a6a3a", shape:"art" },
+  "青森美術 / 文化日": { bg:"#f5ece4", fg:"#9a6a3a", shape:"art" },
+  "黑石・こみせ通り": { bg:"#ece8e4", fg:"#7a6a4a", shape:"komise" },
+  "購物・藥妝日":   { bg:"#f0e4ee", fg:"#8a3a7a", shape:"bag2" },
+  "五所川原日":     { bg:"#f0e8e4", fg:"#8a4a3a", shape:"nebuta" },
+  "津輕三味線日":   { bg:"#e8e4f0", fg:"#5a4a8a", shape:"music" },
+  "弘前深度日":     { bg:"#eee8e4", fg:"#7a5a3a", shape:"castle" },
+  "整理・記錄日":   { bg:"#e8e4ee", fg:"#6a5a8a", shape:"camera" },
+  "自然散策日":     { bg:"#e4f0e8", fg:"#3a7a4a", shape:"leaf" },
+  "十和田・奧入瀨": { bg:"#ddeae4", fg:"#3a6a5a", shape:"stream" },
+  "空白生活日":     { bg:"#e8e8e8", fg:"#888",    shape:"cloud" },
+  "離開準備日":     { bg:"#e8ece4", fg:"#5a6a3a", shape:"luggage" },
+};
+
+function getDayTheme(theme) {
+  return DAY_THEMES[theme] || { bg:"#efefef", fg:"#888", shape:"default" };
+}
+
+function makeDaySVG(theme, dayNum) {
+  const t = getDayTheme(theme);
+  const shapes = {
+    plane: `<ellipse cx="100" cy="108" rx="55" ry="16" fill="${t.fg}" opacity=".1"/>
+      <rect x="68" y="72" width="64" height="26" rx="13" fill="${t.fg}" opacity=".65"/>
+      <polygon points="132,85 160,78 132,92" fill="${t.fg}" opacity=".45"/>
+      <rect x="76" y="100" width="48" height="5" rx="2.5" fill="${t.fg}" opacity=".18"/>`,
+    map: `<rect x="55" y="55" width="90" height="72" rx="4" fill="${t.fg}" opacity=".12"/>
+      <line x1="55" y1="82" x2="145" y2="82" stroke="${t.fg}" stroke-width="1.5" opacity=".28"/>
+      <line x1="100" y1="55" x2="100" y2="127" stroke="${t.fg}" stroke-width="1.5" opacity=".28"/>
+      <circle cx="100" cy="90" r="9" fill="${t.fg}" opacity=".45"/>
+      <circle cx="100" cy="90" r="3.5" fill="${t.fg}" opacity=".85"/>`,
+    book: `<rect x="65" y="55" width="70" height="88" rx="3" fill="${t.fg}" opacity=".18"/>
+      <rect x="68" y="58" width="64" height="82" rx="2" fill="white" opacity=".38"/>
+      <line x1="78" y1="76" x2="122" y2="76" stroke="${t.fg}" stroke-width="2" opacity=".38"/>
+      <line x1="78" y1="88" x2="122" y2="88" stroke="${t.fg}" stroke-width="2" opacity=".28"/>
+      <line x1="78" y1="100" x2="108" y2="100" stroke="${t.fg}" stroke-width="2" opacity=".18"/>`,
+    food: `<ellipse cx="100" cy="87" rx="26" ry="11" fill="${t.fg}" opacity=".28"/>
+      <rect x="74" y="98" width="52" height="18" rx="5" fill="${t.fg}" opacity=".18"/>
+      <rect x="74" y="98" width="52" height="6" rx="3" fill="${t.fg}" opacity=".2"/>
+      <line x1="80" y1="116" x2="80" y2="135" stroke="${t.fg}" stroke-width="2.5" opacity=".28"/>
+      <line x1="120" y1="116" x2="120" y2="135" stroke="${t.fg}" stroke-width="2.5" opacity=".28"/>`,
+    city: `<rect x="52" y="92" width="18" height="46" fill="${t.fg}" opacity=".32"/>
+      <rect x="75" y="74" width="22" height="64" fill="${t.fg}" opacity=".42"/>
+      <rect x="103" y="82" width="20" height="56" fill="${t.fg}" opacity=".38"/>
+      <rect x="129" y="96" width="17" height="42" fill="${t.fg}" opacity=".28"/>
+      <rect x="57" y="102" width="4" height="4" fill="white" opacity=".55"/>
+      <rect x="80" y="84" width="4" height="4" fill="white" opacity=".55"/>
+      <rect x="80" y="96" width="4" height="4" fill="white" opacity=".45"/>`,
+    sakura: `<circle cx="100" cy="90" r="5.5" fill="${t.fg}" opacity=".7"/>
+      <ellipse cx="100" cy="68" rx="11" ry="7.5" fill="${t.fg}" opacity=".38"/>
+      <ellipse cx="121" cy="77" rx="11" ry="7.5" transform="rotate(72 121 77)" fill="${t.fg}" opacity=".38"/>
+      <ellipse cx="113" cy="102" rx="11" ry="7.5" transform="rotate(144 113 102)" fill="${t.fg}" opacity=".38"/>
+      <ellipse cx="87" cy="102" rx="11" ry="7.5" transform="rotate(216 87 102)" fill="${t.fg}" opacity=".38"/>
+      <ellipse cx="79" cy="77" rx="11" ry="7.5" transform="rotate(288 79 77)" fill="${t.fg}" opacity=".38"/>`,
+    bath: `<ellipse cx="100" cy="110" rx="44" ry="20" fill="${t.fg}" opacity=".18"/>
+      <rect x="56" y="88" width="88" height="22" rx="11" fill="${t.fg}" opacity=".22"/>
+      <path d="M86 80 Q100 66 114 80" stroke="${t.fg}" stroke-width="2.5" fill="none" opacity=".48"/>
+      <path d="M78 76 Q85 62 92 76" stroke="${t.fg}" stroke-width="2" fill="none" opacity=".32"/>`,
+    chat: `<rect x="54" y="60" width="76" height="52" rx="9" fill="${t.fg}" opacity=".22"/>
+      <polygon points="64,112 54,128 82,112" fill="${t.fg}" opacity=".18"/>
+      <rect x="64" y="72" width="56" height="5" rx="2.5" fill="${t.fg}" opacity=".38"/>
+      <rect x="64" y="83" width="42" height="5" rx="2.5" fill="${t.fg}" opacity=".28"/>
+      <rect x="64" y="94" width="50" height="5" rx="2.5" fill="${t.fg}" opacity=".18"/>`,
+    wave: `<path d="M28 85 Q55 65 82 85 Q109 105 136 85 Q163 65 190 85" stroke="${t.fg}" stroke-width="3" fill="none" opacity=".32"/>
+      <path d="M28 102 Q55 82 82 102 Q109 122 136 102 Q163 82 190 102" stroke="${t.fg}" stroke-width="2.5" fill="none" opacity=".22"/>
+      <path d="M28 119 Q55 99 82 119 Q109 139 136 119 Q163 99 190 119" stroke="${t.fg}" stroke-width="2" fill="none" opacity=".13"/>`,
+    onsen: `<ellipse cx="100" cy="118" rx="46" ry="16" fill="${t.fg}" opacity=".18"/>
+      <path d="M80 102 Q84 88 80 74" stroke="${t.fg}" stroke-width="2.5" fill="none" opacity=".42"/>
+      <path d="M100 102 Q104 88 100 74" stroke="${t.fg}" stroke-width="2.5" fill="none" opacity=".42"/>
+      <path d="M120 102 Q124 88 120 74" stroke="${t.fg}" stroke-width="2.5" fill="none" opacity=".42"/>`,
+    art: `<circle cx="100" cy="90" r="36" fill="${t.fg}" opacity=".1"/>
+      <rect x="72" y="62" width="56" height="56" rx="28" fill="none" stroke="${t.fg}" stroke-width="2" opacity=".28"/>
+      <circle cx="88" cy="82" r="7" fill="${t.fg}" opacity=".42"/>
+      <circle cx="112" cy="82" r="5" fill="${t.fg}" opacity=".32"/>
+      <circle cx="100" cy="100" r="6" fill="${t.fg}" opacity=".38"/>`,
+    torii: `<rect x="60" y="65" width="80" height="8" rx="4" fill="${t.fg}" opacity=".38"/>
+      <rect x="66" y="73" width="68" height="6" rx="3" fill="${t.fg}" opacity=".28"/>
+      <rect x="70" y="79" width="9" height="62" fill="${t.fg}" opacity=".32"/>
+      <rect x="121" y="79" width="9" height="62" fill="${t.fg}" opacity=".32"/>`,
+    castle: `<rect x="75" y="80" width="50" height="52" fill="${t.fg}" opacity=".18"/>
+      <rect x="64" y="88" width="15" height="44" fill="${t.fg}" opacity=".22"/>
+      <rect x="121" y="88" width="15" height="44" fill="${t.fg}" opacity=".22"/>
+      <polygon points="100,50 132,80 68,80" fill="${t.fg}" opacity=".28"/>
+      <rect x="90" y="104" width="20" height="28" fill="${t.fg}" opacity=".14"/>`,
+    camera: `<rect x="64" y="74" width="72" height="54" rx="8" fill="${t.fg}" opacity=".18"/>
+      <rect x="79" y="66" width="28" height="12" rx="5" fill="${t.fg}" opacity=".22"/>
+      <circle cx="100" cy="101" r="18" fill="${t.fg}" opacity=".14"/>
+      <circle cx="100" cy="101" r="12" fill="${t.fg}" opacity=".18"/>
+      <circle cx="100" cy="101" r="6" fill="${t.fg}" opacity=".32"/>`,
+    leaf: `<path d="M100 132 Q58 102 68 60 Q100 38 132 60 Q142 102 100 132Z" fill="${t.fg}" opacity=".18"/>
+      <line x1="100" y1="132" x2="100" y2="75" stroke="${t.fg}" stroke-width="1.5" opacity=".38"/>
+      <line x1="100" y1="102" x2="80" y2="86" stroke="${t.fg}" stroke-width="1" opacity=".28"/>
+      <line x1="100" y1="90" x2="120" y2="76" stroke="${t.fg}" stroke-width="1" opacity=".28"/>`,
+    stream: `<path d="M38 82 Q68 70 100 82 Q132 94 162 82" stroke="${t.fg}" stroke-width="3" fill="none" opacity=".28"/>
+      <path d="M38 96 Q68 84 100 96 Q132 108 162 96" stroke="${t.fg}" stroke-width="2.5" fill="none" opacity=".22"/>
+      <path d="M38 110 Q68 98 100 110 Q132 122 162 110" stroke="${t.fg}" stroke-width="2" fill="none" opacity=".15"/>
+      <ellipse cx="74" cy="68" rx="14" ry="28" fill="${t.fg}" opacity=".14" transform="rotate(-20 74 68)"/>
+      <ellipse cx="126" cy="72" rx="12" ry="24" fill="${t.fg}" opacity=".12" transform="rotate(15 126 72)"/>`,
+    cloud: `<ellipse cx="100" cy="95" rx="46" ry="28" fill="${t.fg}" opacity=".16"/>
+      <ellipse cx="76" cy="102" rx="30" ry="20" fill="${t.fg}" opacity=".13"/>
+      <ellipse cx="124" cy="102" rx="30" ry="20" fill="${t.fg}" opacity=".13"/>`,
+    luggage: `<rect x="68" y="68" width="64" height="68" rx="6" fill="${t.fg}" opacity=".18"/>
+      <rect x="80" y="58" width="40" height="16" rx="5" fill="none" stroke="${t.fg}" stroke-width="2" opacity=".32"/>
+      <line x1="100" y1="68" x2="100" y2="136" stroke="${t.fg}" stroke-width="2" opacity=".22"/>
+      <line x1="68" y1="102" x2="132" y2="102" stroke="${t.fg}" stroke-width="2" opacity=".22"/>`,
+    nebuta: `<polygon points="100,55 132,92 132,118 68,118 68,92" fill="${t.fg}" opacity=".18"/>
+      <ellipse cx="100" cy="90" rx="32" ry="24" fill="${t.fg}" opacity=".13"/>
+      <circle cx="88" cy="88" r="6" fill="${t.fg}" opacity=".38"/>
+      <circle cx="112" cy="88" r="6" fill="${t.fg}" opacity=".38"/>
+      <path d="M86 102 Q100 110 114 102" stroke="${t.fg}" stroke-width="2" fill="none" opacity=".38"/>`,
+    music: `<ellipse cx="86" cy="116" rx="15" ry="8" fill="${t.fg}" opacity=".28"/>
+      <line x1="101" y1="116" x2="101" y2="58" stroke="${t.fg}" stroke-width="2.5" opacity=".38"/>
+      <ellipse cx="116" cy="112" rx="13" ry="7" fill="${t.fg}" opacity=".28"/>
+      <line x1="129" y1="112" x2="129" y2="56" stroke="${t.fg}" stroke-width="2" opacity=".32"/>
+      <line x1="101" y1="58" x2="129" y2="56" stroke="${t.fg}" stroke-width="2" opacity=".28"/>`,
+    bag2: `<path d="M74 86 L79 68 Q100 56 121 68 L126 86Z" fill="${t.fg}" opacity=".18"/>
+      <rect x="67" y="86" width="66" height="52" rx="6" fill="${t.fg}" opacity=".16"/>
+      <line x1="67" y1="112" x2="133" y2="112" stroke="${t.fg}" stroke-width="1.5" opacity=".18"/>
+      <circle cx="100" cy="112" r="4.5" fill="${t.fg}" opacity=".32"/>`,
+    komise: `<rect x="54" y="70" width="92" height="62" fill="${t.fg}" opacity=".13"/>
+      <rect x="54" y="68" width="92" height="9" fill="${t.fg}" opacity=".28"/>
+      <rect x="61" y="79" width="20" height="53" fill="${t.fg}" opacity=".09"/>
+      <rect x="86" y="79" width="20" height="53" fill="${t.fg}" opacity=".09"/>
+      <rect x="111" y="79" width="20" height="53" fill="${t.fg}" opacity=".09"/>`,
+    default: `<circle cx="100" cy="90" r="36" fill="${t.fg}" opacity=".13"/>
+      <circle cx="100" cy="90" r="20" fill="${t.fg}" opacity=".1"/>`
+  };
+  const shape = shapes[t.shape] || shapes.default;
+  return `<svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+    <rect width="200" height="170" fill="${t.bg}"/>
+    ${shape}
+    <text x="16" y="24" font-size="9" fill="${t.fg}" opacity=".38" font-family="'Courier New',monospace">DAY ${String(dayNum).padStart(2,'0')}</text>
+    <text x="100" y="152" text-anchor="middle" font-size="10" fill="${t.fg}" opacity=".45" font-family="'PingFang TC',sans-serif" letter-spacing=".5">${theme}</text>
+  </svg>`;
+}
+
+// ─── SCHEDULE DATA ───
+const DEFAULT_SCHEDULE_DATA = [
+  {"title":"Day 01","theme":"抵達與安頓","subtitle":"第 1 週：建立生活圈","items":[["08:30–09:30","抵達青森機場或青森站，確認網路、交通票券與住宿資訊。"],["09:30–11:00","移動到市區，途中記錄沿路地標與常用交通站點。"],["11:00–12:00","辦理入住，整理大件行李。"],["12:00–13:00","在住宿附近吃第一餐，熟悉最近的餐廳與便利商店。"],["13:30–15:00","步行確認青森站、巴士站、超市、藥妝店、ATM 位置。"],["15:00–16:30","回住宿整理衣物、分類票券、充電設備。"],["17:00–18:30","到超市採買一週基本用品：水、早餐、即食品、清潔用品。"],["19:00–20:00","簡單記帳，寫下今天最需要記住的生活動線。"],["20:00–21:00","早睡調整節奏。"]]},
+  {"title":"Day 02","theme":"生活圈建立","subtitle":"第 1 週：建立生活圈","items":[["08:00–09:00","早餐＋整理採買清單，補齊缺少的生活用品。"],["09:30–11:00","青森站周邊慢走，記錄最順的步行動線。"],["11:00–12:00","找一間適合久坐的咖啡店，建立未來自修據點。"],["12:30–14:00","到古川市場練習點餐、付款、詢問價格。"],["14:30–16:00","回住宿整理票據、超市價格、常用日文句子。"],["16:00–17:30","輕鬆散步，熟悉白天與傍晚的街區感覺。"],["19:00–20:00","複習今天實際用到的句子：請問、多少錢、可以刷卡嗎。"],["20:00–21:00","寫生活筆記，記錄哪裡最方便、哪裡想再去。"]]},
+  {"title":"Day 03","theme":"第一次日文課","subtitle":"第 1 週：建立生活圈","items":[["08:00–09:00","早餐＋複習自我介紹、五十音、數字與結帳用語。"],["09:30–10:00","整理上課要問的內容：點餐、買東西、搭車。"],["10:00–11:30","日文課①：自我介紹、在店裡會用到的基本句型。"],["11:30–12:00","課後立刻記下老師修正過的句子與發音。"],["13:00–14:30","去咖啡店把今天句型改寫成自己的版本。"],["15:00–16:30","去超商或小店實際用一次今天學到的句子。"],["17:00–18:00","散步到善知鳥神社。"],["20:00–21:00","再複習一次今天真正開口講出去的句子。"]]},
+  {"title":"Day 04","theme":"市場・食文化日","subtitle":"第 1 週：建立生活圈","items":[["07:30–09:00","早起前往古川市場，體驗のっけ丼海鮮蓋飯，練習點餐。"],["09:30–10:30","在市場內慢走，觀察各攤販的食材與標價，熟悉日文食材詞彙。"],["11:00–12:30","前往青森魚菜中心附近，買些當地海產或零食。"],["13:00–14:30","回住宿煮飯或試做簡單日式料理。"],["15:00–16:30","整理今天聽到的日文詞彙，查詢不認識的食物名稱。"],["17:00–18:30","黃昏散步，尋找喜歡的咖啡店作為日後據點。"],["20:00–21:00","記帳、寫今日飲食筆記。"]]},
+  {"title":"Day 05","theme":"青森市區深度日","subtitle":"第 1 週：建立生活圈","items":[["08:00–09:00","早餐，確認今天想走的市區路線。"],["09:30–11:00","A-FACTORY 蘋果商品館，試青森蘋果酒（シードル）。"],["11:00–12:00","ASPAM 三角形觀光館，登頂俯瞰陸奧灣。"],["12:30–14:00","港邊午餐，點海鮮定食練習點餐。"],["14:00–15:30","棟方志功紀念館，感受在地版畫藝術。"],["16:00–17:30","咖啡店整理照片，挑出值得記錄的地方。"],["19:00–20:00","查弘前、五所川原、十和田的交通時刻表。"]]},
+  {"title":"Day 06","theme":"寺社巡禮日","subtitle":"第 1 週：建立生活圈","items":[["08:30–09:30","早餐後步行出發。"],["10:00–11:00","善知鳥神社，感受市中心靜謐的神社氛圍。"],["11:15–12:30","昭和大佛（青龍寺），視覺衝擊強，攝影好地點。"],["13:00–14:30","附近午餐，嘗試點日式定食。"],["15:00–16:30","蛍ヶ丘公園散步。"],["17:00–18:00","回住宿整理，複習本週日文句子。"],["20:00–21:00","整理第一週生活總結。"]]},
+  {"title":"Day 07","theme":"弘前一日來回","subtitle":"第 1 週：建立生活圈","items":[["07:00–08:00","早餐、出門、確認列車時刻與月台。"],["08:00–09:20","搭 JR 奥羽本線前往弘前（約 45 分）。"],["09:30–11:30","弘前公園、天守閣周邊慢走，感受洋館與日式混搭街景。"],["11:30–12:30","弘前市內午餐，試試津輕蕎麥麵（津軽そば）。"],["13:00–14:30","仲町傳統的建造物群保存地区，江戶武家街道。"],["14:30–15:30","星巴克弘前公園前店（明治38年建築）喝咖啡。"],["16:00–17:00","返回弘前站，搭車回青森。"],["18:00–19:00","回住宿休息、整理票券與花費。"],["20:00–21:00","寫下弘前與青森的城市氛圍差別。"]]},
+  {"title":"Day 08","theme":"恢復日","subtitle":"第 2 週：穩定上課與外出","items":[["09:30–10:30","晚起，慢慢吃早餐。"],["11:00–12:30","附近吃飯或買熟食。"],["13:00–15:00","休息、照片整理、補齊支出記錄。"],["15:30–17:00","散步或去銭湯放鬆。"],["17:30–18:30","回住宿泡澡、整理衣物。"],["20:00–21:00","看日文影片或回顧之前上課內容。"]]},
+  {"title":"Day 09","theme":"會話練習日","subtitle":"第 2 週：穩定上課與外出","items":[["08:00–09:00","早餐＋複習昨天沒講順的句子。"],["10:00–11:30","日文課②：問路、買票、搭車時的常用句型。"],["12:00–13:00","整理老師補充的自然說法，特別是東北腔調特色。"],["13:30–15:00","咖啡店自習，把句子改成自己會真的用到的版本。"],["15:30–17:00","出門實戰：在藥妝店問店員問題。"],["17:30–18:30","記錄今天哪些表達最自然、哪些卡住。"],["20:00–21:00","再讀一次今天學過的內容。"]]},
+  {"title":"Day 10","theme":"海邊散步日","subtitle":"第 2 週：穩定上課與外出","items":[["08:30–09:30","早餐，帶著相機出門。"],["10:00–11:30","沿青森港步行，拍攝漁船、倉庫街與遠山景色。"],["11:30–12:30","港邊找海鮮食堂吃午餐。"],["13:00–14:30","ASPAM 買伴手禮，練習日文購物對話。"],["15:00–16:30","三內丸山遺址（縄文時代大型聚落），免費參觀。"],["17:00–18:00","回市區，傍晚在港邊看夕陽。"],["19:30–20:30","寫生活日記，紀錄青森港邊的海洋感受。"]]},
+  {"title":"Day 11","theme":"溫泉・銭湯日","subtitle":"第 2 週：穩定上課與外出","items":[["09:00–10:30","晚起，做個簡單早午餐。"],["11:00–12:00","整理上週所有照片，建立照片分類資料夾。"],["12:30–14:00","輕鬆散步，找一條還沒走過的小巷。"],["14:30–16:00","查詢並前往青森市內的銭湯，體驗在地日常。"],["16:00–18:00","好好泡澡，觀察當地人的澡堂禮節與日語對話。"],["18:30–19:30","晚餐：買超市熟食或煮飯。"],["20:00–21:00","整理本週花費，調整下週預算規劃。"]]},
+  {"title":"Day 12","theme":"文化日","subtitle":"第 2 週：穩定上課與外出","items":[["09:00–10:00","早餐後查詢今天展覽資訊。"],["10:00–12:00","青森縣立美術館，奈良美智「あおもり犬」常設展。"],["12:00–13:00","美術館內或周邊午餐。"],["13:30–15:00","三內丸山遺址博物館，深入了解縄文文化。"],["15:30–17:00","附近散步，感受歷史遺址周邊的空曠感。"],["19:00–20:00","整理今天印象最深的展品，寫下觀察筆記。"]]},
+  {"title":"Day 13","theme":"第一次日文課","subtitle":"第 2 週：穩定上課與外出","items":[["08:00–09:00","早餐＋複習五十音與常用單字。"],["10:00–11:30","日文課③：把句子從「知道」變成「講得出來」。"],["11:30–12:00","課後立刻記下老師修正過的語調。"],["13:00–14:30","咖啡店自習，整理成自己的筆記格式。"],["15:00–16:30","去餐廳實際使用今天學到的句子。"],["17:00–18:00","善知鳥神社散步收尾。"],["20:00–21:00","複習今天真正開口講出去的句子。"]]},
+  {"title":"Day 14","theme":"空白生活日","subtitle":"第 2 週：穩定上課與外出","items":[["09:00–10:00","晚起、慢慢吃早餐，不特別安排行程。"],["10:30–12:00","去超市補貨，練習看折扣標示與價格。"],["12:00–13:00","回住宿簡單煮飯。"],["13:30–15:00","洗衣、整理桌面、照片與票券。"],["15:00–16:30","完全空白時間，休息或隨興散步。"],["17:00–18:30","到附近街區拍照，記錄喜歡的街角。"],["19:30–20:30","寫生活日記與簡單記帳。"]]},
+  {"title":"Day 15","theme":"黑石・こみせ通り","subtitle":"第 3 週：擴大移動範圍","items":[["08:00–09:00","早餐，確認黑石交通（弘前換乘弘南鐵道）。"],["09:00–10:30","青森搭車到弘前再轉弘南鐵道到黑石（約1.5小時）。"],["10:30–12:30","こみせ通り（拱廊街）漫步，日本現存最長木製拱廊街，江戶街景。"],["12:30–13:30","黑石拱廊街內食堂吃中谷（黑石中華そば）。"],["14:00–15:30","附近散步拍照，感受小城靜謐。"],["16:00–17:30","搭車返回青森。"],["19:00–20:00","整理今天的旅行印象，寫地方紀錄。"]]},
+  {"title":"Day 16","theme":"購物・藥妝日","subtitle":"第 3 週：擴大移動範圍","items":[["10:00–11:00","晚起，整理補貨清單。"],["11:00–12:30","前往藥妝店（マツキヨ、ツルハ等），補充日常用品。"],["12:30–13:30","午餐：找一家之前想去但還沒去的店。"],["14:00–15:30","逛 VIVRE 或さくら野百貨，感受在地百貨文化。"],["15:30–17:00","記錄伴手禮候選，接近離開再決定是否購買。"],["17:30–18:30","回住宿整理今天的消費記錄。"],["20:00–21:00","日文練習：購物相關詞彙複習。"]]},
+  {"title":"Day 17","theme":"五所川原日","subtitle":"第 3 週：擴大移動範圍","items":[["07:30–08:30","早餐、出發，搭 JR 五能線前往五所川原（約1小時10分）。"],["09:00–10:30","立佞武多の館，全年展示高22公尺的巨型燈籠，視覺震撼極強。"],["10:30–11:30","轉乘津輕鐵道到金木町，參觀太宰治紀念館「斜陽館」。"],["11:30–12:30","金木町附近午餐，嘗試在地料理。"],["13:00–14:30","蘆野公園漫步（4月可賞津輕鐵道穿越櫻花）。"],["15:00–16:30","搭車返回青森。"],["18:00–19:00","回住宿整理，記錄津輕地區的感受。"]]},
+  {"title":"Day 18","theme":"恢復日","subtitle":"第 3 週：擴大移動範圍","items":[["09:30–10:30","晚起，慢慢吃早餐。"],["11:00–12:30","超市補貨、煮飯。"],["13:00–15:00","休息、照片整理、補齊支出記錄。"],["15:30–17:00","散步或去澡堂放鬆。"],["20:00–21:00","看日文 YouTube，聽東北腔調日語。"]]},
+  {"title":"Day 19","theme":"津輕三味線日","subtitle":"第 3 週：擴大移動範圍","items":[["09:00–10:00","早餐，查詢今天表演資訊。"],["10:30–12:00","前往津輕三味線相關場館或道の駅，有機會聽現場演奏。"],["12:00–13:00","附近午餐。"],["13:30–15:00","回青森，前往 A-FACTORY 試飲青森蘋果酒。"],["15:00–16:30","逛青森站附近伴手禮店。"],["17:00–18:00","A-FACTORY 旁港邊散步看夕陽。"],["20:00–21:00","日文練習：感想表達句型（〜が良かった、〜が面白かった）。"]]},
+  {"title":"Day 20","theme":"整理・記錄日","subtitle":"第 3 週：擴大移動範圍","items":[["09:00–10:00","早餐後開始整理照片。"],["10:00–12:00","系統性整理三週的照片，建立地點標籤分類。"],["12:30–13:30","午餐。"],["14:00–16:00","更新生活筆記，補齊三週觀察：街道、食物、人文、語言進度。"],["16:00–17:30","找一間新咖啡店坐坐，感受中期生活節奏。"],["19:00–20:00","寫一篇給自己的「三週回顧」，記錄進步與下週計畫。"]]},
+  {"title":"Day 21","theme":"弘前深度日","subtitle":"第 3 週：擴大移動範圍","items":[["07:30–09:00","早出門搭車到弘前。"],["09:00–10:30","弘前城本丸、北の郭散步，探索較少遊客的角落。"],["10:30–12:00","仲町傳統的建造物群保存地区，江戶武家街道。"],["12:00–13:00","弘前市內午餐，弘前風味洋食（西洋料理）。"],["13:30–15:00","弘前市立博物館。"],["15:30–16:30","弘前附近老咖啡館，記錄弘前與青森的不同氣質。"],["17:00–18:30","搭車返回青森。"],["20:00–21:00","日文練習：建築、歷史相關詞彙。"]]},
+  {"title":"Day 22","theme":"空白生活日","subtitle":"第 4 週：回收與整理","items":[["09:00–10:00","晚起、慢慢吃早餐。"],["10:30–12:00","去超市補貨，觀察季節限定商品。"],["12:00–13:00","煮飯或買熟食。"],["13:30–15:00","洗衣、整理房間。"],["15:00–16:30","完全空白，休息或隨興散步。"],["17:00–18:30","拍照記錄居住一個月的日常空間。"],["19:30–20:30","寫生活日記，記錄第四週的心情變化。"]]},
+  {"title":"Day 23","theme":"十和田・奧入瀨","subtitle":"第 4 週：回收與整理","items":[["06:30–07:30","早起出發，搭 JR バス前往十和田方向（約2.5小時）。"],["09:00–11:00","奧入瀨溪流步道健行（石ヶ戸到雲井の滝段落，約4km）。"],["11:00–12:00","溪流旁的休憩站午餐或帶便當。"],["12:30–14:00","十和田湖遊覽，乘船或湖畔散步。"],["14:30–15:30","十和田神社參拜，感受原始森林氛圍。"],["16:00–18:30","搭車返回青森。"],["19:00–20:00","整理今日最美照片，寫下自然感受。"]]},
+  {"title":"Day 24","theme":"自然散策日","subtitle":"第 4 週：回收與整理","items":[["09:00–10:00","早餐，準備輕量健行裝備。"],["10:30–12:30","八甲田山腳健行（望岳台一帶），感受火山地形。"],["12:30–13:30","沿途或山腳休憩站簡單午餐。"],["14:00–15:30","酸ヶ湯溫泉（ひば千人風呂）泡湯，百年歷史名湯。"],["16:00–17:30","回市區，傍晚散步。"],["19:00–20:00","整理這週的自然體驗，與上週城市體驗對比。"]]},
+  {"title":"Day 25","theme":"市場・食文化日","subtitle":"第 4 週：回收與整理","items":[["07:30–09:00","早起再訪古川市場，試著和攤販多說幾句日文。"],["09:00–10:30","拍攝市場食材、攤販布置，比較第一次來的感受差異。"],["11:00–12:30","試做一次以青森食材為主的便當或定食。"],["13:00–14:30","咖啡店自習，複習整個月的日文筆記重點。"],["15:00–16:30","購買想帶回家的伴手禮（蘋果製品、花林糖等）。"],["17:00–18:00","最後一次好好走青森港邊。"],["19:30–20:30","整理伴手禮清單與預算。"]]},
+  {"title":"Day 26","theme":"津輕三味線日","subtitle":"第 4 週：回收與整理","items":[["10:00–11:30","查詢並前往有津輕三味線現場演奏的場所。"],["11:30–12:30","午餐，感受音樂與食物的組合。"],["13:00–14:30","弘前市內的津輕三味線會館或民藝館。"],["15:00–16:30","回青森，記錄對這種音樂的感受。"],["17:00–18:30","整理這個月的音樂、藝術、文化體驗清單。"],["20:00–21:00","日文練習：用日文寫下今天的感想句子。"]]},
+  {"title":"Day 27","theme":"整理・記錄日","subtitle":"第 4 週：回收與整理","items":[["09:00–10:00","早餐，確認行李狀況。"],["10:30–12:00","把整個月的票券、傳單、收據整理分類，選幾張有意義的保留。"],["12:30–13:30","午餐。"],["14:00–16:00","寫下一個月的「青森生活總結」：最喜歡的地點、食物、日文進步。"],["16:30–18:00","最後一次去最喜歡的咖啡店或散步路線。"],["19:30–20:30","更新記帳，計算實際花費 vs 預算差距。"]]},
+  {"title":"Day 28","theme":"恢復日","subtitle":"第 4 週：回收與整理","items":[["09:30–10:30","晚起，慢慢吃最後的自炊早餐。"],["11:00–12:30","把冰箱用完，清理廚房。"],["13:00–15:00","休息、整理行李，處理不帶走的東西。"],["15:30–17:00","散步或去澡堂做最後放鬆。"],["17:30–18:30","回住宿，整理行李。"],["20:00–21:00","看日文影片，回顧整個月最喜歡的句子與時光。"]]},
+  {"title":"Day 29","theme":"離開準備日","subtitle":"第 5 週：收尾","items":[["08:00–09:00","早餐後開始打包行李。"],["09:30–11:00","確認行李重量、整理隨身包、列出回程必帶清單。"],["11:00–12:00","辦理退房準備，清潔住宿、垃圾分類。"],["12:30–14:00","最後一次在青森市區吃午餐，選一間有紀念感的餐廳。"],["14:00–15:30","再走一遍最喜歡的路線，把畫面存進記憶裡。"],["15:30–16:30","A-FACTORY 最後採購，補齊想買的蘋果酒或伴手禮。"],["17:00–18:00","回住宿確認行李、充電設備、護照票券。"],["20:00–21:00","早睡，調整好出發心情。"]]},
+  {"title":"Day 30","theme":"整理・記錄日","subtitle":"第 5 週：收尾","items":[["06:00–07:00","起床、最後確認行李、退房。"],["07:00–08:30","前往青森站或機場，感受最後的青森早晨空氣。"],["08:30–","搭車或搭機離開青森，往下一個目的地出發。"],["──","在移動途中，寫下這 30 天最難忘的三件事。"],["──","青森，再見。下次再來的理由，已經想好了。"]]}
 ];
 
+// ─── SIGHTS DATA ───
+const defaultSights = [
+  {"id":"s1","name":"弘前公園（弘前城）","region":"弘前","address":"青森県弘前市下白銀町1","time":"4月下旬～5月上旬（櫻花祭）/ 全年可觀城","note":"城內染井吉野櫻名列日本百大，非花季散步也很舒服。","access":"JR弘前站轉巴士或步行15分","link":"https://www.hirosakipark.jp/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s2","name":"蘆野公園","region":"五所川原","address":"青森県五所川原市金木町芦野","time":"4月下旬","note":"可拍津輕鐵道穿越櫻花隧道，是絕景。","access":"津輕鐵道 蘆野公園站","link":"https://www.aptinet.jp/Detail_display_00000028.html","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s3","name":"古川市場・のっけ丼","region":"青森市","address":"青森県青森市古川1-11-16","time":"早上 6:00～下午（早去選擇最多）","note":"用券自由組合海鮮，很適合練習點餐日文。","access":"青森站步行約5分","link":"https://nokkedon.jp/","checked":false,"category":"Aomori City"},
+  {"id":"s4","name":"善知鳥神社","region":"青森市","address":"青森県青森市安方2-7-18","time":"24小時","note":"市中心靜謐散步首選，老城樹木茂盛。","access":"青森站步行約10分","link":"https://www.utoujinja.or.jp/","checked":false,"category":"Aomori City"},
+  {"id":"s5","name":"昭和大佛（青龍寺）","region":"青森市","address":"青森県青森市桑原山崎45-2","time":"白天建議（8:00–17:00）","note":"日本最大的漆塗大佛，視覺記憶點極強。","access":"青森站轉巴士（約30分）","link":"http://www.seiryuji.or.jp/","checked":false,"category":"Aomori City"},
+  {"id":"s6","name":"星巴克 弘前公園前店","region":"弘前","address":"青森県弘前市上白銀町1-1","time":"白天 / 傍晚","note":"在明治38年建造的舊第八師団長官舍裡喝咖啡，體驗感很特別。","access":"弘前公園對面步行1分","link":"https://store.starbucks.co.jp/detail-1302/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s7","name":"奧入瀨溪流","region":"十和田","address":"青森県十和田市奥瀬","time":"5–10月 / 紅葉高峰約10月底–11月初","note":"秋天楓紅非常強，5–6月新綠也極美。建議石ヶ戸步行到雲井の滝段落（約4km）。","access":"青森站搭 JR バス「みずうみ号」約2.5小時","link":"https://aomori-tourism.com/en/spot/detail_339.html","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s8","name":"青森縣立美術館","region":"青森市","address":"青森県青森市安田字近野185","time":"9:30–17:00，週二休","note":"奈良美智「あおもり犬」常設展，建築本身也值得一看。","access":"青森站轉巴士約20分，三內丸山遺址附近","link":"https://www.aomori-museum.jp/","checked":false,"category":"Aomori City"},
+  {"id":"s9","name":"三內丸山遺址","region":"青森市","address":"青森県青森市三内丸山305-2","time":"9:00–17:00（夏季延長），週一休","note":"5500年前縄文大型聚落，世界遺產，免費參觀部分很大。","access":"青森站轉巴士約20分","link":"https://sannaimaruyama.pref.aomori.jp/","checked":false,"category":"Aomori City"},
+  {"id":"s10","name":"立佞武多の館","region":"五所川原","address":"青森県五所川原市大町506-10","time":"9:00–17:00","note":"全年展示高達22公尺的立佞武多巨型燈籠，五所川原祭（8月）最壯觀。","access":"JR五所川原站步行約5分","link":"https://tachineputa.jp/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s11","name":"太宰治紀念館「斜陽館」","region":"五所川原（金木町）","address":"青森県五所川原市金木町朝日山412-1","time":"9:00–17:30","note":"文豪太宰治出生的豪農邸宅，津輕地區文化旅行必訪。","access":"津輕鐵道 金木站步行約7分","link":"https://www.dazai.or.jp/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s12","name":"A-FACTORY（青森蘋果酒館）","region":"青森市","address":"青森県青森市柳川1-4-2","time":"9:00–20:00","note":"青森蘋果酒（シードル）試飲，港邊位置絕佳，伴手禮豐富。","access":"青森站步行約5分，港邊","link":"https://www.jre-abc.com/wp/afactory/","checked":false,"category":"Aomori City"},
+  {"id":"s13","name":"酸ヶ湯溫泉","region":"八甲田","address":"青森県青森市荒川南荒川山国有林酸湯沢50","time":"7:00–18:00（千人風呂）","note":"百年歷史混浴名湯，ヒバ千人風呂是日本最大木造浴場，強烈推薦。","access":"青森站轉巴士約1小時（¥1,050）","link":"https://www.sukayu.jp/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s14","name":"十和田湖","region":"十和田","address":"青森県十和田市奥瀬十和田湖畔","time":"全年（冬季部分設施關閉）","note":"搭遊覽船環湖或湖畔散步，秋季湖面倒影極美，與奧入瀨溪流同日可行。","access":"青森站轉巴士約2.5小時","link":"https://www.towadako.or.jp/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s15","name":"棟方志功紀念館","region":"青森市","address":"青森県青森市松原2-1-2","time":"9:00–17:00，週一休","note":"出生於青森的版畫巨匠，作品充滿生命力，美術館本身也很精緻。","access":"青森站轉巴士約15分","link":"https://munakatashiko-museum.jp/","checked":false,"category":"Aomori City"},
+  {"id":"s16","name":"黑石こみせ通り","region":"黑石","address":"青森県黒石市中町","time":"全年（部分店舖週一休）","note":"日本現存最長木製拱廊街，江戶風情保存完好，黑石中華そば也是名物。","access":"弘前站換乘弘南鐵道到黑石站，步行約10分","link":"https://kuroishi.or.jp/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s17","name":"弘前睡魔村（ねぷた村）","region":"弘前","address":"青森県弘前市亀甲町61","time":"9:00–17:00","note":"全年展示弘前睡魔祭的大型扇型燈籠，可體驗津輕三味線演奏。","access":"JR弘前站步行約5分","link":"https://www.neputamura.com/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s18","name":"青森 NEBUTA 之家 ワ・ラッセ","region":"青森市","address":"青森県青森市安方1-1-1","time":"9:00–18:00（夏季延長），8月除外","note":"青森睡魔祭博物館，全年展示大型燈籠，最方便體驗夏祭的方法。","access":"青森站步行約5分","link":"https://www.nebuta.jp/warasse/","checked":false,"category":"Aomori City"},
+  {"id":"s19","name":"ASPAM（青森縣觀光物産館）","region":"青森市","address":"青森県青森市安方1-1-40","time":"9:00–19:00（依季節）","note":"三角形地標建築，頂樓可360度俯瞰陸奧灣與青森市，伴手禮齊全。","access":"青森站步行約10分","link":"https://www.aomori-kanko.or.jp/aspam/","checked":false,"category":"Aomori City"},
+  {"id":"s20","name":"八戶朝市（館鼻岸壁朝市）","region":"八戶","address":"青森県八戸市新湊3丁目","time":"週日 3:00–9:00（4月–11月）","note":"日本規模最大級的朝市之一，海鮮、蔬菜、土產，非常有活力。","access":"新青森站搭新幹線到八戶站（25分），再轉巴士","link":"https://www.hachinohe-kanko.com/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s21","name":"弘前市立博物館","region":"弘前","address":"青森県弘前市下白銀町1-6","time":"9:00–17:00，週一休","note":"收藏弘前藩的歷史文物，與弘前公園相鄰，參觀後直接散步到城址。","access":"JR弘前站轉巴士或步行20分","link":"https://www.city.hirosaki.aomori.jp/museum/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s22","name":"仲町傳統的建造物群保存地区","region":"弘前","address":"青森県弘前市仲町","time":"全年（外觀24小時）","note":"江戶時代武家屋敷群，白牆、石疊路，很適合早晨安靜散步，部分屋敷可入內參觀。","access":"JR弘前站步行約15分","link":"https://www.hirosaki-kanko.or.jp/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s23","name":"八甲田纜車","region":"八甲田","address":"青森県青森市荒川寒水沢1-12","time":"9:00–16:20（依季節）","note":"成人來回 ¥1,850，搭乘纜車可俯瞰整個八甲田連峰，秋天紅葉最美。","access":"青森站搭巴士到「八甲田ロープウェー前」約1小時","link":"https://www.hakkoda-ropeway.jp/","checked":false,"category":"Hirosaki & Nature"},
+  {"id":"s24","name":"青森魚菜中心","region":"青森市","address":"青森県青森市古川1-11-16","time":"7:00–16:00","note":"のっけ丼所在地，市場內有多家生鮮、乾物、漬物攤位，早上最熱鬧。","access":"青森站步行約5分","link":"https://nokkedon.jp/","checked":false,"category":"Aomori City"},
+  {"id":"s25","name":"岩木山神社","region":"弘前","address":"青森県弘前市百沢字寺沢27","time":"8:30–17:00","note":"岩木山麓的千年古社，楼門與本殿均為重要文化財，背靠岩木山景色壯觀。","access":"弘前站轉弘南巴士約35分","link":"https://www.iwakisan-jinja.or.jp/","checked":false,"category":"Hirosaki & Nature"}
+];
 
-function getSchedule() {
-  try { return JSON.parse(localStorage.getItem(STORAGE.schedule)) || [...DEFAULT_SCHEDULE_DATA]; }
-  catch (e) { return [...DEFAULT_SCHEDULE_DATA]; }
-}
-function saveSchedule(data) {
-  localStorage.setItem(STORAGE.schedule, JSON.stringify(data));
-}
+// ─── BASE SECTIONS ───
+const baseSections = {
+  "住宿": [
+    {"title":"最適合長住的區域排序","content":"1. 青森站周邊：最適合第一次住 1 個月，交通、超市、餐飲、JR 移動最穩。 2. 新町 / 古川：生活感較強，步行可處理大多數日常。 3. 弘前站周邊：如果你更偏好咖啡店、洋館、散步感，可以把弘前當第二選項。"},
+    {"title":"找房時最優先的 5 個條件","content":"步行 10 分內可到車站或大型超市、有洗衣設備、有簡易廚房或微波設備、可住 28–31 晚、晚上周邊不會太偏。這幾個比單純房價更重要。"},
+    {"title":"住宿類型怎麼選","content":"商旅適合第一次住青森、怕出錯；Airbnb / 公寓型適合想要更像在生活、能自己煮飯的人。如果你想控制預算又保留舒適感，建議先看站前商旅，再看有廚房的公寓。"}
+  ],
+  "月份": [
+    {"title":"最推薦：5 月","content":"櫻花季後價格通常比較回穩，氣溫舒服，生活感與觀光感最平衡。適合第一次住 1 個月。"},
+    {"title":"也很推薦：6 月","content":"人更少，新綠舒服，很適合想安靜過生活、學日文、慢慢建立節奏的人。"},
+    {"title":"景色派最強：10 月","content":"奧入瀨溪流、十和田湖周邊秋色很強，但體感溫度已開始降。適合喜歡秋天、攝影、散步的人。"},
+    {"title":"第一次不建議：1–2 月","content":"雪量、風、移動難度都高。除非你就是為了北國雪景與冬季體驗，否則第一次住一個月不建議從冬天開始。"}
+  ],
+  "生活策略": [
+    {"title":"不要每天排景點","content":"一個月不是 30 天觀光。真正好住的行程應該是：每週 1 次遠一點移動、2–3 次課、2 天空白日，其餘時間回到固定生活圈。"},
+    {"title":"建立自己的日常動線","content":"第一週先找到超市、便利商店、車站、咖啡店、洗衣點與散步路線。只要生活動線穩了，後面整個月會輕鬆很多。"},
+    {"title":"最值得練的日文情境","content":"點餐、買東西、問路、買票、結帳、確認營業時間。這些比背太難的文法更快有感。"}
+  ]
+};
 
+// ─── NAVIGATION ───
 const menuBtn = document.getElementById('menuBtn');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 20) menuBtn.classList.add('menu-hidden');
@@ -264,14 +799,23 @@ function showPage(pageId) {
   window.scrollTo(0, 0);
 }
 
-function getSights() {
-  try { return JSON.parse(localStorage.getItem(STORAGE.sights)) || [...defaultSights]; }
-  catch (e) { return [...defaultSights]; }
+// ─── TRANSPORT TABS ───
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
 }
-function saveSights(data) { localStorage.setItem(STORAGE.sights, JSON.stringify(data)); }
-function uid(prefix='id') { return prefix + '_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
-function escapeHtml(str='') {
-  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+
+// ─── SCHEDULE ───
+function getSchedule() {
+  try { return JSON.parse(localStorage.getItem(STORAGE.schedule)) || [...DEFAULT_SCHEDULE_DATA]; }
+  catch (e) { return [...DEFAULT_SCHEDULE_DATA]; }
+}
+function saveSchedule(data) { localStorage.setItem(STORAGE.schedule, JSON.stringify(data)); }
+
+function getWeekClass(index) {
+  return ['week-1','week-2','week-3','week-4','week-5'][Math.floor(index / 7)] || 'week-5';
 }
 
 function renderSchedule() {
@@ -280,39 +824,35 @@ function renderSchedule() {
   grid.innerHTML = '';
   scheduleData.forEach((item, index) => {
     const day = String(index + 1).padStart(2, '0');
+    const svg = makeDaySVG(item.theme, index + 1);
     grid.innerHTML += `
       <div class="day-card" onclick="openModal(${index})">
         <div class="day-num">${day}</div>
-        <div class="day-image" style="background-image:url('${item.img}')"></div>
+        <div class="day-image">${svg}</div>
         <div class="day-meta">
-          <div class="day-title">${escapeHtml(item.title)}｜${escapeHtml(item.theme)}</div>
+          <div class="day-title">${escapeHtml(item.theme)}</div>
           <div class="day-subtitle">${escapeHtml(item.subtitle)}</div>
         </div>
       </div>`;
   });
 }
+
 let currentScheduleIndex = null;
+let scheduleEditMode = false;
+
 function openModal(index) {
   currentScheduleIndex = index;
   scheduleEditMode = false;
   renderScheduleModalContent(index, false);
   document.getElementById('infoModal').style.display = 'flex';
 }
-function editCurrentScheduleDay() {
-  if (currentScheduleIndex === null) return;
-  toggleScheduleEdit();
-}
 
-let scheduleEditMode = false;
-
-function renderScheduleModalContent(index, isEdit=false) {
+function renderScheduleModalContent(index, isEdit) {
   const data = getSchedule()[index];
-  document.getElementById('m-title').innerText = `${data.title}｜${data.theme}`;
-
+  document.getElementById('m-title').innerText = `DAY ${String(index+1).padStart(2,'0')} ｜ ${data.theme}`;
   let html = `<div class="small" style="margin-bottom:12px;">${escapeHtml(data.subtitle)}</div>`;
-
   if (!isEdit) {
-    data.items.forEach((row, i) => {
+    data.items.forEach(row => {
       html += `<div style="margin-bottom:12px;">
         <div style="font-weight:600; font-size:11px;">${escapeHtml(row[0])}</div>
         <div style="font-size:11px; color:#666;">${escapeHtml(row[1])}</div>
@@ -320,19 +860,14 @@ function renderScheduleModalContent(index, isEdit=false) {
     });
   } else {
     html += `<div id="schedule-edit-list">`;
-    data.items.forEach((row, i) => {
-      html += `
-        <div class="schedule-edit-row" style="display:grid; grid-template-columns:120px 1fr; gap:8px; margin-bottom:8px;">
-          <input type="text" class="schedule-time" value="${escapeHtml(row[0])}" placeholder="時間">
-          <input type="text" class="schedule-detail" value="${escapeHtml(row[1])}" placeholder="內容">
-        </div>`;
-    });
-    html += `</div>
-      <div style="margin-top:10px;">
-        <button class="ghost-btn" onclick="addScheduleEditRow()">新增一行</button>
+    data.items.forEach(row => {
+      html += `<div class="schedule-edit-row" style="display:grid; grid-template-columns:120px 1fr; gap:8px; margin-bottom:8px;">
+        <input type="text" class="schedule-time" value="${escapeHtml(row[0])}" placeholder="時間">
+        <input type="text" class="schedule-detail" value="${escapeHtml(row[1])}" placeholder="內容">
       </div>`;
+    });
+    html += `</div><div style="margin-top:10px;"><button class="ghost-btn" onclick="addScheduleEditRow()">新增一行</button></div>`;
   }
-
   document.getElementById('m-content').innerHTML = html;
   document.getElementById('scheduleEditBtn').style.display = 'flex';
   document.getElementById('scheduleSaveBtn').style.display = isEdit ? 'flex' : 'none';
@@ -349,10 +884,7 @@ function addScheduleEditRow() {
   if (!list) return;
   const row = document.createElement('div');
   row.className = 'schedule-edit-row';
-  row.style.display = 'grid';
-  row.style.gridTemplateColumns = '120px 1fr';
-  row.style.gap = '8px';
-  row.style.marginBottom = '8px';
+  row.style.cssText = 'display:grid; grid-template-columns:120px 1fr; gap:8px; margin-bottom:8px;';
   row.innerHTML = '<input type="text" class="schedule-time" placeholder="時間"><input type="text" class="schedule-detail" placeholder="內容">';
   list.appendChild(row);
 }
@@ -361,16 +893,11 @@ function saveCurrentScheduleDay() {
   if (currentScheduleIndex === null) return;
   const data = getSchedule();
   const rows = Array.from(document.querySelectorAll('#schedule-edit-list .schedule-edit-row'));
-  const items = rows.map(row => {
-    const time = row.querySelector('.schedule-time')?.value.trim() || '';
-    const detail = row.querySelector('.schedule-detail')?.value.trim() || '';
-    return [time, detail];
-  }).filter(row => row[0] || row[1]);
-
-  if (items.length) {
-    data[currentScheduleIndex].items = items;
-    saveSchedule(data);
-  }
+  const items = rows.map(r => [
+    r.querySelector('.schedule-time')?.value.trim() || '',
+    r.querySelector('.schedule-detail')?.value.trim() || ''
+  ]).filter(r => r[0] || r[1]);
+  if (items.length) { data[currentScheduleIndex].items = items; saveSchedule(data); }
   scheduleEditMode = false;
   renderSchedule();
   renderScheduleModalContent(currentScheduleIndex, false);
@@ -382,51 +909,43 @@ function closeModal() {
 }
 function checkClose(e) { if (e.target.id === 'infoModal') closeModal(); }
 
-function inferRegionFromText(text='') {
-  const checks = [
-    ['青森市','青森市'],['弘前','弘前'],['十和田','十和田'],['五所川原','五所川原'],
-    ['八戸','八戶'],['八戶','八戶'],['黒石','黑石'],['黑石','黑石'],['青森県','青森']
-  ];
+// ─── SIGHTS ───
+function getSights() {
+  try { return JSON.parse(localStorage.getItem(STORAGE.sights)) || [...defaultSights]; }
+  catch (e) { return [...defaultSights]; }
+}
+function saveSights(data) { localStorage.setItem(STORAGE.sights, JSON.stringify(data)); }
+function uid(p) { return p + '_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
+function escapeHtml(str) {
+  return String(str||'').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+
+function inferRegionFromText(text) {
+  const checks = [['青森市','青森市'],['弘前','弘前'],['十和田','十和田'],['五所川原','五所川原'],['八戸','八戶'],['八戶','八戶'],['黒石','黑石'],['黑石','黑石'],['青森県','青森']];
   for (const [k,v] of checks) if (text.includes(k)) return v;
   return '';
 }
-function looksLikeAddress(line='') {
+function looksLikeAddress(line) {
   return /(\d{3}-\d{4}|青森県|県|市|町|村|丁目|番地|号)/.test(line);
 }
-function extractUrl(text='') {
-  const m = text.match(/https?:\/\/[^\s]+/);
-  return m ? m[0] : '';
-}
-function cleanGoogleTitle(text='') {
-  return text.replace(/^https?:\/\/[^\s]+$/,'').replace(/\s*·\s*Google Maps.*$/i,'').replace(/\s*-\s*Google Maps.*$/i,'').replace(/\s*\|\s*Google Maps.*$/i,'').trim();
-}
-function classifyCategory(region='', name='', address='', link='') {
-  const text = `${region} ${name} ${address} ${link}`;
-  const lower = text.toLowerCase();
-
-  const aomoriKeywords = ['青森市','青森駅','青森站','青森','aomori','新町','古川','安方','aspam','a-factory','善知鳥','古川市場','青龍寺','昭和大佛'];
-  const otherKeywords = ['弘前','hirosaki','弘前城','弘前公園','十和田','奧入瀨','奥入瀬','五所川原','蘆野','黒石','黑石','八戸','八戶','白神','津軽','津輕'];
-
-  if (aomoriKeywords.some(k => lower.includes(k.toLowerCase()))) return 'Aomori City';
-  if (otherKeywords.some(k => lower.includes(k.toLowerCase()))) return 'Hirosaki & Nature';
-
+function classifyCategory(region, name, address, link) {
+  const text = `${region} ${name} ${address} ${link}`.toLowerCase();
+  const aomoriKw = ['青森市','青森駅','青森站','青森','aomori','新町','古川','安方','aspam','a-factory','善知鳥','古川市場','青龍寺','昭和大佛'];
+  const otherKw = ['弘前','hirosaki','弘前城','弘前公園','十和田','奧入瀨','奥入瀬','五所川原','蘆野','黒石','黑石','八戸','八戶','白神','津軽','津輕'];
+  if (aomoriKw.some(k => text.includes(k.toLowerCase()))) return 'Aomori City';
+  if (otherKw.some(k => text.includes(k.toLowerCase()))) return 'Hirosaki & Nature';
   return 'Hirosaki & Nature';
 }
-function matchKnownPlace(raw='') {
-  const text = raw.toLowerCase();
-  for (const place of knownPlaces) {
-    for (const key of place.keys) {
-      if (text.includes(key.toLowerCase())) return place.data;
-    }
-  }
-  return null;
+function extractUrl(text) { const m = text.match(/https?:\/\/[^\s]+/); return m ? m[0] : ''; }
+function cleanGoogleTitle(text) {
+  return text.replace(/^https?:\/\/[^\s]+$/,'').replace(/\s*·\s*Google Maps.*$/i,'').replace(/\s*-\s*Google Maps.*$/i,'').trim();
 }
-function extractCoords(text='') {
+function extractCoords(text) {
   const m = text.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
   if (m) return {lat:m[1], lon:m[2]};
   return null;
 }
-function extractPlaceNameFromUrl(url='') {
+function extractPlaceNameFromUrl(url) {
   try {
     const decoded = decodeURIComponent(url);
     let m = decoded.match(/\/place\/([^\/]+)/i);
@@ -436,74 +955,46 @@ function extractPlaceNameFromUrl(url='') {
   } catch(e) {}
   return '';
 }
-function parseGoogleMapsInput(raw='') {
+
+const knownPlaces = [
+  { keys:['弘前城','弘前公園'], data:{name:'弘前公園（弘前城）', region:'弘前', address:'青森県弘前市下白銀町1', time:'4月下旬～5月上旬', note:'代表級櫻花景點。', access:'JR弘前站步行15分', category:'Hirosaki & Nature'} },
+  { keys:['古川市場','のっけ丼'], data:{name:'古川市場・のっけ丼', region:'青森市', address:'青森県青森市古川1-11-16', time:'早上～下午', note:'練習點餐日文。', access:'青森站步行約5分', category:'Aomori City'} },
+  { keys:['善知鳥神社'], data:{name:'善知鳥神社', region:'青森市', address:'青森県青森市安方2-7-18', time:'24小時', note:'市中心散步首選。', access:'青森站步行約10分', category:'Aomori City'} },
+  { keys:['昭和大佛','青龍寺'], data:{name:'昭和大佛（青龍寺）', region:'青森市', address:'青森県青森市桑原山崎45-2', time:'白天建議', note:'視覺記憶點很強。', access:'青森站轉巴士', category:'Aomori City'} },
+  { keys:['奧入瀨溪流','奥入瀬渓流'], data:{name:'奧入瀨溪流', region:'十和田', address:'青森県十和田市奥瀬', time:'5–10月', note:'秋天非常強。', access:'巴士/自駕', category:'Hirosaki & Nature'} }
+];
+
+function matchKnownPlace(raw) {
+  const text = raw.toLowerCase();
+  for (const place of knownPlaces)
+    for (const key of place.keys)
+      if (text.includes(key.toLowerCase())) return place.data;
+  return null;
+}
+
+function parseGoogleMapsInput(raw) {
   const lines = raw.split(/\n+/).map(s => s.trim()).filter(Boolean);
   const url = extractUrl(raw);
   const nonUrlLines = lines.filter(l => !/^https?:\/\//i.test(l));
-
   let name = nonUrlLines[0] ? cleanGoogleTitle(nonUrlLines[0]) : '';
   let address = '';
-  let note = '';
-  let time = '';
-  let access = '';
   const coords = extractCoords(raw);
-
   const known = matchKnownPlace(raw);
-  if (known) {
-    return {
-      id: uid('s'),
-      name: known.name,
-      region: known.region || '',
-      address: known.address || '',
-      time: known.time || '',
-      note: known.note || '',
-      access: known.access || '',
-      link: url || raw.trim(),
-      checked: false,
-      category: known.category || 'Custom',
-      coords
-    };
-  }
-
-  for (const line of nonUrlLines) {
-    if (looksLikeAddress(line) && !address) address = line;
-  }
-
+  if (known) return { id:uid('s'), ...known, link:url||raw.trim(), checked:false, coords };
+  for (const line of nonUrlLines) { if (looksLikeAddress(line) && !address) address = line; }
   if (!name && url) name = cleanGoogleTitle(extractPlaceNameFromUrl(url));
-
-  if (nonUrlLines.length >= 2) {
-    const second = nonUrlLines[1];
-    if (!looksLikeAddress(second)) note = second;
-  }
-
   const region = inferRegionFromText([name, address, raw].join(' '));
-  const category = classifyCategory(region, name, address, url || raw);
-
-  return {
-    id: uid('s'),
-    name: name || '未成功辨識名稱（可手動改）',
-    region,
-    address,
-    time,
-    note,
-    access,
-    link: url || raw.trim(),
-    checked: false,
-    category,
-    coords
-  };
+  const category = classifyCategory(region, name, address, url||raw);
+  return { id:uid('s'), name:name||'未成功辨識名稱（可手動改）', region, address, time:'', note:'', access:'', link:url||raw.trim(), checked:false, category, coords };
 }
 
 async function reverseGeocodeByCoords(coords) {
   if (!coords) return null;
   try {
-    const endpoint = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${coords.lat}&lon=${coords.lon}&addressdetails=1`;
-    const res = await fetch(endpoint, { headers: { 'Accept':'application/json' } });
+    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${coords.lat}&lon=${coords.lon}&addressdetails=1`, { headers:{'Accept':'application/json'} });
     if (!res.ok) return null;
     return await res.json();
-  } catch(e) {
-    return null;
-  }
+  } catch(e) { return null; }
 }
 
 async function enrichByNominatim(item) {
@@ -512,33 +1003,19 @@ async function enrichByNominatim(item) {
     if (rev) {
       if (!item.address && rev.display_name) item.address = rev.display_name;
       if (!item.region && rev.display_name) item.region = inferRegionFromText(rev.display_name) || item.region;
-      if ((!item.address || item.address === '') && rev.address) {
-        const a = rev.address;
-        const pieces = [a.state, a.city || a.town || a.village, a.suburb, a.road, a.house_number].filter(Boolean);
-        if (pieces.length) item.address = pieces.join(' ');
-      }
     }
   }
   const query = [item.name, item.address, item.region, 'Aomori', 'Japan'].filter(Boolean).join(', ');
-  if (!query) {
-    if (!item.category || item.category === 'Custom') item.category = classifyCategory(item.region, item.name, item.address, item.link);
-    return item;
-  }
+  if (!query) { item.category = classifyCategory(item.region, item.name, item.address, item.link); return item; }
   try {
-    const endpoint = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=' + encodeURIComponent(query);
-    const res = await fetch(endpoint, { headers: { 'Accept':'application/json' } });
+    const res = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=' + encodeURIComponent(query), { headers:{'Accept':'application/json'} });
     if (!res.ok) return item;
     const data = await res.json();
     if (!Array.isArray(data) || !data.length) return item;
     const hit = data[0];
     if (!item.address && hit.display_name) item.address = hit.display_name;
     if (!item.region && hit.display_name) item.region = inferRegionFromText(hit.display_name) || item.region;
-    if ((!item.address || item.address === '') && hit.address) {
-      const a = hit.address;
-      const pieces = [a.state, a.city || a.town || a.village, a.suburb, a.road, a.house_number].filter(Boolean);
-      if (pieces.length) item.address = pieces.join(' ');
-    }
-    if (!item.category || item.category === 'Custom') item.category = classifyCategory(item.region, item.name, item.address, item.link);
+    item.category = classifyCategory(item.region, item.name, item.address, item.link);
   } catch(e) {}
   return item;
 }
@@ -549,8 +1026,8 @@ async function addFromGoogleMaps() {
   let item = parseGoogleMapsInput(raw);
   if (!item.address || !item.region) item = await enrichByNominatim(item);
   const data = getSights();
-  data.unshift(item);
   item.category = classifyCategory(item.region, item.name, item.address, item.link);
+  data.unshift(item);
   saveSights(data);
   renderSights();
   document.getElementById('mapRawInput').value = '';
@@ -571,8 +1048,8 @@ function addPersonalSight() {
   };
   if (!item.name) return alert('請輸入景點名稱');
   const data = getSights();
-  data.unshift(item);
   item.category = classifyCategory(item.region, item.name, item.address, item.link);
+  data.unshift(item);
   saveSights(data);
   renderSights();
   ['customName','customRegion','customAddress','customTime','customSpecial','customAccess','customLink'].forEach(id => document.getElementById(id).value='');
@@ -595,8 +1072,7 @@ function toggleSight(id) {
   renderSights();
 }
 function deleteSight(id) {
-  const data = getSights().filter(x => x.id !== id);
-  saveSights(data);
+  saveSights(getSights().filter(x => x.id !== id));
   renderSights();
 }
 function resetSights() {
@@ -605,31 +1081,29 @@ function resetSights() {
 }
 
 function sightCard(item) {
-  return `
-    <div class="sight-item">
-      <span class="delete-custom" onclick="deleteSight('${item.id}')">✕</span>
-      <div class="sight-header">
-        <div class="sight-checkbox ${item.checked ? 'checked' : ''}" onclick="toggleSight('${item.id}')"></div>
-        <div style="width:100%;">
-          <div class="sight-title" contenteditable="true" onblur="updateSight('${item.id}','name',this.innerText.trim())">${escapeHtml(item.name)}</div>
-          <div style="margin-top:5px;">
-            <span class="tag">📌 <span contenteditable="true" onblur="updateSight('${item.id}','region',this.innerText.trim())">${escapeHtml(item.region || '未分類')}</span></span>
-            <span class="tag">🕒 <span contenteditable="true" onblur="updateSight('${item.id}','time',this.innerText.trim())">${escapeHtml(item.time || '未填')}</span></span>
-          </div>
+  return `<div class="sight-item">
+    <span class="delete-custom" onclick="deleteSight('${item.id}')">✕</span>
+    <div class="sight-header">
+      <div class="sight-checkbox ${item.checked ? 'checked' : ''}" onclick="toggleSight('${item.id}')"></div>
+      <div style="width:100%;">
+        <div class="sight-title" contenteditable="true" onblur="updateSight('${item.id}','name',this.innerText.trim())">${escapeHtml(item.name)}</div>
+        <div style="margin-top:5px;">
+          <span class="tag">📌 <span contenteditable="true" onblur="updateSight('${item.id}','region',this.innerText.trim())">${escapeHtml(item.region||'未分類')}</span></span>
+          <span class="tag">🕒 <span contenteditable="true" onblur="updateSight('${item.id}','time',this.innerText.trim())">${escapeHtml(item.time||'未填')}</span></span>
         </div>
       </div>
-      <div style="font-size:11px; color:#555;" contenteditable="true" onblur="updateSight('${item.id}','note',this.innerText.trim())">${escapeHtml(item.note || '無備註')}</div>
-      <div class="access-text" contenteditable="true" onblur="updateSight('${item.id}','access',this.innerText.replace('交通：','').trim())">交通：${escapeHtml(item.access || '未填寫')}</div>
-      <div class="address-text" contenteditable="true" onblur="updateSight('${item.id}','address',this.innerText.replace('地址：','').trim())">地址：${escapeHtml(item.address || '未填寫')}</div>
-      <div class="link-text">連結：${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.link)}</a>` : ''}</div>
-    </div>`;
+    </div>
+    <div style="font-size:11px; color:#555;" contenteditable="true" onblur="updateSight('${item.id}','note',this.innerText.trim())">${escapeHtml(item.note||'無備註')}</div>
+    <div class="access-text" contenteditable="true" onblur="updateSight('${item.id}','access',this.innerText.replace('交通：','').trim())">交通：${escapeHtml(item.access||'未填寫')}</div>
+    <div class="address-text" contenteditable="true" onblur="updateSight('${item.id}','address',this.innerText.replace('地址：','').trim())">地址：${escapeHtml(item.address||'未填寫')}</div>
+    <div class="link-text">連結：${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.link)}</a>` : ''}</div>
+  </div>`;
 }
 
 function renderSights() {
   const all = getSights();
   const aomori = all.filter(x => x.category === 'Aomori City');
   const hirosaki = all.filter(x => x.category !== 'Aomori City');
-
   document.getElementById('aomori-list').innerHTML = aomori.map(sightCard).join('') || '<div class="small">目前無資料</div>';
   document.getElementById('hirosaki-list').innerHTML = hirosaki.map(sightCard).join('') || '<div class="small">目前無資料</div>';
 }
@@ -646,6 +1120,7 @@ function renderBaseSections() {
   document.getElementById('base-sections').innerHTML = html;
 }
 
+// ─── INIT ───
 renderSchedule();
 renderSights();
 renderBaseSections();
